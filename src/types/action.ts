@@ -8,6 +8,7 @@ export enum ActionType {
   GuitarsRequest = 'catalog/guitarsRequest',
   GuitarsFailed = 'catalog/guitarsFailed',
   RedirectToRoute = 'app/redirectToRoute',
+  Search = 'catalog/search',
 }
 
 export type ThunkActionResult<R = Promise<void>> = ThunkAction<

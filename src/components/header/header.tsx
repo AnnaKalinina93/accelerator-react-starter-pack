@@ -1,4 +1,35 @@
-function Header() {
+import { ChangeEvent, useState } from 'react';
+import cn from 'classnames';
+import { useSelector } from 'react-redux';
+import { getGuitars } from '../../store/guitars-data/selectors';
+// import { useDispatch } from 'react-redux';
+// import { inputSearchChange } from '../../store/ui-state/action';
+
+type HeaderProps = {
+  onChangeInput?: (value: any) => void
+}
+
+function Header({ onChangeInput }: HeaderProps) {
+  // const dispatch = useDispatch();
+  // const changeInputSearch = (inputSearch: string) => {
+  //   dispatch(inputSearchChange(inputSearch));
+  // };
+  const guitars = useSelector(getGuitars);
+  const [formInput, setFormInput] = useState({
+    touched: false,
+    value: '',
+  });
+
+  const searchClass = cn('form-search__select-list', {
+    hidden: !formInput.touched || formInput.value === '',
+  });
+
+  const selectedGuitars = guitars.filter((guitar) => guitar.name.toLowerCase().includes(formInput.value.toLowerCase()));
+  // const handleChange = ({ target }: ChangeEvent<HTMLInputElement>) => {
+  //   const { value } = target;
+  //   setFormState(value);
+  // };
+
   return (
     <header className="header" id="header">
       <div className="container header__wrapper">
@@ -31,7 +62,13 @@ function Header() {
           </ul>
         </nav>
         <div className="form-search">
-          <form className="form-search__form">
+          <form
+            className="form-search__form"
+            // onSubmit={(evt) => {
+            //   evt.preventDefault();
+            //   changeInputSearch(formState);
+            // }}
+          >
             <button className="form-search__submit" type="submit">
               <svg
                 className="form-search__icon"
@@ -49,30 +86,26 @@ function Header() {
               type="text"
               autoComplete="off"
               placeholder="что вы ищите?"
+              onChange={({ target }: ChangeEvent<HTMLInputElement>) => {
+                setFormInput({
+                  touched: true,
+                  value: target.value,
+                });
+                if (onChangeInput) {
+                  return onChangeInput(target.value);
+                }
+              }}
             />
             <label className="visually-hidden" htmlFor="search">
               Поиск
             </label>
           </form>
-          <ul className="form-search__select-list hidden">
-            <li className="form-search__select-item" tabIndex={0}>
-              Четстер Plus
-            </li>
-            <li className="form-search__select-item" tabIndex={0}>
-              Четстер UX
-            </li>
-            <li className="form-search__select-item" tabIndex={0}>
-              Четстер UX2
-            </li>
-            <li className="form-search__select-item" tabIndex={0}>
-              Четстер UX3
-            </li>
-            <li className="form-search__select-item" tabIndex={0}>
-              Четстер UX4
-            </li>
-            <li className="form-search__select-item" tabIndex={0}>
-              Четстер UX5
-            </li>
+          <ul className={searchClass}>
+            { selectedGuitars.map((guitar)=> (
+              <li key={guitar.id} className="form-search__select-item" tabIndex={0}>
+                {guitar.name}
+              </li>
+            ))}
           </ul>
         </div>
         <a className="header__cart-link" href="#" aria-label="Корзина">

@@ -1,43 +1,47 @@
+import { nanoid } from '@reduxjs/toolkit';
 import { Guitar } from '../../types/guitar';
 
 type GuitarItemProps = {
   guitar: Guitar
 }
 
+const RATING_COUNT = 5;
+
 function GuitarItem({ guitar }: GuitarItemProps): JSX.Element {
+  const {
+    name,
+    previewImg,
+    rating,
+    price,
+    stringCount,
+  }= guitar;
+
   return (
     <div className="product-card">
       <img
-        src="img/content/catalog-product-0.jpg"
-        srcSet="img/content/catalog-product-0@2x.jpg 2x"
+        src={`img/content/${previewImg.slice(4)}`}
         width="75"
         height="190"
-        alt="СURT Z30 Plus Acoustics"
+        alt={name}
       />
       <div className="product-card__info">
         <div className="rate product-card__rate" aria-hidden="true">
           <span className="visually-hidden">Рейтинг:</span>
-          <svg width="12" height="11" aria-hidden="true">
-            <use xlinkHref="#icon-full-star"></use>
-          </svg>
-          <svg width="12" height="11" aria-hidden="true">
-            <use xlinkHref="#icon-full-star"></use>
-          </svg>
-          <svg width="12" height="11" aria-hidden="true">
-            <use xlinkHref="#icon-full-star"></use>
-          </svg>
-          <svg width="12" height="11" aria-hidden="true">
-            <use xlinkHref="#icon-full-star"></use>
-          </svg>
-          <svg width="12" height="11" aria-hidden="true">
-            <use xlinkHref="#icon-star"></use>
-          </svg>
-          <span className="rate__count">9</span>
+          { new Array(Math.round(rating)).fill(1).map(nanoid).map((item) =>(
+            <svg key={item} width="12" height="11" aria-hidden="true">
+              <use xlinkHref="#icon-full-star"></use>
+            </svg>))}
+          { new Array(RATING_COUNT-Math.round(rating)).fill(1).map(nanoid).map((item) =>(
+            <svg key={item} width="12" height="11" aria-hidden="true">
+              <use xlinkHref="#icon-star"></use>
+            </svg>
+          ))}
+          <span className="rate__count">{stringCount}</span>
           <span className="rate__message"></span>
         </div>
-        <p className="product-card__title">СURT Z30 Plus Acoustics</p>
+        <p className="product-card__title">{name}</p>
         <p className="product-card__price">
-          <span className="visually-hidden">Цена:</span>129 500 ₽
+          <span className="visually-hidden">Цена:</span>{price} ₽
         </p>
       </div>
       <div className="product-card__buttons">

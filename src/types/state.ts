@@ -23,10 +23,9 @@ export type GuitarsData = {
 //   isPostReview: boolean,
 // }
 
-// export type UiState = {
-//   activeCity: string,
-//   activeSortType: string,
-// }
+export type UiState = {
+  inputSearch: string,
+}
 
 // export type FavoritesData = {
 //   favoritesOffers: Offers,
