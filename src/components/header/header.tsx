@@ -2,6 +2,7 @@ import { ChangeEvent, useState } from 'react';
 import cn from 'classnames';
 import { useSelector } from 'react-redux';
 import { getGuitars } from '../../store/guitars-data/selectors';
+import { Link } from 'react-router-dom';
 // import { useDispatch } from 'react-redux';
 // import { inputSearchChange } from '../../store/ui-state/action';
 
@@ -103,7 +104,7 @@ function Header({ onChangeInput }: HeaderProps) {
           <ul className={searchClass}>
             { selectedGuitars.map((guitar)=> (
               <li key={guitar.id} className="form-search__select-item" tabIndex={0}>
-                {guitar.name}
+                <Link to={`/catalog/${guitar.id}`} className="form-search__select-item">{guitar.name}</Link>
               </li>
             ))}
           </ul>
