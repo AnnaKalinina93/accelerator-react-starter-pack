@@ -27,12 +27,12 @@ function GuitarItem({ guitar }: GuitarItemProps): JSX.Element {
       <div className="product-card__info">
         <div className="rate product-card__rate" aria-hidden="true">
           <span className="visually-hidden">Рейтинг:</span>
-          { new Array(Math.round(rating)).fill(1).map(nanoid).map((item) =>(
-            <svg key={item} width="12" height="11" aria-hidden="true">
+          { new Array(Math.round(rating)).fill(1).map((item) =>(
+            <svg key={nanoid()} width="12" height="11" aria-hidden="true">
               <use xlinkHref="#icon-full-star"></use>
             </svg>))}
-          { new Array(RATING_COUNT-Math.round(rating)).fill(1).map(nanoid).map((item) =>(
-            <svg key={item} width="12" height="11" aria-hidden="true">
+          { new Array(RATING_COUNT-Math.round(rating)).fill(1).map((item) =>(
+            <svg key={nanoid()} width="12" height="11" aria-hidden="true">
               <use xlinkHref="#icon-star"></use>
             </svg>
           ))}

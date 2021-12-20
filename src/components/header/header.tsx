@@ -1,4 +1,4 @@
-import { ChangeEvent, useState } from 'react';
+import { ChangeEvent, useState, FormEvent } from 'react';
 import cn from 'classnames';
 import { useSelector } from 'react-redux';
 import { getGuitars } from '../../store/guitars-data/selectors';
@@ -104,7 +104,7 @@ function Header({ onChangeInput }: HeaderProps) {
           <ul className={searchClass}>
             { selectedGuitars.map((guitar)=> (
               <li key={guitar.id} className="form-search__select-item" tabIndex={0}>
-                <Link to={`/catalog/${guitar.id}`} className="form-search__select-item">{guitar.name}</Link>
+                <Link to={`/product/${guitar.id}`} className="form-search__select-item">{guitar.name}</Link>
               </li>
             ))}
           </ul>

@@ -5,5 +5,6 @@ export enum APIRoute {
 export enum AppRoute {
     Catalog = '/catalog',
     Main = '/',
-    Pagination = '/catalog/page_:id',
+    Pagination = '/page_:id',
+    Product = '/product/:id'
   }

@@ -8,7 +8,7 @@ function GuitarsList({ guitars }: GuitarsListProps): JSX.Element {
   return (
     <div className="cards catalog__cards">
       {guitars.map((guitar) => (
-        <GuitarItem key={guitar.id} guitar={guitar} />
+        <GuitarItem key={`${guitar.id}-${guitar.vendorCode}`} guitar={guitar} />
       ))}
     </div>
   );
