@@ -1,8 +1,8 @@
 import { useSelector } from 'react-redux';
 import {
-  getGuitars,
   getGuitarsError,
-  getGuitarsLoading
+  getGuitarsLoading,
+  getSortGuitars
 } from '../../store/guitars-data/selectors';
 import Header from '../../components/header/header';
 import Filter from '../../components/filter/filter';
@@ -16,7 +16,7 @@ import { useState } from 'react';
 function Catalog(): JSX.Element {
   const guitarsLoading = useSelector(getGuitarsLoading);
   const guitarsError = useSelector(getGuitarsError);
-  const guitars = useSelector(getGuitars);
+  const guitars = useSelector(getSortGuitars);
 
   const [formState, setFormState] = useState('');
 

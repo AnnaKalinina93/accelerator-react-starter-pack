@@ -8,7 +8,11 @@ export enum ActionType {
   GuitarsRequest = 'catalog/guitarsRequest',
   GuitarsFailed = 'catalog/guitarsFailed',
   RedirectToRoute = 'app/redirectToRoute',
-  Search = 'catalog/search',
+  CommentsRequest = 'catalog/commentsRequest',
+  CommentsSucceeded = 'catalog/commentsSucceeded',
+  CommentsFailed = 'catalog/commentsFailed',
+  SortType = 'catalog/sortType',
+  SortPrice = 'catalog/sortPrice'
 }
 
 export type ThunkActionResult<R = Promise<void>> = ThunkAction<

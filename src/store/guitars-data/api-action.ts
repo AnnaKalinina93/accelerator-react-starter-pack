@@ -11,7 +11,7 @@ export const fetchGuitarsAction = (): ThunkActionResult =>
   async (dispatch, _, api): Promise<void> => {
     dispatch(guitarsRequest());
     try {
-      const { data } = await api.get<Guitar[]>(APIRoute.Guitars);
+      const { data } = await api.get<Guitar[]>(`${APIRoute.Guitars}?_embed=comments`);
       dispatch(guitarsSucceeded(data));
     } catch {
       dispatch(guitarsFailed());

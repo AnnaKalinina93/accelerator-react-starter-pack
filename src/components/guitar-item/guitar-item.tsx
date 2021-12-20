@@ -13,7 +13,7 @@ function GuitarItem({ guitar }: GuitarItemProps): JSX.Element {
     previewImg,
     rating,
     price,
-    stringCount,
+    comments,
   }= guitar;
 
   return (
@@ -36,7 +36,7 @@ function GuitarItem({ guitar }: GuitarItemProps): JSX.Element {
               <use xlinkHref="#icon-star"></use>
             </svg>
           ))}
-          <span className="rate__count">{stringCount}</span>
+          <span className="rate__count">{comments.length}</span>
           <span className="rate__message"></span>
         </div>
         <p className="product-card__title">{name}</p>
