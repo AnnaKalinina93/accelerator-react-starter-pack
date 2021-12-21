@@ -1,26 +1,62 @@
-import { useDispatch, useSelector } from 'react-redux';
-import { sortChangeType, sortChangePrice } from '../../store/ui-state/action';
-import { getChangeSort} from '../../store/ui-state/selectors';
+import { useDispatch } from 'react-redux';
 import cn from 'classnames';
-import { SortingPrice, SortingType } from '../../const';
+import { fetchGuitarsAction } from '../../store/guitars-data/api-action';
+import { useState } from 'react';
+import { SortingPriceRout, SortingRatingRout, sortingType } from '../../const';
+import { getSortRout } from '../../utils';
 
+type stateProps = {
+    type: string;
+    order: string;
+};
 function Sort(): JSX.Element {
-  const activeSortType = useSelector(getChangeSort).type;
-  const activeSortPrice = useSelector(getChangeSort).type;
-
+  const [activeSorting, setActiveSorting] = useState<stateProps>({
+    type: sortingType.type.default,
+    order: sortingType.order.default,
+  });
   const dispatch = useDispatch();
 
-  const onUserAnswerType = (currentSortType: string) => {
-    dispatch(sortChangeType(currentSortType));
-  };
-  const onUserAnswerPrice = (currentSortPrice: string) => {
-    dispatch(sortChangePrice(currentSortPrice));
+  const onUserAnswer = (currentSortPriceType: SortingPriceRout, currentSortRatingType: SortingRatingRout) => {
+    dispatch(fetchGuitarsAction(currentSortPriceType, currentSortRatingType));
   };
 
-  const sortTypePriceClass =cn('catalog-sort__type-button',{'catalog-sort__type-button--active ': activeSortType === SortingType.Price});
-  const sortTypePopularityClass =cn('catalog-sort__type-button',{'catalog-sort__type-button--active ': activeSortType === SortingType.Popularity});
-  const sortPriceIncreaseClass =cn('catalog-sort__order-button catalog-sort__order-button--up',{'catalog-sort__order-button--active': activeSortPrice === SortingPrice.Increase});
-  const sortPriceDecreaseClass = cn('catalog-sort__order-button catalog-sort__order-button--down',{ 'catalog-sort__order-button--active': activeSortPrice === SortingPrice.Decrease});
+  const handlePriceClick = () => {
+    setActiveSorting({
+      order: activeSorting.order,
+      type: sortingType.type.price,
+    });
+    const activeRout = getSortRout(activeSorting);
+    onUserAnswer(activeRout.sortPrice, activeRout.rating);
+  };
+  const handleRatingClick = () => {
+    setActiveSorting({
+      order: activeSorting.order,
+      type: sortingType.type.rating,
+    });
+    const activeRout = getSortRout(activeSorting);
+    onUserAnswer(activeRout.sortPrice, activeRout.rating);
+  };
+  const handleUpClick = () => {
+    setActiveSorting({
+      type: activeSorting.type,
+      order: sortingType.order.increase,
+    });
+    const activeRout = getSortRout(activeSorting);
+    onUserAnswer(activeRout.sortPrice, activeRout.rating);
+  };
+  const handleDownClick = () => {
+    setActiveSorting({
+      type: activeSorting.type,
+      order: sortingType.order.decrease,
+    });
+    const activeRout = getSortRout(activeSorting);
+    onUserAnswer(activeRout.sortPrice, activeRout.rating);
+  };
+
+  const sortTypePriceClass =cn('catalog-sort__type-button',{'catalog-sort__type-button--active ': activeSorting.type === sortingType.type.price});
+  const sortTypePopularityClass =cn('catalog-sort__type-button',{'catalog-sort__type-button--active ': activeSorting.type === sortingType.type.rating});
+  const sortPriceIncreaseClass =cn('catalog-sort__order-button catalog-sort__order-button--up',{'catalog-sort__order-button--active': activeSorting.order === sortingType.order.increase});
+  const sortPriceDecreaseClass = cn('catalog-sort__order-button catalog-sort__order-button--down',{ 'catalog-sort__order-button--active': activeSorting.order === sortingType.order.decrease});
   return (
     <div className="catalog-sort">
       <h2 className="catalog-sort__title">Сортировать:</h2>
@@ -29,14 +65,14 @@ function Sort(): JSX.Element {
           className={sortTypePriceClass}
           aria-label="по цене"
           tabIndex={-1}
-          onClick={() => onUserAnswerType(SortingType.Price)}
+          onClick={handlePriceClick}
         >
           по цене
         </button>
         <button
           className={sortTypePopularityClass}
           aria-label="по популярности"
-          onClick={() => onUserAnswerType(SortingType.Popularity)}
+          onClick={handleRatingClick}
         >
           по популярности
         </button>
@@ -46,12 +82,12 @@ function Sort(): JSX.Element {
           className={sortPriceIncreaseClass}
           aria-label="По возрастанию"
           tabIndex={-1}
-          onClick={() => onUserAnswerPrice(SortingPrice.Increase)}
+          onClick={handleUpClick}
         />
         <button
           className={sortPriceDecreaseClass}
           aria-label="По убыванию"
-          onClick={() => onUserAnswerPrice(SortingPrice.Decrease)}
+          onClick={handleDownClick}
         />
       </div>
     </div>

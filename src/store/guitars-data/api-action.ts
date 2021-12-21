@@ -4,16 +4,17 @@ import {
   guitarsRequest,
   guitarsSucceeded
 } from './action';
-import { APIRoute } from '../../const';
+import { APIRoute, SortingPriceRout, SortingRatingRout } from '../../const';
 import { Guitar} from '../../types/guitar';
 
-export const fetchGuitarsAction = (): ThunkActionResult =>
+export const fetchGuitarsAction = (sortingPriceRout = SortingPriceRout.Default, sortingRatingRout = SortingRatingRout.Default): ThunkActionResult =>
   async (dispatch, _, api): Promise<void> => {
     dispatch(guitarsRequest());
     try {
-      const { data } = await api.get<Guitar[]>(`${APIRoute.Guitars}?_embed=comments`);
+      const { data } = await api.get<Guitar[]>(`${APIRoute.Guitars}?_embed=comments${sortingPriceRout}${sortingRatingRout}`);
       dispatch(guitarsSucceeded(data));
     } catch {
       dispatch(guitarsFailed());
     }
   };
+

@@ -2,7 +2,7 @@ import { useSelector } from 'react-redux';
 import {
   getGuitarsError,
   getGuitarsLoading,
-  getSortGuitars
+  getGuitars
 } from '../../store/guitars-data/selectors';
 import Header from '../../components/header/header';
 import Filter from '../../components/filter/filter';
@@ -16,11 +16,11 @@ import { useState } from 'react';
 function Catalog(): JSX.Element {
   const guitarsLoading = useSelector(getGuitarsLoading);
   const guitarsError = useSelector(getGuitarsError);
-  const guitars = useSelector(getSortGuitars);
+  const guitars = useSelector(getGuitars);
 
   const [formState, setFormState] = useState('');
 
-  const handleChange = (value: any) => {
+  const handleChange = (value: string) => {
     setFormState(value);
   };
 
