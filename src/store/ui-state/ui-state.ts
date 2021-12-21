@@ -1,11 +1,11 @@
 import { createReducer } from '@reduxjs/toolkit';
 import { UiState } from '../../types/state';
-import { sortChangeType, sortChangePrice } from './action';
+import { sortChangeType, sortChangeOrder } from './action';
 
 const initialState: UiState = {
   activeSort: {
     type: '',
-    price: '',
+    order: '',
   },
 };
 
@@ -16,7 +16,7 @@ export const uiState = createReducer(initialState, (builder) => {
       state.activeSort.type = action.payload;
     })
 
-    .addCase(sortChangePrice, (state, action) => {
-      state.activeSort.price = action.payload;
+    .addCase(sortChangeOrder, (state, action) => {
+      state.activeSort.order = action.payload;
     });
 });

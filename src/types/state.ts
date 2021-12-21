@@ -28,7 +28,7 @@ export type GuitarsData = {
 export type UiState = {
   activeSort: {
     type: string
-    price: string
+    order: string
   }
 }
 

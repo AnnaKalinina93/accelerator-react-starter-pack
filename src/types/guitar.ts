@@ -23,3 +23,7 @@ export type Guitar = {
   };
 
 
+export type Sorting = {
+  type: string;
+  order: string;
+};

@@ -32,7 +32,7 @@ function Filter(): JSX.Element {
             type="checkbox"
             id="electric"
             name="electric"
-            checked
+            //checked
           />
           <label htmlFor="electric">Электрогитары</label>
         </div>
@@ -42,7 +42,7 @@ function Filter(): JSX.Element {
             type="checkbox"
             id="ukulele"
             name="ukulele"
-            checked
+            //checked
           />
           <label htmlFor="ukulele">Укулеле</label>
         </div>
@@ -57,7 +57,7 @@ function Filter(): JSX.Element {
             type="checkbox"
             id="4-strings"
             name="4-strings"
-            checked
+            //checked
           />
           <label htmlFor="4-strings">4</label>
         </div>
@@ -67,7 +67,7 @@ function Filter(): JSX.Element {
             type="checkbox"
             id="6-strings"
             name="6-strings"
-            checked
+            //checked
           />
           <label htmlFor="6-strings">6</label>
         </div>

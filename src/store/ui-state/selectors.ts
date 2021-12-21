@@ -5,5 +5,5 @@ export const getChangeSort = (
   state: State,
 ): {
   type: string
-  price: string
+  order: string
 } => state[NameSpace.Ui].activeSort;

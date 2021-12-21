@@ -1,56 +1,43 @@
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import cn from 'classnames';
 import { fetchGuitarsAction } from '../../store/guitars-data/api-action';
-import { useState } from 'react';
-import { SortingPriceRout, SortingRatingRout, sortingType } from '../../const';
-import { getSortRout } from '../../utils';
+import { sortingType } from '../../const';
+import { getChangeSort } from '../../store/ui-state/selectors';
 
-type stateProps = {
-    type: string;
-    order: string;
-};
 function Sort(): JSX.Element {
-  const [activeSorting, setActiveSorting] = useState<stateProps>({
-    type: sortingType.type.default,
-    order: sortingType.order.default,
-  });
+  const activeSorting = useSelector(getChangeSort);
   const dispatch = useDispatch();
 
-  const onUserAnswer = (currentSortPriceType: SortingPriceRout, currentSortRatingType: SortingRatingRout) => {
-    dispatch(fetchGuitarsAction(currentSortPriceType, currentSortRatingType));
+  const onUserAnswer = (currentSorting: {
+    type: string,
+    order: string,
+  }) => {
+    dispatch(fetchGuitarsAction(currentSorting));
   };
 
   const handlePriceClick = () => {
-    setActiveSorting({
+    onUserAnswer({
       order: activeSorting.order,
       type: sortingType.type.price,
     });
-    const activeRout = getSortRout(activeSorting);
-    onUserAnswer(activeRout.sortPrice, activeRout.rating);
   };
   const handleRatingClick = () => {
-    setActiveSorting({
+    onUserAnswer({
       order: activeSorting.order,
       type: sortingType.type.rating,
     });
-    const activeRout = getSortRout(activeSorting);
-    onUserAnswer(activeRout.sortPrice, activeRout.rating);
   };
   const handleUpClick = () => {
-    setActiveSorting({
+    onUserAnswer({
       type: activeSorting.type,
       order: sortingType.order.increase,
     });
-    const activeRout = getSortRout(activeSorting);
-    onUserAnswer(activeRout.sortPrice, activeRout.rating);
   };
   const handleDownClick = () => {
-    setActiveSorting({
+    onUserAnswer({
       type: activeSorting.type,
       order: sortingType.order.decrease,
     });
-    const activeRout = getSortRout(activeSorting);
-    onUserAnswer(activeRout.sortPrice, activeRout.rating);
   };
 
   const sortTypePriceClass =cn('catalog-sort__type-button',{'catalog-sort__type-button--active ': activeSorting.type === sortingType.type.price});

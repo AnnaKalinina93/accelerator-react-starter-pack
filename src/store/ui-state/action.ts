@@ -8,9 +8,9 @@ export const sortChangeType= createAction(
   }),
 );
 
-export const sortChangePrice= createAction(
-  ActionType.SortPrice,
-  (activeSortPrice: string) => ({
-    payload: activeSortPrice,
+export const sortChangeOrder= createAction(
+  ActionType.SortOrder,
+  (activeSortOrder: string) => ({
+    payload: activeSortOrder,
   }),
 );
