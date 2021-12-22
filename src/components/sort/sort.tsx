@@ -17,14 +17,14 @@ function Sort(): JSX.Element {
 
   const handlePriceClick = () => {
     onUserAnswer({
-      order: activeSorting.order,
       type: sortingType.type.price,
+      order: activeSorting.order,
     });
   };
   const handleRatingClick = () => {
     onUserAnswer({
-      order: activeSorting.order,
       type: sortingType.type.rating,
+      order: activeSorting.order,
     });
   };
   const handleUpClick = () => {

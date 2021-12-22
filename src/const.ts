@@ -23,12 +23,12 @@ export enum SortingRatingRout {
 
 export const sortingType = {
   type: {
-    default: 'default',
+    default: 'defaultType',
     price: 'price',
     rating: 'rating',
   },
   order: {
-    default: 'default',
+    default: 'defaultOrder',
     increase: 'increase',
     decrease: 'decrease',
   },

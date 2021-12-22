@@ -1,11 +1,12 @@
 import { createReducer } from '@reduxjs/toolkit';
+import { sortingType } from '../../const';
 import { UiState } from '../../types/state';
 import { sortChangeType, sortChangeOrder } from './action';
 
 const initialState: UiState = {
   activeSort: {
-    type: '',
-    order: '',
+    type: sortingType.type.default,
+    order: sortingType.order.default,
   },
 };
 
