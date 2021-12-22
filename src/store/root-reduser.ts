@@ -1,5 +1,6 @@
 import { combineReducers } from 'redux';
 import { guitarsData } from './guitars-data/guitars-data';
+import { uiState } from './ui-state/ui-state';
 // import { userProcess } from './user-process/user-process';
 // import { commentsData } from './comments-data/comments-data';
 // import { uiState } from './ui-state/ui-state';
@@ -12,6 +13,7 @@ export enum NameSpace {
 
 export const rootReducer = combineReducers({
   [NameSpace.Guitars]: guitarsData,
+  [NameSpace.Ui]: uiState,
 });
 
 export type RootState = ReturnType<typeof rootReducer>

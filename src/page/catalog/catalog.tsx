@@ -11,11 +11,20 @@ import GuitarsList from '../../components/guitars-list/guitars-list';
 import Footer from '../../components/footer/footer';
 import LoadingScreen from '../loading-screen/loading-screen';
 import GuitarsErrorScreen from '../guitars-error-screen/guitars-error-screen';
+import { useState } from 'react';
 
 function Catalog(): JSX.Element {
   const guitarsLoading = useSelector(getGuitarsLoading);
   const guitarsError = useSelector(getGuitarsError);
   const guitars = useSelector(getGuitars);
+
+  const [formState, setFormState] = useState('');
+
+  const handleChange = (value: any) => {
+    setFormState(value);
+  };
+
+  const searchGuitars = guitars.filter((guitar) => guitar.name.toLowerCase().includes(formState.toLowerCase()));
 
   if (guitarsLoading && !guitarsError) {
     return <LoadingScreen />;
@@ -25,9 +34,10 @@ function Catalog(): JSX.Element {
     return <GuitarsErrorScreen />;
   }
 
+
   return (
     <div className="wrapper">
-      <Header />
+      <Header onChangeInput={handleChange}/>
       <main className="page-content">
         <div className="container">
           <h1 className="page-content__title title title--bigger">
@@ -46,7 +56,7 @@ function Catalog(): JSX.Element {
           <div className="catalog">
             <Filter />
             <Sort />
-            <GuitarsList guitars={guitars.slice(0, 9)} />
+            <GuitarsList guitars={searchGuitars.slice(0, 9)} />
             <div className="pagination page-content__pagination">
               <ul className="pagination__list">
                 <li className="pagination__page pagination__page--active">
