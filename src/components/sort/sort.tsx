@@ -1,31 +1,80 @@
+import { useDispatch, useSelector } from 'react-redux';
+import cn from 'classnames';
+import { fetchGuitarsAction } from '../../store/guitars-data/api-action';
+import { sortingType } from '../../const';
+import { getChangeSort } from '../../store/ui-state/selectors';
+
 function Sort(): JSX.Element {
+  const activeSorting = useSelector(getChangeSort);
+  const dispatch = useDispatch();
+
+  const onUserAnswer = (currentSorting: {
+    type: string,
+    order: string,
+  }) => {
+    dispatch(fetchGuitarsAction(currentSorting));
+  };
+
+  const handlePriceClick = () => {
+    onUserAnswer({
+      type: sortingType.type.price,
+      order: activeSorting.order,
+    });
+  };
+  const handleRatingClick = () => {
+    onUserAnswer({
+      type: sortingType.type.rating,
+      order: activeSorting.order,
+    });
+  };
+  const handleUpClick = () => {
+    onUserAnswer({
+      type: activeSorting.type,
+      order: sortingType.order.increase,
+    });
+  };
+  const handleDownClick = () => {
+    onUserAnswer({
+      type: activeSorting.type,
+      order: sortingType.order.decrease,
+    });
+  };
+
+  const sortTypePriceClass =cn('catalog-sort__type-button',{'catalog-sort__type-button--active ': activeSorting.type === sortingType.type.price});
+  const sortTypePopularityClass =cn('catalog-sort__type-button',{'catalog-sort__type-button--active ': activeSorting.type === sortingType.type.rating});
+  const sortPriceIncreaseClass =cn('catalog-sort__order-button catalog-sort__order-button--up',{'catalog-sort__order-button--active': activeSorting.order === sortingType.order.increase});
+  const sortPriceDecreaseClass = cn('catalog-sort__order-button catalog-sort__order-button--down',{ 'catalog-sort__order-button--active': activeSorting.order === sortingType.order.decrease});
   return (
     <div className="catalog-sort">
       <h2 className="catalog-sort__title">Сортировать:</h2>
       <div className="catalog-sort__type">
         <button
-          className="catalog-sort__type-button catalog-sort__type-button--active"
+          className={sortTypePriceClass}
           aria-label="по цене"
           tabIndex={-1}
+          onClick={handlePriceClick}
         >
           по цене
         </button>
         <button
-          className="catalog-sort__type-button"
+          className={sortTypePopularityClass}
           aria-label="по популярности"
+          onClick={handleRatingClick}
         >
           по популярности
         </button>
       </div>
       <div className="catalog-sort__order">
         <button
-          className="catalog-sort__order-button catalog-sort__order-button--up catalog-sort__order-button--active"
+          className={sortPriceIncreaseClass}
           aria-label="По возрастанию"
           tabIndex={-1}
+          onClick={handleUpClick}
         />
         <button
-          className="catalog-sort__order-button catalog-sort__order-button--down"
+          className={sortPriceDecreaseClass}
           aria-label="По убыванию"
+          onClick={handleDownClick}
         />
       </div>
     </div>

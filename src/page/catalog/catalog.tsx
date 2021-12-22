@@ -1,8 +1,8 @@
 import { useSelector } from 'react-redux';
 import {
-  getGuitars,
   getGuitarsError,
-  getGuitarsLoading
+  getGuitarsLoading,
+  getGuitars
 } from '../../store/guitars-data/selectors';
 import Header from '../../components/header/header';
 import Filter from '../../components/filter/filter';
@@ -20,7 +20,7 @@ function Catalog(): JSX.Element {
 
   const [formState, setFormState] = useState('');
 
-  const handleChange = (value: any) => {
+  const handleChange = (value: string) => {
     setFormState(value);
   };
 

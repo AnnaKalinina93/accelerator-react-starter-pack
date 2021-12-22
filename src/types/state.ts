@@ -1,8 +1,7 @@
 import { Guitar } from './guitar';
 import { RootState } from '../store/root-reduser';
 
-
-export type State = RootState;
+export type State = RootState
 
 // export type UserProcess = {
 //   authorizationStatus: AuthorizationStatus,
@@ -14,6 +13,9 @@ export type GuitarsData = {
   guitars: Guitar[],
   guitarsLoading: boolean,
   guitarsError: boolean,
+  comments: [],
+  commentsLoading: boolean,
+  commentsError: boolean,
 }
 
 // export type CommentsData = {
@@ -24,7 +26,10 @@ export type GuitarsData = {
 // }
 
 export type UiState = {
-  inputSearch: string,
+  activeSort: {
+    type: string
+    order: string
+  }
 }
 
 // export type FavoritesData = {

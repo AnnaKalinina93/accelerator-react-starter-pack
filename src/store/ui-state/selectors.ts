@@ -1,5 +1,9 @@
 import { NameSpace } from '../root-reduser';
 import { State } from '../../types/state';
 
-export const getInputSearch= (state: State): string => state[NameSpace.Ui].inputSearch;
-
+export const getChangeSort = (
+  state: State,
+): {
+  type: string
+  order: string
+} => state[NameSpace.Ui].activeSort;
