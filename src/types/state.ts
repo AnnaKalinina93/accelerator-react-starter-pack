@@ -3,12 +3,6 @@ import { RootState } from '../store/root-reduser';
 
 export type State = RootState
 
-// export type UserProcess = {
-//   authorizationStatus: AuthorizationStatus,
-//   loginLoading: boolean,
-//   user: AuthInfo | null,
-// };
-
 export type GuitarsData = {
   guitars: Guitar[],
   guitarsLoading: boolean,
@@ -18,23 +12,13 @@ export type GuitarsData = {
   commentsError: boolean,
 }
 
-// export type CommentsData = {
-//   reviews: Reviews,
-//   reviewsLoading: boolean,
-//   reviewsError: boolean,
-//   isPostReview: boolean,
-// }
-
 export type UiState = {
   activeSort: {
     type: string
     order: string
-  }
+  },
+  minPrice: string,
+  maxPrice: string,
+  typeGuitar: string[],
+  activeStrings: string[],
 }
-
-// export type FavoritesData = {
-//   favoritesOffers: Offers,
-//   favoritesOffersLoading: boolean,
-//   favoritesOffersError: boolean,
-//   favoritesOffer: Offer | null,
-// }

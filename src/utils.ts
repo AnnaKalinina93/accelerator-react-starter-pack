@@ -1,4 +1,4 @@
-import { SortingPriceRout, SortingRatingRout, sortingType } from './const';
+import { FilterTypeGuitarRout, guitarType, SortingPriceRout, SortingRatingRout, sortingType } from './const';
 
 export function getSortRout(activeSorting: {
   type: string
@@ -77,5 +77,27 @@ export function getSortRout(activeSorting: {
         sortPrice: SortingPriceRout.Default,
         rating: SortingRatingRout.Default,
       };
+  }
+}
+
+export function getTypeRout (activeType: string[]): string {
+  if (activeType.length) {
+    const typeRout:string[] = [];
+    activeType.map((type) => typeRout.push(Object(FilterTypeGuitarRout)[type]));
+    return typeRout.join('');
+  }
+  return '';
+}
+
+export function getStringsFromType (type: string): string[] {
+  switch (type) {
+    case guitarType.acoustic:
+      return ['6', '7', '12'];
+    case guitarType.electric:
+      return ['4', '6', '7'];
+    case guitarType.ukulele:
+      return ['4'];
+    default:
+      return [];
   }
 }

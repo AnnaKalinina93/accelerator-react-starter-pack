@@ -1,8 +1,8 @@
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import {
   getGuitarsError,
   getGuitarsLoading,
-  getGuitars
+  getFilterGuitars
 } from '../../store/guitars-data/selectors';
 import Header from '../../components/header/header';
 import Filter from '../../components/filter/filter';
@@ -11,22 +11,38 @@ import GuitarsList from '../../components/guitars-list/guitars-list';
 import Footer from '../../components/footer/footer';
 import LoadingScreen from '../loading-screen/loading-screen';
 import GuitarsErrorScreen from '../guitars-error-screen/guitars-error-screen';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { fetchGuitarsAction } from '../../store/guitars-data/api-action';
+import { getChangeSort, getMaxPrice, getMinPrice, getTypeGuitar } from '../../store/ui-state/selectors';
 
 function Catalog(): JSX.Element {
   const guitarsLoading = useSelector(getGuitarsLoading);
   const guitarsError = useSelector(getGuitarsError);
-  const guitars = useSelector(getGuitars);
+  const guitars = useSelector(getFilterGuitars);
+  const activeSorting = useSelector(getChangeSort);
+  const activeMinPrice = useSelector(getMinPrice);
+  const activeMaxPrice = useSelector(getMaxPrice);
+  const activeTypeGuitar = useSelector(getTypeGuitar);
 
   const [formState, setFormState] = useState('');
+
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(fetchGuitarsAction(activeSorting, activeMinPrice, activeMaxPrice, activeTypeGuitar));
+  }, [
+    activeSorting,
+    activeMinPrice,
+    activeMaxPrice,
+    activeTypeGuitar,
+    dispatch]);
+
 
   const handleChange = (value: string) => {
     setFormState(value);
   };
 
-  const searchGuitars = guitars.filter((guitar) => guitar.name.toLowerCase().includes(formState.toLowerCase()));
-
-  if (guitarsLoading && !guitarsError) {
+  if (guitarsLoading) {
     return <LoadingScreen />;
   }
 
@@ -34,6 +50,7 @@ function Catalog(): JSX.Element {
     return <GuitarsErrorScreen />;
   }
 
+  const searchGuitars = guitars.filter((guitar) => guitar.name.toLowerCase().includes(formState.toLowerCase()));
 
   return (
     <div className="wrapper">
@@ -54,7 +71,7 @@ function Catalog(): JSX.Element {
             </li>
           </ul>
           <div className="catalog">
-            <Filter />
+            <Filter/>
             <Sort />
             <GuitarsList guitars={searchGuitars.slice(0, 9)} />
             <div className="pagination page-content__pagination">
