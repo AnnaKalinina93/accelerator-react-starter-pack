@@ -101,3 +101,19 @@ export function getStringsFromType (type: string): string[] {
       return [];
   }
 }
+
+export function getUrlString (url: string, params: string): string {
+  const indexParams = params.indexOf('=');
+  const startParams = params.substring(0,indexParams);
+  const urlIndex = url.indexOf(startParams);
+  const finishUrl  = url.substring(urlIndex+1, url.length-1);
+  const secondIndex = finishUrl.indexOf('?');
+  if (urlIndex !== -1 && secondIndex !== -1) {
+    return url.substr(0,urlIndex)+params+url.substr(secondIndex);
+  }
+  if (urlIndex !== -1 && secondIndex === -1) {
+    return url.substr(0,urlIndex)+params;
+  } else {
+    return url+params;
+  }
+}

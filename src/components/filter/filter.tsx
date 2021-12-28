@@ -5,8 +5,8 @@ import { minPriceChange, maxPriceChange, typeGuitarChange, numberOfStringChange 
 import { getTypeGuitar, getActiveStrings } from '../../store/ui-state/selectors';
 import AwesomeDebouncePromise from 'awesome-debounce-promise';
 import { getFilterGuitars } from '../../store/guitars-data/selectors';
-import { getStringsFromType } from '../../utils';
-import { useHistory } from 'react-router';
+import { getStringsFromType, getUrlString } from '../../utils';
+import { useHistory, useLocation } from 'react-router';
 
 function Filter(): JSX.Element {
   const guitars = useSelector(getFilterGuitars);
@@ -28,6 +28,8 @@ function Filter(): JSX.Element {
     dispatch(numberOfStringChange(numberStrings));
   };
 
+  const location = useLocation();
+  const urlName = location.search;
   const history = useHistory();
   const assortedGuitars = guitars.slice().sort((a,b) => a.price - b.price);
   const minGuitarPrice = assortedGuitars[0].price.toString();
@@ -35,27 +37,33 @@ function Filter(): JSX.Element {
 
   const handleInputMinChange = ({target}: ChangeEvent<HTMLInputElement>) => {
     if ( target.value < minGuitarPrice) {
-      history.push(`/start=${minGuitarPrice}`);
+      const newUrl = getUrlString(urlName, `?start=${minGuitarPrice}`);
+      history.push(newUrl);
       onUserAnswerMinPrice(minGuitarPrice);
     } else if (target.value > maxGuitarPrice) {
-      history.push(`/start=${maxGuitarPrice}`);
+      const newUrl = getUrlString(urlName, `?start=${maxGuitarPrice}`);
+      history.push(newUrl);
       onUserAnswerMinPrice(maxGuitarPrice);
     } else {
-      history.push(`/start=${target.value}`);
+      const newUrl = getUrlString(urlName, `?start=${target.value}`);
+      history.push(newUrl);
       onUserAnswerMinPrice(target.value);
     }
   };
 
   const handleInputMaxChange = ({target}: ChangeEvent<HTMLInputElement>) => {
     if ( target.value > maxGuitarPrice) {
-      history.push(`/end=${maxGuitarPrice}`);
+      const newUrl = getUrlString(urlName , `?end=${maxGuitarPrice}`);
+      history.push(newUrl);
       onUserAnswerMaxPrice(maxGuitarPrice);
     } else if(target.value < minGuitarPrice) {
-      history.push(`/end=${minGuitarPrice}`);
+      const newUrl = getUrlString(urlName , `?end=${minGuitarPrice}`);
+      history.push(newUrl);
       onUserAnswerMaxPrice(minGuitarPrice);
     }
     else {
-      history.push(`/end=${target.value}`);
+      const newUrl = getUrlString(urlName , `?end=${target.value}`);
+      history.push(newUrl);
       onUserAnswerMaxPrice(target.value);
     }
   };
@@ -68,6 +76,8 @@ function Filter(): JSX.Element {
       const currentIndex = typeGuitars.indexOf(target.name);
       typeGuitars.splice(currentIndex,1);
     }
+    const newUrl = getUrlString(urlName , `?type=${typeGuitars.join()}`);
+    history.push(newUrl);
     onUserTypeAnswer(typeGuitars);
   };
 
@@ -79,6 +89,8 @@ function Filter(): JSX.Element {
       const currentIndex = numberStrings.indexOf(target.value);
       numberStrings.splice(currentIndex,1);
     }
+    const newUrl = getUrlString(urlName , `?string=${numberStrings.join()}`);
+    history.push(newUrl);
     onUserStringsAnswer(numberStrings);
   };
 
