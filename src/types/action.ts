@@ -12,7 +12,11 @@ export enum ActionType {
   CommentsSucceeded = 'catalog/commentsSucceeded',
   CommentsFailed = 'catalog/commentsFailed',
   SortType = 'catalog/sortType',
-  SortOrder = 'catalog/sortOrder'
+  SortOrder = 'catalog/sortOrder',
+  ActiveMinPrice = 'catalog/activeMinPrice',
+  ActiveMaxPrice = 'catalog/activeMaxPrice',
+  TypeGuitar = 'catalog/typeGuitar',
+  NumberOfString = 'catalog/numberOfString'
 }
 
 export type ThunkActionResult<R = Promise<void>> = ThunkAction<

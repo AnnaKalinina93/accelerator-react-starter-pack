@@ -1,8 +1,8 @@
 import { useDispatch, useSelector } from 'react-redux';
 import cn from 'classnames';
-import { fetchGuitarsAction } from '../../store/guitars-data/api-action';
 import { sortingType } from '../../const';
 import { getChangeSort } from '../../store/ui-state/selectors';
+import { sortChangeOrder, sortChangeType } from '../../store/ui-state/action';
 
 function Sort(): JSX.Element {
   const activeSorting = useSelector(getChangeSort);
@@ -12,7 +12,8 @@ function Sort(): JSX.Element {
     type: string,
     order: string,
   }) => {
-    dispatch(fetchGuitarsAction(currentSorting));
+    dispatch(sortChangeType(currentSorting.type));
+    dispatch(sortChangeOrder(currentSorting.order));
   };
 
   const handlePriceClick = () => {
