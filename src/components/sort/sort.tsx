@@ -52,7 +52,6 @@ function Sort(): JSX.Element {
         <button
           className={sortTypePriceClass}
           aria-label="по цене"
-          tabIndex={-1}
           onClick={handlePriceClick}
         >
           по цене
