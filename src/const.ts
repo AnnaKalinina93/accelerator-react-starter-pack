@@ -3,28 +3,28 @@ export enum APIRoute {
 }
 
 export enum AppRoute {
-  Catalog = '/catalog',
+  Catalog = '/catalog/:id',
   Main = '/',
   Pagination = '/page_:id',
   Product = '/product/:id',
 }
 
-export enum SortingPriceRout {
+export enum SortingRout {
   Default = '',
-  Increase = '&_sort=price&_order=asc',
-  Decrease = '&_sort=price&_order=desc',
+  Type = '_sort',
+  Order= '_order',
 }
 
-export enum SortingRatingRout {
-  Default = '',
-  Increase = '&_sort=rating&_order=asc',
-  Decrease='&_sort=rating&_order=desc',
-}
+// export enum SortingRatingRout {
+//   Default = '',
+//   Increase = '&_sort=rating&_order=asc',
+//   Decrease='&_sort=rating&_order=desc',
+// }
 
 export enum FilterPriceRout {
   default = '',
-  from = '&price_gte=',
-  to = '&price_lte=',
+  from = 'price_gte',
+  to = 'price_lte',
 }
 
 export enum FilterTypeGuitarRout {
@@ -42,8 +42,8 @@ export const sortingType = {
   },
   order: {
     default: 'defaultOrder',
-    increase: 'increase',
-    decrease: 'decrease',
+    increase: 'asc',
+    decrease: 'desc',
   },
 };
 

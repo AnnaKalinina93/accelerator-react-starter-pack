@@ -1,7 +1,7 @@
 import { createReducer } from '@reduxjs/toolkit';
 import { sortingType } from '../../const';
 import { UiState } from '../../types/state';
-import { sortChangeType, sortChangeOrder, minPriceChange, maxPriceChange, typeGuitarChange, numberOfStringChange } from './action';
+import { sortChangeType, sortChangeOrder, minPriceChange, maxPriceChange, typeGuitarChange, numberOfStringChange, priceChange } from './action';
 
 const initialState: UiState = {
   activeSort: {
@@ -31,6 +31,13 @@ export const uiState = createReducer(initialState, (builder) => {
 
     .addCase(maxPriceChange, (state, action) => {
       state.maxPrice = action.payload;
+    })
+    .addCase(priceChange, (state, action) => {
+      const { key, price } = action.payload;
+      return {
+        ...state,
+        [key]: price,
+      };
     })
 
     .addCase(typeGuitarChange, (state, action) => {

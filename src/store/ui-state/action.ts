@@ -29,6 +29,16 @@ export const maxPriceChange = createAction(
   }),
 );
 
+export const priceChange = createAction(
+  ActionType.ChangePrice,
+  (name: string, price: string) => ({
+    payload: {
+      key: name,
+      price,
+    },
+  }),
+);
+
 export const typeGuitarChange = createAction(
   ActionType.TypeGuitar,
   (activeTypeGuitar: string[]) => ({
