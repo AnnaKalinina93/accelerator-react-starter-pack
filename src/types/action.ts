@@ -15,6 +15,7 @@ export enum ActionType {
   SortOrder = 'catalog/sortOrder',
   ActiveMinPrice = 'catalog/activeMinPrice',
   ActiveMaxPrice = 'catalog/activeMaxPrice',
+  ChangePrice = 'catalog/changePrice',
   TypeGuitar = 'catalog/typeGuitar',
   NumberOfString = 'catalog/numberOfString'
 }

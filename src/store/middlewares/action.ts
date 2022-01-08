@@ -1,10 +1,10 @@
 import { ActionType } from '../../types/action';
-import { AppRoute } from '../../const';
+//import { AppRoute } from '../../const';
 import { createAction } from '@reduxjs/toolkit';
 
 export const redirectToRoute = createAction(
   ActionType.RedirectToRoute,
-  (url: AppRoute) => ({
+  (url: string) => ({
     payload: url,
   }),
 );

@@ -28,3 +28,14 @@ export const getFilterGuitars = createSelector([getGuitars, getActiveStrings], (
   }
 });
 
+export const selectPrices = createSelector(
+  [getGuitars],
+  (guitars) => {
+    const sortedGuitars = guitars.slice().sort((a,b) => a.price - b.price);
+
+    return {
+      minPrice: sortedGuitars[0]?.price,
+      maxPrice: sortedGuitars[sortedGuitars.length - 1]?.price,
+    };
+  },
+);

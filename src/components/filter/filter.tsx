@@ -1,108 +1,78 @@
-import { ChangeEvent } from 'react';
+import { ChangeEvent, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { guitarsType, numberOfString } from '../../const';
-import { minPriceChange, maxPriceChange, typeGuitarChange, numberOfStringChange } from '../../store/ui-state/action';
-import { getTypeGuitar, getActiveStrings } from '../../store/ui-state/selectors';
-import AwesomeDebouncePromise from 'awesome-debounce-promise';
-import { getFilterGuitars } from '../../store/guitars-data/selectors';
-import { getStringsFromType, getUrlString } from '../../utils';
-import { useHistory, useLocation } from 'react-router';
+import { typeGuitarChange, numberOfStringChange, priceChange } from '../../store/ui-state/action';
+import { getGuitarTypes, getActiveStrings, selectDisabledStringCheckboxes } from '../../store/ui-state/selectors';
+import { selectPrices } from '../../store/guitars-data/selectors';
+//import { useHistory, useLocation } from 'react-router';
+import { useDebouncedCallback } from 'use-debounce';
 
 function Filter(): JSX.Element {
-  const guitars = useSelector(getFilterGuitars);
-  const activeTypeGuitar = useSelector(getTypeGuitar);
-  const activeNumberOfStrings = useSelector(getActiveStrings);
-
+  // const { search } = useLocation();
+  // const history = useHistory();
   const dispatch = useDispatch();
-  const onUserAnswerMinPrice = (minPrice: string) => {
-    dispatch(minPriceChange(minPrice));
-  };
-  const onUserAnswerMaxPrice = (maxPrice: string) => {
-    dispatch(maxPriceChange(maxPrice));
-  };
-  const onUserTypeAnswer = (type: string[]) => {
-    dispatch(typeGuitarChange(type));
+  const { minPrice, maxPrice } = useSelector(selectPrices);
+  const activeGuitarTypes = useSelector(getGuitarTypes);
+  const activeGuitarStrings = useSelector(getActiveStrings);
+  const disabledStringCheckboxes = useSelector(selectDisabledStringCheckboxes);
+  const [localPriceState, setLocalPriceState] = useState({
+    minPrice: '',
+    maxPrice: '',
+  });
+
+  const debouncedPriceChange = useDebouncedCallback((name, value) => {
+    dispatch(priceChange(name, value));
+  }, 500);
+
+  const handleChangePrice = ({target}: ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = target;
+    let correctedPrice = value;
+
+    if (Number(value) < minPrice && name === 'minPrice') {
+      correctedPrice = minPrice.toString();
+    }
+
+    if (Number(value) > maxPrice && name === 'maxPrice') {
+      correctedPrice = maxPrice.toString();
+    }
+
+    setLocalPriceState((prevState) => ({
+      ...prevState,
+      [name]: correctedPrice,
+    }));
+
+    debouncedPriceChange(name, value);
   };
 
-  const onUserStringsAnswer = (numberStrings: string[]) => {
-    dispatch(numberOfStringChange(numberStrings));
-  };
+  // const handleBlur = ({target}: ChangeEvent<HTMLInputElement>) => {
+  //   const { name, value } = target;
+  //   dispatch(priceChange(name, value));
+  // };
 
-  const location = useLocation();
-  const urlName = location.search;
-  const history = useHistory();
-  const assortedGuitars = guitars.slice().sort((a,b) => a.price - b.price);
-  const minGuitarPrice = assortedGuitars[0].price.toString();
-  const maxGuitarPrice = assortedGuitars[assortedGuitars.length-1].price.toString();
+  const handleTypesChange = ({target}: ChangeEvent<HTMLInputElement>) => {
+    const { value } = target;
+    const set = new Set(activeGuitarTypes);
 
-  const handleInputMinChange = ({target}: ChangeEvent<HTMLInputElement>) => {
-    if ( target.value < minGuitarPrice) {
-      const newUrl = getUrlString(urlName, `?start=${minGuitarPrice}`);
-      history.push(newUrl);
-      onUserAnswerMinPrice(minGuitarPrice);
-    } else if (target.value > maxGuitarPrice) {
-      const newUrl = getUrlString(urlName, `?start=${maxGuitarPrice}`);
-      history.push(newUrl);
-      onUserAnswerMinPrice(maxGuitarPrice);
+    if (set.has(value)) {
+      set.delete(value);
     } else {
-      const newUrl = getUrlString(urlName, `?start=${target.value}`);
-      history.push(newUrl);
-      onUserAnswerMinPrice(target.value);
+      set.add(value);
     }
-  };
 
-  const handleInputMaxChange = ({target}: ChangeEvent<HTMLInputElement>) => {
-    if ( target.value > maxGuitarPrice) {
-      const newUrl = getUrlString(urlName , `?end=${maxGuitarPrice}`);
-      history.push(newUrl);
-      onUserAnswerMaxPrice(maxGuitarPrice);
-    } else if(target.value < minGuitarPrice) {
-      const newUrl = getUrlString(urlName , `?end=${minGuitarPrice}`);
-      history.push(newUrl);
-      onUserAnswerMaxPrice(minGuitarPrice);
-    }
-    else {
-      const newUrl = getUrlString(urlName , `?end=${target.value}`);
-      history.push(newUrl);
-      onUserAnswerMaxPrice(target.value);
-    }
-  };
-
-  const handleTypeChange = ({target}: ChangeEvent<HTMLInputElement>) => {
-    const typeGuitars = [...activeTypeGuitar];
-    if (!typeGuitars.includes(target.name)){
-      typeGuitars.push(target.name);
-    } else {
-      const currentIndex = typeGuitars.indexOf(target.name);
-      typeGuitars.splice(currentIndex,1);
-    }
-    const newUrl = getUrlString(urlName , `?type=${typeGuitars.join()}`);
-    history.push(newUrl);
-    onUserTypeAnswer(typeGuitars);
+    dispatch(typeGuitarChange([...set]));
   };
 
   const handleStringsChange = ({target}: ChangeEvent<HTMLInputElement>) => {
-    const numberStrings = [...activeNumberOfStrings];
-    if (!numberStrings.includes(target.value)) {
-      numberStrings.push(target.value);
-    } else {
-      const currentIndex = numberStrings.indexOf(target.value);
-      numberStrings.splice(currentIndex,1);
-    }
-    const newUrl = getUrlString(urlName , `?string=${numberStrings.join()}`);
-    history.push(newUrl);
-    onUserStringsAnswer(numberStrings);
-  };
+    const { value } = target;
+    const set = new Set(activeGuitarStrings);
 
-  const isDisabled = (string: string, types: string[] ): boolean => {
-    if (types.length) {let numberStrings: string[] = [];
-      types.map((typeItem) => {
-        numberStrings = [...numberStrings, ...getStringsFromType(typeItem)];
-      });
-      const set = new Set(numberStrings);
-      return !Array.from(set).includes(string);
+    if (set.has(value)) {
+      set.delete(value);
+    } else {
+      set.add(value);
     }
-    return false;
+
+    dispatch(numberOfStringChange([...set]));
   };
 
   return (
@@ -115,22 +85,26 @@ function Filter(): JSX.Element {
             <label className="visually-hidden">Минимальная цена</label>
             <input
               type="number"
-              placeholder={minGuitarPrice}
+              placeholder={minPrice?.toString() ?? '0'}
               id="priceMin"
-              name="от"
+              name="minPrice"
               min="0"
-              onChange={AwesomeDebouncePromise(handleInputMinChange, 500)}
+              value={localPriceState.minPrice}
+              onChange={handleChangePrice}
+              // onBlur={handleBlur}
             />
           </div>
           <div className="form-input">
             <label className="visually-hidden">Максимальная цена</label>
             <input
               type="number"
-              placeholder={maxGuitarPrice}
+              placeholder={maxPrice?.toString() ?? '0'}
               id="priceMax"
-              name="до"
+              name="maxPrice"
               min="0"
-              onChange={AwesomeDebouncePromise(handleInputMaxChange, 500)}
+              value={localPriceState.maxPrice}
+              onChange={handleChangePrice}
+              // onBlur={handleBlur}
             />
           </div>
         </div>
@@ -144,8 +118,9 @@ function Filter(): JSX.Element {
               type="checkbox"
               id={key}
               name={key}
-              checked={activeTypeGuitar.includes(key)}
-              onChange={handleTypeChange}
+              value={key}
+              checked={activeGuitarTypes.includes(key)}
+              onChange={handleTypesChange}
             />
             <label htmlFor={key}>{value}</label>
           </div>
@@ -163,9 +138,9 @@ function Filter(): JSX.Element {
               id={value}
               name={value}
               value={key}
-              checked={activeNumberOfStrings.includes(key)}
+              checked={activeGuitarStrings.includes(key)}
               onChange={handleStringsChange}
-              disabled={isDisabled(key, activeTypeGuitar)}
+              disabled={disabledStringCheckboxes.includes(key)}
             />
             <label htmlFor={value}>{key}</label>
           </div>

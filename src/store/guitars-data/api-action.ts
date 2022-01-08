@@ -1,9 +1,9 @@
 import { ThunkActionResult } from '../../types/action';
 import { guitarsFailed, guitarsRequest, guitarsSucceeded } from './action';
-import { APIRoute, FilterPriceRout, sortingType } from '../../const';
+import { APIRoute, AppRoute, sortingType } from '../../const';
 import { Guitar } from '../../types/guitar';
-import { getSortRout, getTypeRout } from '../../utils';
-import { sortChangeOrder, sortChangeType } from '../ui-state/action';
+import { redirectToRoute } from '../middlewares/action';
+import { getNewParams } from '../../utils';
 
 export const fetchGuitarsAction = (
   activeSorting = {
@@ -12,20 +12,17 @@ export const fetchGuitarsAction = (
   },
   minPrice = '',
   maxPrice = '',
-  activeTypeGuitar: string[] = [],
+  activeTypes: string[] = [],
 ): ThunkActionResult => async (dispatch, _, api): Promise<void> => {
-  const activeRout = getSortRout(activeSorting);
-  const filterMinPriceRout = minPrice !== ''? `${FilterPriceRout.from}${minPrice}` : '';
-  const filterMaxPriceRout = maxPrice !== ''? `${FilterPriceRout.to}${maxPrice}` : '';
-  const filterTypeRout = getTypeRout(activeTypeGuitar);
+  const baseURL = `${APIRoute.Guitars}?_embed=comments`;
+  const params = getNewParams(activeSorting, minPrice, maxPrice, activeTypes);
+  const url = params.toString() ? `${baseURL}&${params.toString()}` : baseURL;
+
   dispatch(guitarsRequest());
   try {
-    const { data } = await api.get<Guitar[]>(
-      `${APIRoute.Guitars}?_embed=comments${activeRout.sortPrice}${activeRout.rating}${filterMinPriceRout}${filterMaxPriceRout}${filterTypeRout}`,
-    );
+    const { data } = await api.get<Guitar[]>(url);
     dispatch(guitarsSucceeded(data));
-    dispatch(sortChangeType(activeSorting.type));
-    dispatch(sortChangeOrder(activeSorting.order));
+    dispatch(redirectToRoute(`${AppRoute.Main}?${params.toString()}`));
   } catch {
     dispatch(guitarsFailed());
   }
