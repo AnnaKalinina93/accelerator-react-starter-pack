@@ -13,11 +13,18 @@ export const fetchGuitarsAction = (
   minPrice = '',
   maxPrice = '',
   activeTypes: string[] = [],
+  page = 1,
+  activeStrings: string[] = [],
 ): ThunkActionResult => async (dispatch, _, api): Promise<void> => {
   const baseURL = `${APIRoute.Guitars}?_embed=comments`;
   const params = getNewParams(activeSorting, minPrice, maxPrice, activeTypes);
   const url = params.toString() ? `${baseURL}&${params.toString()}` : baseURL;
-
+  if (page !== 1) {
+    params.set('page_', String(page));
+  }
+  if (activeStrings.length) {
+    activeStrings.map((item)=>params.append('strings', item));
+  }
   dispatch(guitarsRequest());
   try {
     const { data } = await api.get<Guitar[]>(url);

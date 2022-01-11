@@ -46,3 +46,6 @@ export const selectDisabledStringCheckboxes = createSelector(
     return [...set];
   },
 );
+
+export const getActivePage = (state: State): number =>
+  state[NameSpace.Ui].activePage;

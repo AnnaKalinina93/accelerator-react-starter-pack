@@ -1,15 +1,12 @@
 import { ChangeEvent, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { guitarsType, numberOfString } from '../../const';
-import { typeGuitarChange, numberOfStringChange, priceChange } from '../../store/ui-state/action';
+import { typeGuitarChange, numberOfStringChange, priceChange, activePageChange } from '../../store/ui-state/action';
 import { getGuitarTypes, getActiveStrings, selectDisabledStringCheckboxes } from '../../store/ui-state/selectors';
 import { selectPrices } from '../../store/guitars-data/selectors';
-//import { useHistory, useLocation } from 'react-router';
 import { useDebouncedCallback } from 'use-debounce';
 
 function Filter(): JSX.Element {
-  // const { search } = useLocation();
-  // const history = useHistory();
   const dispatch = useDispatch();
   const { minPrice, maxPrice } = useSelector(selectPrices);
   const activeGuitarTypes = useSelector(getGuitarTypes);
@@ -40,14 +37,9 @@ function Filter(): JSX.Element {
       ...prevState,
       [name]: correctedPrice,
     }));
-
+    dispatch(activePageChange(1));
     debouncedPriceChange(name, value);
   };
-
-  // const handleBlur = ({target}: ChangeEvent<HTMLInputElement>) => {
-  //   const { name, value } = target;
-  //   dispatch(priceChange(name, value));
-  // };
 
   const handleTypesChange = ({target}: ChangeEvent<HTMLInputElement>) => {
     const { value } = target;
@@ -60,6 +52,7 @@ function Filter(): JSX.Element {
     }
 
     dispatch(typeGuitarChange([...set]));
+    dispatch(activePageChange(1));
   };
 
   const handleStringsChange = ({target}: ChangeEvent<HTMLInputElement>) => {
@@ -73,6 +66,7 @@ function Filter(): JSX.Element {
     }
 
     dispatch(numberOfStringChange([...set]));
+    dispatch(activePageChange(1));
   };
 
   return (

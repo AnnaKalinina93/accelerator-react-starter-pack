@@ -21,4 +21,5 @@ export type UiState = {
   maxPrice: string,
   typeGuitar: string[],
   activeStrings: string[],
+  activePage: number,
 }
