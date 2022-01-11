@@ -15,12 +15,6 @@ export enum SortingRout {
   Order= '_order',
 }
 
-// export enum SortingRatingRout {
-//   Default = '',
-//   Increase = '&_sort=rating&_order=asc',
-//   Decrease='&_sort=rating&_order=desc',
-// }
-
 export enum FilterPriceRout {
   default = '',
   from = 'price_gte',

@@ -2,18 +2,18 @@ import { useDispatch, useSelector } from 'react-redux';
 import cn from 'classnames';
 import { sortingType } from '../../const';
 import { getChangeSort } from '../../store/ui-state/selectors';
-import { sortChangeOrder, sortChangeType } from '../../store/ui-state/action';
+import { activePageChange, sortChangeOrder, sortChangeType } from '../../store/ui-state/action';
 
 function Sort(): JSX.Element {
   const activeSorting = useSelector(getChangeSort);
   const dispatch = useDispatch();
-
   const onUserAnswer = (currentSorting: {
     type: string,
     order: string,
   }) => {
     dispatch(sortChangeType(currentSorting.type));
     dispatch(sortChangeOrder(currentSorting.order));
+    dispatch(activePageChange(1));
   };
 
   const handlePriceClick = () => {

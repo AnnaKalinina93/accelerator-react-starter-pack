@@ -17,7 +17,8 @@ export enum ActionType {
   ActiveMaxPrice = 'catalog/activeMaxPrice',
   ChangePrice = 'catalog/changePrice',
   TypeGuitar = 'catalog/typeGuitar',
-  NumberOfString = 'catalog/numberOfString'
+  NumberOfString = 'catalog/numberOfString',
+  ActivePage = 'catalog/activePage'
 }
 
 export type ThunkActionResult<R = Promise<void>> = ThunkAction<

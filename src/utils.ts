@@ -123,7 +123,7 @@ export function getNewParams (activeSorting: {type: string, order: string}, acti
     params.set(FilterPriceRout.to, activeMaxPrice);
   }
   if (activeGuitarTypes.length) {
-    activeGuitarTypes.forEach((type)=>params.append('type', type));
+    activeGuitarTypes.map((type)=>params.append('type', type));
   }
   return params;
 }

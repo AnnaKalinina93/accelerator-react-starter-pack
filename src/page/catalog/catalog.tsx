@@ -11,13 +11,14 @@ import {
   getChangeSort,
   getMaxPrice,
   getMinPrice,
-  getGuitarTypes
+  getGuitarTypes,
+  getActivePage,
+  getActiveStrings
 } from '../../store/ui-state/selectors';
 import Pagination from '../../components/pagination/pagination';
 import * as queryString from 'querystring';
 import { useHistory } from 'react-router';
-import { sortingType } from '../../const';
-//import { getNewParams } from '../../utils';
+import { activePageChange, maxPriceChange, minPriceChange, numberOfStringChange, sortChangeOrder, sortChangeType, typeGuitarChange } from '../../store/ui-state/action';
 
 function Catalog(): JSX.Element {
   const guitars = useSelector(getFilterGuitars);
@@ -25,24 +26,20 @@ function Catalog(): JSX.Element {
   const activeMinPrice = useSelector(getMinPrice);
   const activeMaxPrice = useSelector(getMaxPrice);
   const activeGuitarTypes = useSelector(getGuitarTypes);
+  const activePage = useSelector(getActivePage);
+  const activeStrings = useSelector(getActiveStrings);
 
   const [formState, setFormState] = useState('');
 
   const dispatch = useDispatch();
   const history = useHistory();
 
-  // useEffect(() => {
-  //   const params = getNewParams(activeSorting, activeMinPrice, activeMaxPrice, activeGuitarTypes);
-  //   history.push({
-  //     pathname: '/',
-  //     search: params.toString(),
-  //   });
-  // }, [activeSorting, activeMinPrice, activeMaxPrice, activeGuitarTypes, dispatch],
-  // );
+  useEffect( () => {
+    dispatch(fetchGuitarsAction(activeSorting, activeMinPrice, activeMaxPrice, activeGuitarTypes, activePage, activeStrings));
+  },[activeSorting, activeMinPrice, activeMaxPrice, activeGuitarTypes, activePage, activeStrings]);
 
   useEffect(() => {
     const parsed = queryString.parse(history.location.search.substr(1));
-
     let actualSorting = activeSorting;
     if (parsed._sort) { actualSorting = {
       ...actualSorting,
@@ -53,34 +50,40 @@ function Catalog(): JSX.Element {
       ...actualSorting,
       order: parsed._order as string,
     };}
-    if (activeSorting.type !== sortingType.type.default || activeSorting.order !== sortingType.order.default) {
-      actualSorting = activeSorting;
-    }
 
     let actualMinPrice = activeMinPrice;
     if (parsed.price_gte) {
       actualMinPrice = parsed.price_gte as string;
     }
-    if (activeMinPrice !== '') {
-      actualMinPrice = activeMinPrice;
-    }
+
     let actualMaxPrice = activeMaxPrice;
     if (parsed.price_lte) {
       actualMaxPrice = parsed.price_lte as string;
-    }
-    if (activeMaxPrice !== '') {
-      actualMaxPrice = activeMaxPrice;
     }
 
     let actualGuitarTypes = activeGuitarTypes;
     if (parsed.type) {
       actualGuitarTypes = parsed.type as string[];
     }
-    if ( activeMinPrice.length ) {
-      actualGuitarTypes = activeGuitarTypes;
+
+    let actualPage = activePage;
+    if (parsed.page_) {
+      actualPage = Number(parsed.page_);
     }
-    dispatch(fetchGuitarsAction(actualSorting, actualMinPrice, actualMaxPrice, actualGuitarTypes));
-  }, [activeSorting, activeMinPrice, activeMaxPrice, activeGuitarTypes, dispatch],
+
+    let actualStrings = activeStrings;
+    if (parsed.strings) {
+      actualStrings = parsed.strings as string[];
+    }
+    dispatch(sortChangeType(actualSorting.type));
+    dispatch(sortChangeOrder(actualSorting.order));
+    dispatch(minPriceChange(actualMinPrice));
+    dispatch(maxPriceChange(actualMaxPrice));
+    dispatch(typeGuitarChange(activeGuitarTypes));
+    dispatch(activePageChange(actualPage));
+    dispatch(numberOfStringChange(actualStrings));
+    dispatch(fetchGuitarsAction(actualSorting, actualMinPrice, actualMaxPrice, actualGuitarTypes, actualPage, actualStrings));
+  }, [],
   );
 
   const handleChange = (value: string) => {
@@ -91,6 +94,8 @@ function Catalog(): JSX.Element {
   const searchGuitars = guitars.filter((guitar) =>
     guitar.name.toLowerCase().includes(formState.toLowerCase()),
   );
+
+  const PAGE_COUNT = Math.min(searchGuitars.length/9);
 
   return (
     <div className="wrapper">
@@ -113,8 +118,8 @@ function Catalog(): JSX.Element {
           <div className="catalog">
             <Filter />
             <Sort />
-            <GuitarsList guitars={searchGuitars.slice(0, 9)} />
-            <Pagination />
+            <GuitarsList guitars={searchGuitars.slice((activePage-1)*9, activePage*9)} />
+            <Pagination pageCount={PAGE_COUNT}/>
           </div>
         </div>
       </main>

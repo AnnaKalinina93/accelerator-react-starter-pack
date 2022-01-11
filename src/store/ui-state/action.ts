@@ -52,3 +52,10 @@ export const numberOfStringChange = createAction(
     payload: activeNumberOfString,
   }),
 );
+
+export const activePageChange = createAction(
+  ActionType.ActivePage,
+  (activePage: number) => ({
+    payload: activePage,
+  }),
+);
