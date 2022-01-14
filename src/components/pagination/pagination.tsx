@@ -25,6 +25,7 @@ function Pagination({pageCount}: PaginationProps): JSX.Element {
         { activePage !== 1 && (
           <li className="pagination__page pagination__page--next" id="next">
             <a className="link pagination__page-link"
+              data-testid="назад"
               onClick={()=>handleChangePage(activePage-1)}
             >
             Назад
@@ -36,6 +37,7 @@ function Pagination({pageCount}: PaginationProps): JSX.Element {
             <li key={page} className={classLink}>
               <a className="link pagination__page-link"
                 onClick={()=>handleChangePage(page)}
+                data-testid={page}
               >
                 {page}
               </a>
@@ -46,6 +48,7 @@ function Pagination({pageCount}: PaginationProps): JSX.Element {
           <li className="pagination__page pagination__page--next" id="next">
             <a className="link pagination__page-link"
               onClick={()=>handleChangePage(activePage+1)}
+              data-testid="далее"
             >
             Далее
             </a>

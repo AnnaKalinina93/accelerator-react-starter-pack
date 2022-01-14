@@ -19,6 +19,9 @@ import Pagination from '../../components/pagination/pagination';
 import * as queryString from 'querystring';
 import { useHistory } from 'react-router';
 import { activePageChange, maxPriceChange, minPriceChange, numberOfStringChange, sortChangeOrder, sortChangeType, typeGuitarChange } from '../../store/ui-state/action';
+import { redirectToRoute } from '../../store/middlewares/action';
+import { AppRoute } from '../../const';
+import { getNewParams } from '../../utils';
 
 function Catalog(): JSX.Element {
   const guitars = useSelector(getFilterGuitars);
@@ -35,7 +38,11 @@ function Catalog(): JSX.Element {
   const history = useHistory();
 
   useEffect( () => {
-    dispatch(fetchGuitarsAction(activeSorting, activeMinPrice, activeMaxPrice, activeGuitarTypes, activePage, activeStrings));
+    dispatch(fetchGuitarsAction(activeSorting, activeMinPrice, activeMaxPrice, activeGuitarTypes));
+    const params = getNewParams(activeSorting, activeMinPrice, activeMaxPrice, activeGuitarTypes, activePage, activeStrings);
+    if (params.toString() !== '') {
+      dispatch(redirectToRoute(`${AppRoute.Main}?${params.toString()}`));
+    }
   },[activeSorting, activeMinPrice, activeMaxPrice, activeGuitarTypes, activePage, activeStrings]);
 
   useEffect(() => {
@@ -82,7 +89,7 @@ function Catalog(): JSX.Element {
     dispatch(typeGuitarChange(activeGuitarTypes));
     dispatch(activePageChange(actualPage));
     dispatch(numberOfStringChange(actualStrings));
-    dispatch(fetchGuitarsAction(actualSorting, actualMinPrice, actualMaxPrice, actualGuitarTypes, actualPage, actualStrings));
+    dispatch(fetchGuitarsAction(actualSorting, actualMinPrice, actualMaxPrice, actualGuitarTypes));
   }, [],
   );
 
