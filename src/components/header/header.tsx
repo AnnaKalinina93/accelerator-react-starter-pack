@@ -3,18 +3,13 @@ import cn from 'classnames';
 import { useSelector } from 'react-redux';
 import { getGuitars } from '../../store/guitars-data/selectors';
 import { Link } from 'react-router-dom';
-// import { useDispatch } from 'react-redux';
-// import { inputSearchChange } from '../../store/ui-state/action';
 
 type HeaderProps = {
   onChangeInput?: (value: any) => void
 }
 
 function Header({ onChangeInput }: HeaderProps) {
-  // const dispatch = useDispatch();
-  // const changeInputSearch = (inputSearch: string) => {
-  //   dispatch(inputSearchChange(inputSearch));
-  // };
+
   const guitars = useSelector(getGuitars);
   const [formInput, setFormInput] = useState({
     touched: false,
@@ -26,10 +21,6 @@ function Header({ onChangeInput }: HeaderProps) {
   });
 
   const selectedGuitars = guitars.filter((guitar) => guitar.name.toLowerCase().includes(formInput.value.toLowerCase()));
-  // const handleChange = ({ target }: ChangeEvent<HTMLInputElement>) => {
-  //   const { value } = target;
-  //   setFormState(value);
-  // };
 
   return (
     <header className="header" id="header">
@@ -65,10 +56,6 @@ function Header({ onChangeInput }: HeaderProps) {
         <div className="form-search">
           <form
             className="form-search__form"
-            // onSubmit={(evt) => {
-            //   evt.preventDefault();
-            //   changeInputSearch(formState);
-            // }}
           >
             <button className="form-search__submit" type="submit">
               <svg

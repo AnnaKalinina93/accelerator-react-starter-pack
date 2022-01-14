@@ -83,6 +83,7 @@ function Filter(): JSX.Element {
               id="priceMin"
               name="minPrice"
               min="0"
+              data-testid="minPrice"
               value={localPriceState.minPrice}
               onChange={handleChangePrice}
               // onBlur={handleBlur}

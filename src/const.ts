@@ -3,9 +3,7 @@ export enum APIRoute {
 }
 
 export enum AppRoute {
-  Catalog = '/catalog/:id',
   Main = '/',
-  Pagination = '/page_:id',
   Product = '/product/:id',
 }
 

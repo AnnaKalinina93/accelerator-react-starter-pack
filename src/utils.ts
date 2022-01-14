@@ -102,7 +102,7 @@ export function getStringsFromType (type: string): string[] {
   }
 }
 
-export function getNewParams (activeSorting: {type: string, order: string}, activeMinPrice: string, activeMaxPrice: string, activeGuitarTypes: string[]): URLSearchParams {
+export function getNewParams (activeSorting: {type: string, order: string}, activeMinPrice: string, activeMaxPrice: string, activeGuitarTypes: string[], activePage?: number, activeStrings?: string[]): URLSearchParams {
   const params = new URLSearchParams('');
   if (activeSorting.type !== sortingType.type.default && activeSorting.order !== sortingType.order.default) {
     params.set(SortingRout.Type, activeSorting.type);
@@ -124,6 +124,12 @@ export function getNewParams (activeSorting: {type: string, order: string}, acti
   }
   if (activeGuitarTypes.length) {
     activeGuitarTypes.map((type)=>params.append('type', type));
+  }
+  if (activePage !== 1 && activePage) {
+    params.set('page_', String(activePage));
+  }
+  if (activeStrings && activeStrings.length) {
+    activeStrings.map((item)=>params.append('strings', item));
   }
   return params;
 }
