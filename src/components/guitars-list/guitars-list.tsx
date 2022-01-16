@@ -1,7 +1,7 @@
 import { Guitar } from '../../types/guitar';
 import GuitarItem from '../guitar-item/guitar-item';
-import LoadingScreen from '../../page/loading-screen/loading-screen';
-import GuitarsErrorScreen from '../../page/guitars-error-screen/guitars-error-screen';
+import LoadingScreen from '../loading-screen/loading-screen';
+import GuitarsErrorScreen from '../guitars-error-screen/guitars-error-screen';
 import {
   getGuitarsError,
   getGuitarsLoading

@@ -6,6 +6,11 @@ import { getGuitarTypes, getActiveStrings, selectDisabledStringCheckboxes } from
 import { selectPrices } from '../../store/guitars-data/selectors';
 import { useDebouncedCallback } from 'use-debounce';
 
+const typesPrices = {
+  minPrice: 'minPrice',
+  maxPrice: 'maxPrice',
+};
+
 function Filter(): JSX.Element {
   const dispatch = useDispatch();
   const { minPrice, maxPrice } = useSelector(selectPrices);
@@ -25,11 +30,11 @@ function Filter(): JSX.Element {
     const { name, value } = target;
     let correctedPrice = value;
 
-    if (Number(value) < minPrice && name === 'minPrice') {
+    if (Number(value) < minPrice && name === typesPrices.minPrice) {
       correctedPrice = minPrice.toString();
     }
 
-    if (Number(value) > maxPrice && name === 'maxPrice') {
+    if (Number(value) > maxPrice && name === typesPrices.maxPrice) {
       correctedPrice = maxPrice.toString();
     }
 
@@ -81,12 +86,11 @@ function Filter(): JSX.Element {
               type="number"
               placeholder={minPrice?.toString() ?? '0'}
               id="priceMin"
-              name="minPrice"
+              name={typesPrices.minPrice}
               min="0"
-              data-testid="minPrice"
+              data-testid={typesPrices.minPrice}
               value={localPriceState.minPrice}
               onChange={handleChangePrice}
-              // onBlur={handleBlur}
             />
           </div>
           <div className="form-input">
@@ -95,11 +99,10 @@ function Filter(): JSX.Element {
               type="number"
               placeholder={maxPrice?.toString() ?? '0'}
               id="priceMax"
-              name="maxPrice"
+              name={typesPrices.maxPrice}
               min="0"
               value={localPriceState.maxPrice}
               onChange={handleChangePrice}
-              // onBlur={handleBlur}
             />
           </div>
         </div>

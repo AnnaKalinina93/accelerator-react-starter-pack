@@ -1,5 +1,5 @@
-import Header from '../../components/header/header';
-import Footer from '../../components/footer/footer';
+import Header from '../header/header';
+import Footer from '../footer/footer';
 
 function Product(): JSX.Element {
   return (

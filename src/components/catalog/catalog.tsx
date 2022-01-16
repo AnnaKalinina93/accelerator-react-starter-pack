@@ -1,10 +1,10 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { getFilterGuitars } from '../../store/guitars-data/selectors';
-import Header from '../../components/header/header';
-import Filter from '../../components/filter/filter';
-import Sort from '../../components/sort/sort';
-import GuitarsList from '../../components/guitars-list/guitars-list';
-import Footer from '../../components/footer/footer';
+import Header from '../header/header';
+import Filter from '../filter/filter';
+import Sort from '../sort/sort';
+import GuitarsList from '../guitars-list/guitars-list';
+import Footer from '../footer/footer';
 import { useEffect, useState } from 'react';
 import { fetchGuitarsAction } from '../../store/guitars-data/api-action';
 import {
@@ -15,7 +15,7 @@ import {
   getActivePage,
   getActiveStrings
 } from '../../store/ui-state/selectors';
-import Pagination from '../../components/pagination/pagination';
+import Pagination from '../pagination/pagination';
 import * as queryString from 'querystring';
 import { useHistory } from 'react-router';
 import { activePageChange, maxPriceChange, minPriceChange, numberOfStringChange, sortChangeOrder, sortChangeType, typeGuitarChange } from '../../store/ui-state/action';
