@@ -9,6 +9,8 @@ import { createAPI } from './services/api';
 import { fetchGuitarsAction } from './store/guitars-data/api-action';
 import { redirect } from './store/middlewares/redirect';
 import { configureStore } from '@reduxjs/toolkit';
+import {Router as BrowserRouter} from 'react-router-dom';
+import browserHistory from './browser-history';
 
 const api = createAPI();
 
@@ -27,8 +29,10 @@ store.dispatch(fetchGuitarsAction());
 ReactDOM.render(
   <React.StrictMode>
     <Provider store = {store}>
-      <ToastContainer />
-      <App />
+      <BrowserRouter history={browserHistory}>
+        <ToastContainer />
+        <App />
+      </BrowserRouter>
     </Provider>
   </React.StrictMode>,
   document.getElementById('root'),

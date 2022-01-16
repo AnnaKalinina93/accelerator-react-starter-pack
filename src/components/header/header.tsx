@@ -91,7 +91,7 @@ function Header({ onChangeInput }: HeaderProps) {
           <ul className={searchClass}>
             { selectedGuitars.map((guitar)=> (
               <li key={guitar.id} className="form-search__select-item">
-                <Link key={guitar.id} to={`/product/${guitar.id}`} className="form-search__select-item" tabIndex={0}>{guitar.name}</Link>
+                <Link to={`/product/${guitar.id}`} className="form-search__select-item" tabIndex={0}>{guitar.name}</Link>
               </li>
             ))}
           </ul>
