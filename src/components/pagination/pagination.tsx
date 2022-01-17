@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/anchor-is-valid */
 import { useDispatch, useSelector } from 'react-redux';
 import { getActivePage } from '../../store/ui-state/selectors';
 import cn from 'classnames';

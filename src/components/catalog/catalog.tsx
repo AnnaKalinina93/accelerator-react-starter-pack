@@ -1,3 +1,5 @@
+/* eslint-disable react-hooks/exhaustive-deps */
+/* eslint-disable jsx-a11y/anchor-is-valid */
 import { useDispatch, useSelector } from 'react-redux';
 import { getFilterGuitars } from '../../store/guitars-data/selectors';
 import Header from '../header/header';
