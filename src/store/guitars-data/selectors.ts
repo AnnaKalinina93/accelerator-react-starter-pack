@@ -18,7 +18,7 @@ export const getComments = (state: State): [] =>
 export const getFilterGuitars = createSelector([getGuitars, getActiveStrings], (guitars, numberStrings) => {
   if (numberStrings.length) {
     let currentGuitars: Guitar[] = [];
-    numberStrings.map((count) => {
+    numberStrings.forEach((count) => {
       const selectedGuitars = guitars.filter((guitar) => guitar.stringCount === Number(count));
       currentGuitars = [...currentGuitars, ...selectedGuitars];
     });
