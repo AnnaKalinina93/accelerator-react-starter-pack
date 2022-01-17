@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/anchor-is-valid */
 import { nanoid } from '@reduxjs/toolkit';
 import { Guitar } from '../../types/guitar';
 

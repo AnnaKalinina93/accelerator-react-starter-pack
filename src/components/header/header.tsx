@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable jsx-a11y/anchor-is-valid */
 import { ChangeEvent, useState } from 'react';
 import cn from 'classnames';
 import { useSelector } from 'react-redux';
@@ -8,7 +10,7 @@ type HeaderProps = {
   onChangeInput?: (value: any) => void
 }
 
-function Header({ onChangeInput }: HeaderProps) {
+function Header({ onChangeInput }: HeaderProps): JSX.Element {
 
   const guitars = useSelector(getGuitars);
   const [formInput, setFormInput] = useState({
