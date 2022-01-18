@@ -7,6 +7,7 @@ export type GuitarsData = {
   guitars: Guitar[],
   guitarsLoading: boolean,
   guitarsError: boolean,
+  guitarsForPrice: Guitar[],
   comments: [],
   commentsLoading: boolean,
   commentsError: boolean,

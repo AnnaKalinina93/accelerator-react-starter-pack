@@ -2,9 +2,10 @@ import { ChangeEvent, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { guitarsType, numberOfString } from '../../const';
 import { typeGuitarChange, numberOfStringChange, priceChange, activePageChange } from '../../store/ui-state/action';
-import { getGuitarTypes, getActiveStrings, selectDisabledStringCheckboxes } from '../../store/ui-state/selectors';
+import { getGuitarTypes, getActiveStrings, selectDisabledStringCheckboxes, selectDisabledTypesCheckboxes } from '../../store/ui-state/selectors';
 import { selectPrices } from '../../store/guitars-data/selectors';
 import { useDebouncedCallback } from 'use-debounce';
+import { fetchGuitarsForPrice } from '../../store/guitars-data/api-action';
 
 const typesPrices = {
   minPrice: 'minPrice',
@@ -17,17 +18,14 @@ function Filter(): JSX.Element {
   const activeGuitarTypes = useSelector(getGuitarTypes);
   const activeGuitarStrings = useSelector(getActiveStrings);
   const disabledStringCheckboxes = useSelector(selectDisabledStringCheckboxes);
+  const disabledSTypesCheckboxes = useSelector(selectDisabledTypesCheckboxes);
   const [localPriceState, setLocalPriceState] = useState({
     minPrice: '',
     maxPrice: '',
   });
 
   const debouncedPriceChange = useDebouncedCallback((name, value) => {
-    dispatch(priceChange(name, value));
-  }, 500);
 
-  const handleChangePrice = ({target}: ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = target;
     let correctedPrice = value;
 
     if (Number(value) < minPrice && name === typesPrices.minPrice) {
@@ -41,6 +39,16 @@ function Filter(): JSX.Element {
     setLocalPriceState((prevState) => ({
       ...prevState,
       [name]: correctedPrice,
+    }));
+    dispatch(priceChange(name, value));
+  }, 500);
+
+  const handleChangePrice = ({target}: ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = target;
+
+    setLocalPriceState((prevState) => ({
+      ...prevState,
+      [name]: value,
     }));
     dispatch(activePageChange(1));
     debouncedPriceChange(name, value);
@@ -58,6 +66,7 @@ function Filter(): JSX.Element {
 
     dispatch(typeGuitarChange([...set]));
     dispatch(activePageChange(1));
+    dispatch(fetchGuitarsForPrice([...set], activeGuitarStrings));
   };
 
   const handleStringsChange = ({target}: ChangeEvent<HTMLInputElement>) => {
@@ -72,6 +81,7 @@ function Filter(): JSX.Element {
 
     dispatch(numberOfStringChange([...set]));
     dispatch(activePageChange(1));
+    dispatch(fetchGuitarsForPrice(activeGuitarTypes, [...set]));
   };
 
   return (
@@ -119,6 +129,7 @@ function Filter(): JSX.Element {
               value={key}
               checked={activeGuitarTypes.includes(key)}
               onChange={handleTypesChange}
+              disabled={disabledSTypesCheckboxes.includes(value)}
             />
             <label htmlFor={key}>{value}</label>
           </div>

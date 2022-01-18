@@ -20,6 +20,7 @@ const store = mockStore({
     guitarsLoading: false,
     guitarsError: false,
     guitars,
+    guitarsForPrice: [],
   },
   [NameSpace.Ui]: {
     activeSort: {
@@ -63,7 +64,7 @@ describe('Component: Filter', () => {
 
     expect(screen.getByRole('checkbox', {name: 'Акустические гитары'})).toBeInTheDocument();
     userEvent.click(screen.getByRole('checkbox', {name: 'Акустические гитары'}));
-    expect(dispatch).toBeCalledTimes(2);
+    expect(dispatch).toBeCalledTimes(3);
   });
 
   it('should сhange activeStrings guitar when click checkbox Количесвто струн', () => {
@@ -74,7 +75,7 @@ describe('Component: Filter', () => {
 
     expect(screen.getByRole('checkbox', {name: '6'})).toBeInTheDocument();
     userEvent.click(screen.getByRole('checkbox', {name: '6'}));
-    expect(dispatch).toBeCalledTimes(2);
+    expect(dispatch).toBeCalledTimes(3);
   });
 
   it('should сhange minPrice when write input', () => {

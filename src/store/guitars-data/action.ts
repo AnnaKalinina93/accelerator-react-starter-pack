@@ -9,6 +9,12 @@ export const guitarsSucceeded = createAction(
   }),
 );
 
+export const guitarsSucceededForPrice = createAction(
+  ActionType.GuitarsForPriceSucceeded,
+  (guitars: Guitar[]) => ({
+    payload: guitars,
+  }),
+);
 
 export const commentsSucceeded = createAction(
   ActionType.CommentsSucceeded,

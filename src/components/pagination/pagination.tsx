@@ -20,6 +20,11 @@ function Pagination({pageCount}: PaginationProps): JSX.Element {
   const START_PAGE_COUNT = activePage % 3 === 1 && activePage!==1 ? activePage +1: 0;
   const FINISH_PAGE_COUNT = START_PAGE_COUNT+3;
 
+  if (!pageCount) {
+    return (
+      <div className="pagination page-content__pagination"></div>
+    );
+  }
   return (
     <div className="pagination page-content__pagination">
       <ul className="pagination__list">
@@ -45,7 +50,7 @@ function Pagination({pageCount}: PaginationProps): JSX.Element {
             </li>
           );
         })}
-        {activePage !== pageCount && pageCount !== 0 && (
+        {activePage !== pageCount && pageCount > 1  && (
           <li className="pagination__page pagination__page--next" id="next">
             <a className="link pagination__page-link"
               onClick={()=>handleChangePage(activePage+1)}

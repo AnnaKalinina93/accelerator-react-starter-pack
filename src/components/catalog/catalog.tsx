@@ -8,7 +8,7 @@ import Sort from '../sort/sort';
 import GuitarsList from '../guitars-list/guitars-list';
 import Footer from '../footer/footer';
 import { useEffect, useState } from 'react';
-import { fetchGuitarsAction } from '../../store/guitars-data/api-action';
+import { fetchGuitarsAction, fetchGuitarsForPrice } from '../../store/guitars-data/api-action';
 import {
   getChangeSort,
   getMaxPrice,
@@ -41,6 +41,7 @@ function Catalog(): JSX.Element {
 
   useEffect( () => {
     dispatch(fetchGuitarsAction(activeSorting, activeMinPrice, activeMaxPrice, activeGuitarTypes));
+    dispatch(fetchGuitarsForPrice(activeGuitarTypes, activeStrings));
     const params = getNewParams(activeSorting, activeMinPrice, activeMaxPrice, activeGuitarTypes, activePage, activeStrings);
     if (params.toString() !== '') {
       dispatch(redirectToRoute(`${AppRoute.Main}?${params.toString()}`));
@@ -72,7 +73,11 @@ function Catalog(): JSX.Element {
 
     let actualGuitarTypes = activeGuitarTypes;
     if (parsed.type) {
-      actualGuitarTypes = parsed.type as string[];
+      if ( Array.isArray(parsed.type)) {
+        actualGuitarTypes = parsed.type as string[];
+      } else {
+        actualGuitarTypes = [parsed.type as string];
+      }
     }
 
     let actualPage = activePage;
@@ -82,16 +87,19 @@ function Catalog(): JSX.Element {
 
     let actualStrings = activeStrings;
     if (parsed.strings) {
-      actualStrings = parsed.strings as string[];
+      if (Array.isArray(parsed.strings)) {
+        actualStrings = parsed.strings as string[];
+      } else {
+        actualStrings = [parsed.strings as string];
+      }
     }
     dispatch(sortChangeType(actualSorting.type));
     dispatch(sortChangeOrder(actualSorting.order));
     dispatch(minPriceChange(actualMinPrice));
     dispatch(maxPriceChange(actualMaxPrice));
-    dispatch(typeGuitarChange(activeGuitarTypes));
+    dispatch(typeGuitarChange(actualGuitarTypes));
     dispatch(activePageChange(actualPage));
     dispatch(numberOfStringChange(actualStrings));
-    dispatch(fetchGuitarsAction(actualSorting, actualMinPrice, actualMaxPrice, actualGuitarTypes));
   }, [],
   );
 
@@ -104,7 +112,7 @@ function Catalog(): JSX.Element {
     guitar.name.toLowerCase().includes(formState.toLowerCase()),
   );
 
-  const PAGE_COUNT = Math.min(searchGuitars.length/9);
+  const PAGE_COUNT = Math.ceil(searchGuitars.length/9);
 
   return (
     <div className="wrapper">

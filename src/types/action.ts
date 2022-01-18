@@ -7,6 +7,7 @@ export enum ActionType {
   GuitarsSucceeded = 'catalog/guitarsSucceeded',
   GuitarsRequest = 'catalog/guitarsRequest',
   GuitarsFailed = 'catalog/guitarsFailed',
+  GuitarsForPriceSucceeded = 'catalog/guitarsForPriceSucceeded',
   RedirectToRoute = 'app/redirectToRoute',
   CommentsRequest = 'catalog/commentsRequest',
   CommentsSucceeded = 'catalog/commentsSucceeded',

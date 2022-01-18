@@ -25,6 +25,7 @@ const store = configureStore({
 });
 
 store.dispatch(fetchGuitarsAction());
+//store.dispatch(fetchGuitarsForPrice());
 
 ReactDOM.render(
   <React.StrictMode>

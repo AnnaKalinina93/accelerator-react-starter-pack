@@ -1,4 +1,4 @@
-import { FilterPriceRout, guitarType, SortingRout, sortingType } from './const';
+import { FilterPriceRout, guitarsType, guitarType, SortingRout, sortingType } from './const';
 
 export function getStringsFromType (type: string): string[] {
   switch (type) {
@@ -10,6 +10,21 @@ export function getStringsFromType (type: string): string[] {
       return ['4'];
     default:
       return [];
+  }
+}
+
+export function getTypesFromStrings ( string: string): string[] {
+  switch (string) {
+    case '4':
+      return [guitarsType.electric, guitarsType.ukulele];
+    case '6':
+      return [guitarsType.acoustic, guitarsType.electric];
+    case '7':
+      return [guitarsType.acoustic, guitarsType.electric];
+    case '12':
+      return [guitarsType.acoustic];
+    default:
+      return[];
   }
 }
 
@@ -34,7 +49,7 @@ export function getNewParams (activeSorting: {type: string, order: string}, acti
     params.set(FilterPriceRout.to, activeMaxPrice);
   }
   if (activeGuitarTypes.length) {
-    activeGuitarTypes.forEach((type)=>params.append('type', type));
+    activeGuitarTypes.map((type)=>params.append('type', type));
   }
   if (activePage !== 1 && activePage) {
     params.set('page_', String(activePage));

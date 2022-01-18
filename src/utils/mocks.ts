@@ -33,6 +33,7 @@ export const makeFakeStore = (): State => ({
   GUITARS: {
     guitars: new Array(6).fill(null).map(()=>(makeFakeGuitar())),
     guitarsError: false,
+    guitarsForPrice: new Array(6).fill(null).map(()=>(makeFakeGuitar())),
     comments: [],
     commentsLoading: false,
     commentsError: false,

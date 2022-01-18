@@ -28,8 +28,11 @@ export const getFilterGuitars = createSelector([getGuitars, getActiveStrings], (
   }
 });
 
+export const getGuitarsForPrice = (state: State): Guitar[] =>
+  state[NameSpace.Guitars].guitarsForPrice;
+
 export const selectPrices = createSelector(
-  [getGuitars],
+  [getGuitarsForPrice],
   (guitars) => {
     const sortedGuitars = guitars.slice().sort((a,b) => a.price - b.price);
 
