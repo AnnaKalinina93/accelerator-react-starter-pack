@@ -5,7 +5,6 @@ import { typeGuitarChange, numberOfStringChange, priceChange, activePageChange }
 import { getGuitarTypes, getActiveStrings, selectDisabledStringCheckboxes, selectDisabledTypesCheckboxes } from '../../store/ui-state/selectors';
 import { selectPrices } from '../../store/guitars-data/selectors';
 import { useDebouncedCallback } from 'use-debounce';
-import { fetchGuitarsForPrice } from '../../store/guitars-data/api-action';
 
 const typesPrices = {
   minPrice: 'minPrice',
@@ -66,7 +65,7 @@ function Filter(): JSX.Element {
 
     dispatch(typeGuitarChange([...set]));
     dispatch(activePageChange(1));
-    dispatch(fetchGuitarsForPrice([...set], activeGuitarStrings));
+
   };
 
   const handleStringsChange = ({target}: ChangeEvent<HTMLInputElement>) => {
@@ -81,7 +80,6 @@ function Filter(): JSX.Element {
 
     dispatch(numberOfStringChange([...set]));
     dispatch(activePageChange(1));
-    dispatch(fetchGuitarsForPrice(activeGuitarTypes, [...set]));
   };
 
   return (

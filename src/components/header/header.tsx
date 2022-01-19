@@ -5,6 +5,7 @@ import cn from 'classnames';
 import { useSelector } from 'react-redux';
 import { getGuitars } from '../../store/guitars-data/selectors';
 import { Link } from 'react-router-dom';
+import { getSortInput } from '../../utils';
 
 type HeaderProps = {
   onChangeInput?: (value: any) => void
@@ -23,6 +24,7 @@ function Header({ onChangeInput }: HeaderProps): JSX.Element {
   });
 
   const selectedGuitars = guitars.filter((guitar) => guitar.name.toLowerCase().includes(formInput.value.toLowerCase()));
+  const selectedGuitarsByName = getSortInput(selectedGuitars,formInput.value);
 
   return (
     <header className="header" id="header">
@@ -91,7 +93,7 @@ function Header({ onChangeInput }: HeaderProps): JSX.Element {
             </label>
           </form>
           <ul className={searchClass}>
-            { selectedGuitars.map((guitar)=> (
+            { selectedGuitarsByName.map((guitar)=> (
               <li key={guitar.id} className="form-search__select-item">
                 <Link to={`/product/${guitar.id}`} className="form-search__select-item" tabIndex={0}>{guitar.name}</Link>
               </li>

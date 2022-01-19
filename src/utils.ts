@@ -1,4 +1,5 @@
 import { FilterPriceRout, guitarsType, guitarType, SortingRout, sortingType } from './const';
+import { Guitar } from './types/guitar';
 
 export function getStringsFromType (type: string): string[] {
   switch (type) {
@@ -58,4 +59,14 @@ export function getNewParams (activeSorting: {type: string, order: string}, acti
     activeStrings.forEach((item)=>params.append('strings', item));
   }
   return params;
+}
+
+export function getSortInput (guitars: Guitar[], value: string): Guitar[] {
+  return guitars.sort((a,b)=> {
+    const index1 = a.name.toLowerCase().indexOf(value.toLowerCase());
+    const index2 = b.name.toLowerCase().indexOf(value.toLowerCase());
+    if ( index1 > index2) { return 1;}
+    if ( index2> index1) { return -1;}
+    else {return 0;}
+  });
 }

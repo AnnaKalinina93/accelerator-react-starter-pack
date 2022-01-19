@@ -2,17 +2,66 @@ import { createReducer } from '@reduxjs/toolkit';
 import { sortingType } from '../../const';
 import { UiState } from '../../types/state';
 import { sortChangeType, sortChangeOrder, minPriceChange, maxPriceChange, typeGuitarChange, numberOfStringChange, priceChange, activePageChange } from './action';
+import * as queryString from 'querystring';
+
+const location = window.location;
+const parsed = queryString.parse(location.search.substr(1));
+let activeSort = {
+  type: sortingType.type.default,
+  order: sortingType.order.default,
+};
+if (parsed._sort) {
+  activeSort = {
+    ...activeSort,
+    type: parsed._sort as string,
+  };
+}
+if (parsed._order) {
+  activeSort = {
+    ...activeSort,
+    order: parsed._order as string,
+  };}
+
+let minPrice = '';
+if (parsed.price_gte) {
+  minPrice = parsed.price_gte as string;
+}
+
+let maxPrice = '';
+if (parsed.price_lte) {
+  maxPrice = parsed.price_lte as string;
+}
+
+let typeGuitar: string[] = [];
+if (parsed.type) {
+  if ( Array.isArray(parsed.type)) {
+    typeGuitar = parsed.type as string[];
+  } else {
+    typeGuitar = [parsed.type as string];
+  }
+}
+
+let activePage = 1;
+if (parsed.page_) {
+  activePage = Number(parsed.page_);
+}
+
+let activeStrings: string[] = [];
+if (parsed.strings) {
+  if (Array.isArray(parsed.strings)) {
+    activeStrings = parsed.strings as string[];
+  } else {
+    activeStrings = [parsed.strings as string];
+  }
+}
 
 const initialState: UiState = {
-  activeSort: {
-    type: sortingType.type.default,
-    order: sortingType.order.default,
-  },
-  minPrice: '',
-  maxPrice: '',
-  typeGuitar: [],
-  activeStrings: [],
-  activePage: 1,
+  activeSort,
+  minPrice,
+  maxPrice,
+  typeGuitar,
+  activeStrings,
+  activePage,
 };
 
 export const uiState = createReducer(initialState, (builder) => {

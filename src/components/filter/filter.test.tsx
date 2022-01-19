@@ -64,7 +64,7 @@ describe('Component: Filter', () => {
 
     expect(screen.getByRole('checkbox', {name: 'Акустические гитары'})).toBeInTheDocument();
     userEvent.click(screen.getByRole('checkbox', {name: 'Акустические гитары'}));
-    expect(dispatch).toBeCalledTimes(3);
+    expect(dispatch).toBeCalledTimes(2);
   });
 
   it('should сhange activeStrings guitar when click checkbox Количесвто струн', () => {
@@ -75,7 +75,7 @@ describe('Component: Filter', () => {
 
     expect(screen.getByRole('checkbox', {name: '6'})).toBeInTheDocument();
     userEvent.click(screen.getByRole('checkbox', {name: '6'}));
-    expect(dispatch).toBeCalledTimes(3);
+    expect(dispatch).toBeCalledTimes(2);
   });
 
   it('should сhange minPrice when write input', () => {

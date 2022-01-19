@@ -18,9 +18,6 @@ import {
   getActiveStrings
 } from '../../store/ui-state/selectors';
 import Pagination from '../pagination/pagination';
-import * as queryString from 'querystring';
-import { useHistory } from 'react-router';
-import { activePageChange, maxPriceChange, minPriceChange, numberOfStringChange, sortChangeOrder, sortChangeType, typeGuitarChange } from '../../store/ui-state/action';
 import { redirectToRoute } from '../../store/middlewares/action';
 import { AppRoute } from '../../const';
 import { getNewParams } from '../../utils';
@@ -37,71 +34,15 @@ function Catalog(): JSX.Element {
   const [formState, setFormState] = useState('');
 
   const dispatch = useDispatch();
-  const history = useHistory();
 
   useEffect( () => {
+    dispatch(fetchGuitarsForPrice(activeGuitarTypes,activeStrings));
     dispatch(fetchGuitarsAction(activeSorting, activeMinPrice, activeMaxPrice, activeGuitarTypes));
-    dispatch(fetchGuitarsForPrice(activeGuitarTypes, activeStrings));
     const params = getNewParams(activeSorting, activeMinPrice, activeMaxPrice, activeGuitarTypes, activePage, activeStrings);
     if (params.toString() !== '') {
       dispatch(redirectToRoute(`${AppRoute.Main}?${params.toString()}`));
     }
   },[activeSorting, activeMinPrice, activeMaxPrice, activeGuitarTypes, activePage, activeStrings]);
-
-  useEffect(() => {
-    const parsed = queryString.parse(history.location.search.substr(1));
-    let actualSorting = activeSorting;
-    if (parsed._sort) { actualSorting = {
-      ...actualSorting,
-      type: parsed._sort as string,
-    };
-    }
-    if (parsed._order) { actualSorting = {
-      ...actualSorting,
-      order: parsed._order as string,
-    };}
-
-    let actualMinPrice = activeMinPrice;
-    if (parsed.price_gte) {
-      actualMinPrice = parsed.price_gte as string;
-    }
-
-    let actualMaxPrice = activeMaxPrice;
-    if (parsed.price_lte) {
-      actualMaxPrice = parsed.price_lte as string;
-    }
-
-    let actualGuitarTypes = activeGuitarTypes;
-    if (parsed.type) {
-      if ( Array.isArray(parsed.type)) {
-        actualGuitarTypes = parsed.type as string[];
-      } else {
-        actualGuitarTypes = [parsed.type as string];
-      }
-    }
-
-    let actualPage = activePage;
-    if (parsed.page_) {
-      actualPage = Number(parsed.page_);
-    }
-
-    let actualStrings = activeStrings;
-    if (parsed.strings) {
-      if (Array.isArray(parsed.strings)) {
-        actualStrings = parsed.strings as string[];
-      } else {
-        actualStrings = [parsed.strings as string];
-      }
-    }
-    dispatch(sortChangeType(actualSorting.type));
-    dispatch(sortChangeOrder(actualSorting.order));
-    dispatch(minPriceChange(actualMinPrice));
-    dispatch(maxPriceChange(actualMaxPrice));
-    dispatch(typeGuitarChange(actualGuitarTypes));
-    dispatch(activePageChange(actualPage));
-    dispatch(numberOfStringChange(actualStrings));
-  }, [],
-  );
 
   const handleChange = (value: string) => {
     setFormState(value);
