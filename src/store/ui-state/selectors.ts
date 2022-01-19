@@ -1,9 +1,11 @@
 import { NameSpace } from '../root-reduser';
 import { State } from '../../types/state';
 import { createSelector } from 'reselect';
-import { getStringsFromType } from '../../utils';
+import { getStringsFromType, getTypesFromStrings } from '../../utils';
+import { guitarsType } from '../../const';
 
 const ALL_STRINGS = ['4', '6', '7', '12'];
+const ALL_TYPES = [guitarsType.acoustic,guitarsType.electric, guitarsType.ukulele];
 
 export const getChangeSort = (
   state: State,
@@ -35,6 +37,29 @@ export const selectDisabledStringCheckboxes = createSelector(
 
     types.forEach((typeItem) => {
       const values = getStringsFromType(typeItem);
+
+      values.forEach((value) => {
+        if (set.has(value)) {
+          set.delete(value);
+        }
+      });
+    });
+
+    return [...set];
+  },
+);
+
+export const selectDisabledTypesCheckboxes = createSelector(
+  [getActiveStrings],
+  (strings) => {
+    if (strings.length === 0) {
+      return [];
+    }
+
+    const set = new Set(ALL_TYPES);
+
+    strings.forEach((stringsItem) => {
+      const values = getTypesFromStrings(stringsItem);
 
       values.forEach((value) => {
         if (set.has(value)) {

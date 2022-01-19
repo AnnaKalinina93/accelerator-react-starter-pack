@@ -20,6 +20,7 @@ const store = mockStore({
     guitarsLoading: false,
     guitarsError: false,
     guitars,
+    guitarsForPrice: [],
   },
   [NameSpace.Ui]: {
     activeSort: {

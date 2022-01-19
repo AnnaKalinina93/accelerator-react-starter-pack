@@ -8,7 +8,7 @@ import Sort from '../sort/sort';
 import GuitarsList from '../guitars-list/guitars-list';
 import Footer from '../footer/footer';
 import { useEffect, useState } from 'react';
-import { fetchGuitarsAction } from '../../store/guitars-data/api-action';
+import { fetchGuitarsAction, fetchGuitarsForPrice } from '../../store/guitars-data/api-action';
 import {
   getChangeSort,
   getMaxPrice,
@@ -18,9 +18,6 @@ import {
   getActiveStrings
 } from '../../store/ui-state/selectors';
 import Pagination from '../pagination/pagination';
-import * as queryString from 'querystring';
-import { useHistory } from 'react-router';
-import { activePageChange, maxPriceChange, minPriceChange, numberOfStringChange, sortChangeOrder, sortChangeType, typeGuitarChange } from '../../store/ui-state/action';
 import { redirectToRoute } from '../../store/middlewares/action';
 import { AppRoute } from '../../const';
 import { getNewParams } from '../../utils';
@@ -37,63 +34,15 @@ function Catalog(): JSX.Element {
   const [formState, setFormState] = useState('');
 
   const dispatch = useDispatch();
-  const history = useHistory();
 
   useEffect( () => {
+    dispatch(fetchGuitarsForPrice(activeGuitarTypes,activeStrings));
     dispatch(fetchGuitarsAction(activeSorting, activeMinPrice, activeMaxPrice, activeGuitarTypes));
     const params = getNewParams(activeSorting, activeMinPrice, activeMaxPrice, activeGuitarTypes, activePage, activeStrings);
     if (params.toString() !== '') {
       dispatch(redirectToRoute(`${AppRoute.Main}?${params.toString()}`));
     }
   },[activeSorting, activeMinPrice, activeMaxPrice, activeGuitarTypes, activePage, activeStrings]);
-
-  useEffect(() => {
-    const parsed = queryString.parse(history.location.search.substr(1));
-    let actualSorting = activeSorting;
-    if (parsed._sort) { actualSorting = {
-      ...actualSorting,
-      type: parsed._sort as string,
-    };
-    }
-    if (parsed._order) { actualSorting = {
-      ...actualSorting,
-      order: parsed._order as string,
-    };}
-
-    let actualMinPrice = activeMinPrice;
-    if (parsed.price_gte) {
-      actualMinPrice = parsed.price_gte as string;
-    }
-
-    let actualMaxPrice = activeMaxPrice;
-    if (parsed.price_lte) {
-      actualMaxPrice = parsed.price_lte as string;
-    }
-
-    let actualGuitarTypes = activeGuitarTypes;
-    if (parsed.type) {
-      actualGuitarTypes = parsed.type as string[];
-    }
-
-    let actualPage = activePage;
-    if (parsed.page_) {
-      actualPage = Number(parsed.page_);
-    }
-
-    let actualStrings = activeStrings;
-    if (parsed.strings) {
-      actualStrings = parsed.strings as string[];
-    }
-    dispatch(sortChangeType(actualSorting.type));
-    dispatch(sortChangeOrder(actualSorting.order));
-    dispatch(minPriceChange(actualMinPrice));
-    dispatch(maxPriceChange(actualMaxPrice));
-    dispatch(typeGuitarChange(activeGuitarTypes));
-    dispatch(activePageChange(actualPage));
-    dispatch(numberOfStringChange(actualStrings));
-    dispatch(fetchGuitarsAction(actualSorting, actualMinPrice, actualMaxPrice, actualGuitarTypes));
-  }, [],
-  );
 
   const handleChange = (value: string) => {
     setFormState(value);
@@ -104,7 +53,7 @@ function Catalog(): JSX.Element {
     guitar.name.toLowerCase().includes(formState.toLowerCase()),
   );
 
-  const PAGE_COUNT = Math.min(searchGuitars.length/9);
+  const PAGE_COUNT = Math.ceil(searchGuitars.length/9);
 
   return (
     <div className="wrapper">
