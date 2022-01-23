@@ -66,3 +66,8 @@ export const guitarTranslate: GuitarTranslate  = {
 };
 
 type GuitarTranslate = { [key: string]: string};
+
+export const activeTabs = {
+  description: 'description',
+  characteristics: 'characteristics',
+};
