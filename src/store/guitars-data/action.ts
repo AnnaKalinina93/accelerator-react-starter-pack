@@ -23,6 +23,17 @@ export const commentsSucceeded = createAction(
   }),
 );
 
+export const guitarSucceeded = createAction(
+  ActionType.GuitarSucceeded,
+  (guitar: Guitar) => ({
+    payload: guitar,
+  }),
+);
+
+export const guitarRequest = createAction(ActionType.GuitarRequest);
+
+export const guitarFailed = createAction(ActionType.GuitarFailed);
+
 export const guitarsRequest = createAction(ActionType.GuitarsRequest);
 
 export const guitarsFailed = createAction(ActionType.GuitarsFailed);

@@ -1,6 +1,17 @@
 import { createReducer } from '@reduxjs/toolkit';
 import { GuitarsData } from '../../types/state';
-import { guitarsFailed, guitarsRequest, guitarsSucceeded, commentsFailed, commentsRequest, commentsSucceeded, guitarsSucceededForPrice } from './action';
+import {
+  guitarsFailed,
+  guitarsRequest,
+  guitarsSucceeded,
+  commentsFailed,
+  commentsRequest,
+  commentsSucceeded,
+  guitarsSucceededForPrice,
+  guitarFailed,
+  guitarRequest,
+  guitarSucceeded
+} from './action';
 
 const initialState: GuitarsData = {
   guitars: [],
@@ -10,6 +21,9 @@ const initialState: GuitarsData = {
   commentsLoading: false,
   commentsError: false,
   guitarsForPrice : [],
+  guitar: null,
+  guitarLoading: false,
+  guitarError: false,
 };
 
 export const guitarsData = createReducer(initialState, (builder) => {
@@ -32,6 +46,21 @@ export const guitarsData = createReducer(initialState, (builder) => {
 
     .addCase(guitarsSucceededForPrice, (state, action) => {
       state.guitarsForPrice = action.payload;
+    })
+
+    .addCase(guitarRequest, (state) => {
+      state.guitarLoading = true;
+    })
+
+    .addCase(guitarSucceeded, (state, action) => {
+      state.guitarLoading = false;
+      state.guitarError = false;
+      state.guitar = action.payload;
+    })
+
+    .addCase(guitarFailed, (state) => {
+      state.guitarLoading = false;
+      state.guitarError = true;
     })
 
     .addCase(commentsRequest, (state) => {

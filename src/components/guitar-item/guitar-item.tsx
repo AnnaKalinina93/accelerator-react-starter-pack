@@ -1,5 +1,6 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import { nanoid } from '@reduxjs/toolkit';
+import { Link } from 'react-router-dom';
 import { Guitar } from '../../types/guitar';
 
 type GuitarItemProps = {
@@ -46,9 +47,9 @@ function GuitarItem({ guitar }: GuitarItemProps): JSX.Element {
         </p>
       </div>
       <div className="product-card__buttons">
-        <a className="button button--mini" href="#">
+        <Link to={`/product/${guitar.id}`} className="button button--mini">
           Подробнее
-        </a>
+        </Link>
         <a
           className="button button--red button--mini button--add-to-cart"
           href="#"

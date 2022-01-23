@@ -38,6 +38,9 @@ export const makeFakeStore = (): State => ({
     commentsLoading: false,
     commentsError: false,
     guitarsLoading: false,
+    guitar: makeFakeGuitar(),
+    guitarError: false,
+    guitarLoading: false,
   },
   UI_STATE: {
     activeSort: {
