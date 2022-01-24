@@ -2,7 +2,7 @@ import Header from '../header/header';
 import Footer from '../footer/footer';
 import { useParams } from 'react-router';
 import { useDispatch, useSelector } from 'react-redux';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { fetchGuitarAction } from '../../store/guitars-data/api-action';
 import {
   getGuitar,
@@ -14,7 +14,8 @@ import ReviewsList from '../reviews-list/reviews-list';
 import { nanoid } from 'nanoid';
 import Breadcrumbs from '../breadcrumbs/breadcrumbs__item';
 import LoadingScreen from '../loading-screen/loading-screen';
-import { guitarTranslate } from '../../const';
+import { activeTabs, guitarTranslate } from '../../const';
+import cn from 'classnames';
 
 type ParamTypes = {
   id: string
@@ -26,10 +27,24 @@ function Product(): JSX.Element {
   const guitar = useSelector(getGuitar);
   const guitarLoading = useSelector(getGuitarLoading);
   const guitarError = useSelector(getGuitarError);
+  const [tabsState, setTabsState] = useState(activeTabs.characteristics);
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(fetchGuitarAction(id));
   }, [id]);
+
+  const handleChangeTabs = () => {
+    if (tabsState === activeTabs.characteristics) {
+      setTabsState(activeTabs.description);
+    } else {
+      setTabsState(activeTabs.characteristics);
+    }
+  };
+
+  const characteristicsClass = cn('button button--medium tabs__button', {'button--black-border': tabsState === activeTabs.description});
+  const characteristicsTableClass = cn('tabs__table', {hidden: tabsState === activeTabs.description});
+  const descriptionClass = cn('button button--medium tabs__button', {'button--black-border': tabsState === activeTabs.characteristics});
+  const descriptionParagraphClass = cn('tabs__product-description', {hidden: tabsState === activeTabs.characteristics});
 
   return (
     <div className="wrapper">
@@ -86,19 +101,19 @@ function Product(): JSX.Element {
                   </div>
                   <div className="tabs">
                     <a
-                      className="button button--medium tabs__button"
-                      href="#characteristics"
+                      className={characteristicsClass}
+                      onClick={handleChangeTabs}
                     >
                       Характеристики
                     </a>
                     <a
-                      className="button button--black-border button--medium tabs__button"
-                      href="#description"
+                      className={descriptionClass}
+                      onClick={handleChangeTabs}
                     >
                       Описание
                     </a>
                     <div className="tabs__content" id="characteristics">
-                      <table className="tabs__table">
+                      <table className={characteristicsTableClass}>
                         <tbody>
                           <tr className="tabs__table-row">
                             <td className="tabs__title">Артикул:</td>
@@ -116,7 +131,7 @@ function Product(): JSX.Element {
                           </tr>
                         </tbody>
                       </table>
-                      <p className="tabs__product-description hidden">
+                      <p className={descriptionParagraphClass}>
                         {guitar.description}
                       </p>
                     </div>
