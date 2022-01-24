@@ -27,14 +27,14 @@ function Header({ onChangeInput }: HeaderProps): JSX.Element {
   const selectedGuitarsByName = getSortInput(selectedGuitars,formInput.value);
 
   return (
-    <header className="header" id="header">
+    <header className="header" id="#header">
       <div className="container header__wrapper">
         <a className="header__logo logo">
           <img
             className="logo__img"
             width="70"
             height="70"
-            src="./img/svg/logo.svg"
+            src="/img/svg/logo.svg"
             alt="Логотип"
           />
         </a>

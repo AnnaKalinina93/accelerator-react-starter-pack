@@ -58,3 +58,11 @@ export const numberOfString = {
   7: '7-strings',
   12: '12-strings',
 };
+
+export const guitarTranslate: GuitarTranslate  = {
+  acoustic: 'Акустическая гитара',
+  electric: 'Электрогитара',
+  ukulele: 'Укулеле',
+};
+
+type GuitarTranslate = { [key: string]: string};

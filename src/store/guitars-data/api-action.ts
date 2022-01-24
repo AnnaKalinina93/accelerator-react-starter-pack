@@ -1,5 +1,5 @@
 import { ThunkActionResult } from '../../types/action';
-import { guitarsFailed, guitarsRequest, guitarsSucceeded, guitarsSucceededForPrice } from './action';
+import { guitarFailed, guitarRequest, guitarsFailed, guitarsRequest, guitarsSucceeded, guitarsSucceededForPrice, guitarSucceeded } from './action';
 import { APIRoute, sortingType } from '../../const';
 import { Guitar } from '../../types/guitar';
 import { getNewParams } from '../../utils';
@@ -50,5 +50,17 @@ export const fetchGuitarsForPrice = (
     }
   } catch {
     toast.info('Не удалось пересчитать минималльную и максимальную цену');
+  }
+};
+
+export const fetchGuitarAction = (
+  id: string,
+): ThunkActionResult => async (dispatch, _, api): Promise<void> => {
+  dispatch(guitarRequest());
+  try {
+    const { data } = await api.get<Guitar>(`${APIRoute.Guitars}/${id}?_embed=comments`);
+    dispatch(guitarSucceeded(data));
+  } catch {
+    dispatch(guitarFailed());
   }
 };

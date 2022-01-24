@@ -14,6 +14,9 @@ describe('Reduser: GuitarsData', () => {
       comments: [],
       commentsLoading: false,
       commentsError: false,
+      guitar: null,
+      guitarLoading: false,
+      guitarError: false,
     };
     expect(guitarsData(state, guitarsRequest()))
       .toEqual({
@@ -24,6 +27,9 @@ describe('Reduser: GuitarsData', () => {
         comments: [],
         commentsLoading: false,
         commentsError: false,
+        guitar: null,
+        guitarLoading: false,
+        guitarError: false,
       });
   });
 
@@ -36,6 +42,9 @@ describe('Reduser: GuitarsData', () => {
       comments: [],
       commentsLoading: false,
       commentsError: false,
+      guitar: null,
+      guitarLoading: false,
+      guitarError: false,
     };
     expect(guitarsData(state, guitarsSucceeded(guitars)))
       .toEqual({
@@ -46,6 +55,9 @@ describe('Reduser: GuitarsData', () => {
         comments: [],
         commentsLoading: false,
         commentsError: false,
+        guitar: null,
+        guitarLoading: false,
+        guitarError: false,
       });
   });
 
@@ -58,6 +70,9 @@ describe('Reduser: GuitarsData', () => {
       comments: [],
       commentsLoading: false,
       commentsError: false,
+      guitar: null,
+      guitarLoading: false,
+      guitarError: false,
     };
     expect(guitarsData(state, guitarsFailed()))
       .toEqual({
@@ -68,6 +83,9 @@ describe('Reduser: GuitarsData', () => {
         comments: [],
         commentsLoading: false,
         commentsError: false,
+        guitar: null,
+        guitarLoading: false,
+        guitarError: false,
       });
   });
 
