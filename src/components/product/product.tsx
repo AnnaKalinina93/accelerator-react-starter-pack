@@ -16,6 +16,8 @@ import Breadcrumbs from '../breadcrumbs/breadcrumbs__item';
 import LoadingScreen from '../loading-screen/loading-screen';
 import { activeTabs, guitarTranslate } from '../../const';
 import cn from 'classnames';
+import FormReview from '../form-review/form-review';
+import PopupThanks from '../popup-thanks/popup-thanks';
 
 type ParamTypes = {
   id: string
@@ -28,6 +30,7 @@ function Product(): JSX.Element {
   const guitarLoading = useSelector(getGuitarLoading);
   const guitarError = useSelector(getGuitarError);
   const [tabsState, setTabsState] = useState(activeTabs.characteristics);
+  const [formReviewState, setFormReviewState] = useState(false);
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(fetchGuitarAction(id));
@@ -41,18 +44,22 @@ function Product(): JSX.Element {
     }
   };
 
+  const handleClickFormReview = (param: boolean) => {
+    setFormReviewState(param);
+  };
+
   const characteristicsClass = cn('button button--medium tabs__button', {'button--black-border': tabsState === activeTabs.description});
   const characteristicsTableClass = cn('tabs__table', {hidden: tabsState === activeTabs.description});
   const descriptionClass = cn('button button--medium tabs__button', {'button--black-border': tabsState === activeTabs.characteristics});
   const descriptionParagraphClass = cn('tabs__product-description', {hidden: tabsState === activeTabs.characteristics});
-
+  const formClass = cn ('modal modal--review modal-for-ui-kit', {'is-active': formReviewState === true});
   return (
     <div className="wrapper">
       <Header />
       <main className="page-content">
         <div className="container">
-          <h1 className="page-content__title title title--bigger">Товар</h1>
-          <Breadcrumbs />
+          <h1 className="page-content__title title title--bigger">{guitar?.name ?? 'Товар'}</h1>
+          <Breadcrumbs name={guitar?.name}/>
           {guitarLoading && <LoadingScreen />}
           {guitarError && <NotFoundScreen />}
           {guitar && (
@@ -152,7 +159,9 @@ function Product(): JSX.Element {
                   </a>
                 </div>
               </div>
-              <ReviewsList comments={guitar.comments} />
+              <ReviewsList comments={guitar.comments} onClickFormReview={handleClickFormReview}/>
+              <FormReview nameGuitar={guitar.name} guitarId={guitar.id} formClass={formClass} onClickFormReview={handleClickFormReview}/>
+              {formReviewState === false && <PopupThanks/>}
             </>
           )}
         </div>

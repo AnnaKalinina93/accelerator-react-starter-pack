@@ -1,5 +1,5 @@
 import { ActionType } from '../../types/action';
-import { Guitar } from '../../types/guitar';
+import { Comment, Guitar } from '../../types/guitar';
 import { createAction } from '@reduxjs/toolkit';
 
 export const guitarsSucceeded = createAction(
@@ -16,10 +16,10 @@ export const guitarsSucceededForPrice = createAction(
   }),
 );
 
-export const commentsSucceeded = createAction(
-  ActionType.CommentsSucceeded,
-  (comments: []) => ({
-    payload: comments,
+export const commentSucceeded = createAction(
+  ActionType.CommentSucceeded,
+  (comment: Comment) => ({
+    payload: comment,
   }),
 );
 
@@ -38,6 +38,8 @@ export const guitarsRequest = createAction(ActionType.GuitarsRequest);
 
 export const guitarsFailed = createAction(ActionType.GuitarsFailed);
 
-export const commentsRequest = createAction(ActionType.CommentsRequest);
+export const commentRequest = createAction(ActionType.CommentRequest);
 
-export const commentsFailed = createAction(ActionType.CommentsFailed);
+export const commentFailed = createAction(ActionType.CommentFailed);
+
+export const postReviewReset = createAction(ActionType.PostReviewReset);

@@ -1,5 +1,6 @@
 export enum APIRoute {
   Guitars = '/guitars',
+  Comments = '/comments',
 }
 
 export enum AppRoute {
@@ -70,4 +71,12 @@ type GuitarTranslate = { [key: string]: string};
 export const activeTabs = {
   description: 'description',
   characteristics: 'characteristics',
+};
+
+export const ratingMap = {
+  1: 'Ужасно',
+  2: 'Плохо',
+  3: 'Нормально',
+  4: 'Хорошо',
+  5: 'Отлично',
 };

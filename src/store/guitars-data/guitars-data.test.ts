@@ -11,12 +11,13 @@ describe('Reduser: GuitarsData', () => {
       guitarsLoading: false,
       guitarsError: false,
       guitarsForPrice: [],
-      comments: [],
-      commentsLoading: false,
-      commentsError: false,
+      comment: null,
+      commentLoading: false,
+      commentError: false,
       guitar: null,
       guitarLoading: false,
       guitarError: false,
+      isPostComment: false,
     };
     expect(guitarsData(state, guitarsRequest()))
       .toEqual({
@@ -30,6 +31,7 @@ describe('Reduser: GuitarsData', () => {
         guitar: null,
         guitarLoading: false,
         guitarError: false,
+        isPostComment: false,
       });
   });
 
@@ -39,12 +41,13 @@ describe('Reduser: GuitarsData', () => {
       guitarsLoading: false,
       guitarsError: false,
       guitarsForPrice: [],
-      comments: [],
-      commentsLoading: false,
-      commentsError: false,
+      comment: null,
+      commentLoading: false,
+      commentError: false,
       guitar: null,
       guitarLoading: false,
       guitarError: false,
+      isPostComment: false,
     };
     expect(guitarsData(state, guitarsSucceeded(guitars)))
       .toEqual({
@@ -52,12 +55,13 @@ describe('Reduser: GuitarsData', () => {
         guitarsLoading: false,
         guitarsError: false,
         guitarsForPrice: [],
-        comments: [],
-        commentsLoading: false,
-        commentsError: false,
+        comment: null,
+        commentLoading: false,
+        commentError: false,
         guitar: null,
         guitarLoading: false,
         guitarError: false,
+        isPostComment: false,
       });
   });
 
@@ -67,12 +71,13 @@ describe('Reduser: GuitarsData', () => {
       guitarsLoading: false,
       guitarsError: false,
       guitarsForPrice: [],
-      comments: [],
-      commentsLoading: false,
-      commentsError: false,
+      comment: null,
+      commentLoading: false,
+      commentError: false,
       guitar: null,
       guitarLoading: false,
       guitarError: false,
+      isPostComment: false,
     };
     expect(guitarsData(state, guitarsFailed()))
       .toEqual({
@@ -80,12 +85,13 @@ describe('Reduser: GuitarsData', () => {
         guitarsLoading: false,
         guitarsError: true,
         guitarsForPrice: [],
-        comments: [],
-        commentsLoading: false,
-        commentsError: false,
+        comment: null,
+        commentLoading: false,
+        commentError: false,
         guitar: null,
         guitarLoading: false,
         guitarError: false,
+        isPostComment: false,
       });
   });
 
