@@ -8,8 +8,8 @@ const getRandomRating = () => (Math.floor(Math.random() * 5) + 1);
 export const makeFakeComment = (): Comment => ({
   id: String(datatype.number()),
   userName: name.firstName(),
-  advantages: lorem.paragraph(),
-  disadvantages: lorem.paragraph(),
+  advantage: lorem.paragraph(),
+  disadvantage: lorem.paragraph(),
   comment: lorem.paragraph(),
   rating: getRandomRating(),
   createAt: lorem.paragraph(),
@@ -34,13 +34,14 @@ export const makeFakeStore = (): State => ({
     guitars: new Array(6).fill(null).map(()=>(makeFakeGuitar())),
     guitarsError: false,
     guitarsForPrice: new Array(6).fill(null).map(()=>(makeFakeGuitar())),
-    comments: [],
-    commentsLoading: false,
-    commentsError: false,
+    comment: null,
+    commentLoading: false,
+    commentError: false,
     guitarsLoading: false,
     guitar: makeFakeGuitar(),
     guitarError: false,
     guitarLoading: false,
+    isPostComment: false,
   },
   UI_STATE: {
     activeSort: {

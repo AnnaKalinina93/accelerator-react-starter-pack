@@ -4,26 +4,28 @@ import {
   guitarsFailed,
   guitarsRequest,
   guitarsSucceeded,
-  commentsFailed,
-  commentsRequest,
-  commentsSucceeded,
+  commentFailed,
+  commentRequest,
+  commentSucceeded,
   guitarsSucceededForPrice,
   guitarFailed,
   guitarRequest,
-  guitarSucceeded
+  guitarSucceeded,
+  postReviewReset
 } from './action';
 
 const initialState: GuitarsData = {
   guitars: [],
   guitarsLoading: false,
   guitarsError: false,
-  comments: [],
-  commentsLoading: false,
-  commentsError: false,
+  comment: null,
+  commentLoading: false,
+  commentError: false,
   guitarsForPrice : [],
   guitar: null,
   guitarLoading: false,
   guitarError: false,
+  isPostComment: false,
 };
 
 export const guitarsData = createReducer(initialState, (builder) => {
@@ -63,19 +65,30 @@ export const guitarsData = createReducer(initialState, (builder) => {
       state.guitarError = true;
     })
 
-    .addCase(commentsRequest, (state) => {
-      state.commentsLoading = true;
+    .addCase(commentRequest, (state) => {
+      state.commentLoading = true;
     })
 
-    .addCase(commentsSucceeded, (state, action) => {
-      state.commentsLoading = false;
-      state.commentsError = false;
-      state.comments = action.payload;
+    .addCase(commentSucceeded, (state, action) => {
+      state.commentLoading = false;
+      state.commentError = false;
+      state.comment = action.payload;
+      if (state.guitar){
+        state.guitar.comments = [state.comment,...state.guitar.comments];
+      }
+      state.isPostComment = true;
     })
 
-    .addCase(commentsFailed, (state) => {
-      state.commentsLoading = false;
-      state.commentsError = true;
+    .addCase(commentFailed, (state) => {
+      state.commentLoading = false;
+      state.commentError = true;
+    })
+
+    .addCase(postReviewReset, (state) =>{
+      state.commentLoading = false;
+      state.commentError = false;
+      state.comment = null;
+      state.isPostComment = false;
     });
 });
 

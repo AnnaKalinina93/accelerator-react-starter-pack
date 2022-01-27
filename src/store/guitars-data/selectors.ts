@@ -1,6 +1,6 @@
 import { NameSpace } from '../root-reduser';
 import { State } from '../../types/state';
-import { Guitar } from '../../types/guitar';
+import { Comment, Guitar } from '../../types/guitar';
 import { createSelector } from 'reselect';
 import { getActiveStrings } from '../ui-state/selectors';
 
@@ -18,8 +18,8 @@ export const getGuitarLoading = (state: State): boolean =>
 export const getGuitarError = (state: State): boolean =>
   state[NameSpace.Guitars].guitarError;
 
-export const getComments = (state: State): [] =>
-  state[NameSpace.Guitars].comments;
+export const getComment = (state: State): Comment | null =>
+  state[NameSpace.Guitars].comment;
 
 export const getFilterGuitars = createSelector([getGuitars, getActiveStrings], (guitars, numberStrings) => {
   if (numberStrings.length) {
@@ -48,3 +48,6 @@ export const selectPrices = createSelector(
     };
   },
 );
+
+export const getIsPostReview = (state: State): boolean =>
+  state[NameSpace.Guitars].isPostComment;

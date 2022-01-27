@@ -1,8 +1,8 @@
 export type Comment = {
   id: string,
   userName: string,
-  advantages: string,
-  disadvantages: string,
+  advantage: string,
+  disadvantage: string,
   comment: string,
   rating: number,
   createAt: string,
@@ -26,4 +26,13 @@ export type Guitar = {
 export type Sorting = {
   type: string;
   order: string;
+};
+
+export type PostComment = {
+  userName: string,
+  advantage: string,
+  disadvantage: string,
+  comment: string,
+  rating: number,
+  guitarId: number,
 };

@@ -12,9 +12,9 @@ export enum ActionType {
   GuitarSucceeded = 'product/guitarSucceeded',
   GuitarFailed = 'product/guitarFailed',
   RedirectToRoute = 'app/redirectToRoute',
-  CommentsRequest = 'catalog/commentsRequest',
-  CommentsSucceeded = 'catalog/commentsSucceeded',
-  CommentsFailed = 'catalog/commentsFailed',
+  CommentRequest = 'catalog/commentsRequest',
+  CommentSucceeded = 'catalog/commentsSucceeded',
+  CommentFailed = 'catalog/commentsFailed',
   SortType = 'catalog/sortType',
   SortOrder = 'catalog/sortOrder',
   ActiveMinPrice = 'catalog/activeMinPrice',
@@ -22,7 +22,8 @@ export enum ActionType {
   ChangePrice = 'catalog/changePrice',
   TypeGuitar = 'catalog/typeGuitar',
   NumberOfString = 'catalog/numberOfString',
-  ActivePage = 'catalog/activePage'
+  ActivePage = 'catalog/activePage',
+  PostReviewReset = 'product/postReviewReset'
 }
 
 export type ThunkActionResult<R = Promise<void>> = ThunkAction<

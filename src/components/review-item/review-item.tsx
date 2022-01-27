@@ -38,9 +38,9 @@ function ReviewItem ({ comment }: ReviewProps): JSX.Element {
         <span className="rate__message"></span>
       </div>
       <h4 className="review__title title title--lesser">Достоинства:</h4>
-      <p className="review__value">{comment.advantages}</p>
+      <p className="review__value">{comment.advantage}</p>
       <h4 className="review__title title title--lesser">Недостатки:</h4>
-      <p className="review__value">{comment.disadvantages}</p>
+      <p className="review__value">{comment.disadvantage}</p>
       <h4 className="review__title title title--lesser">Комментарий:</h4>
       <p className="review__value">{comment.comment}</p>
     </div>

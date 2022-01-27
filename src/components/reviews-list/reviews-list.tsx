@@ -1,12 +1,14 @@
+import dayjs from 'dayjs';
 import { useState } from 'react';
 import { Comment } from '../../types/guitar';
 import ReviewItem from '../review-item/review-item';
 
 type ReviewsListProps = {
   comments: Comment[],
+  onClickFormReview: (param:boolean)=>void,
 }
 
-function ReviewsList ({comments}:ReviewsListProps): JSX.Element {
+function ReviewsList ({comments, onClickFormReview}:ReviewsListProps): JSX.Element {
 
   const [countRaviews, setCountReviews] = useState(3);
 
@@ -14,22 +16,39 @@ function ReviewsList ({comments}:ReviewsListProps): JSX.Element {
     setCountReviews(countRaviews+3);
   };
 
+  const sortComments = comments.slice().sort((a,b) => {
+    const isBefore = dayjs(a.createAt).isBefore(b.createAt);
+    if (isBefore) { return 1; }
+    return -1;
+  });
+  // const scrollHandler = (evt: Event) => {
+
+  //   if (evt.target.scrollHieght-(evt.target.documentElement.scrollTop + window.innerHeight)< 100) {
+  //     setCountReviews(countRaviews+3);
+  //   }
+  // };
+
+  // useEffect(() => {
+  //   document.addEventListener('scroll' , scrollHandler);
+  //   return document.removeEventListener('scroll', scrollHandler);
+  // }, [scrollHandler]);
+
   return (
     <section className="reviews">
       <h3 className="reviews__title title title--bigger">Отзывы</h3>
       <a
         className="button button--red-border button--big reviews__sumbit-button"
-        href="#"
+        onClick={()=> onClickFormReview(true)}
       >
         Оставить отзыв
       </a>
-      {comments.length >=1 && comments.slice(0, countRaviews).map(
+      {sortComments.length >=1 && sortComments.slice(0, countRaviews).map(
         (comment) =>
           comment && (
             <ReviewItem key={comment.id} comment={comment}/>
           ),
       )}
-      {comments.length > 3 && countRaviews <= comments.length && (
+      {sortComments.length > 3 && countRaviews <= sortComments.length && (
         <button className="button button--medium reviews__more-button"
           onClick={handleClickButton}
         >
@@ -37,10 +56,14 @@ function ReviewsList ({comments}:ReviewsListProps): JSX.Element {
         </button>
       )}
 
-      { comments.length &&(
+      { sortComments.length &&(
         <a
           className="button button--up button--red-border button--big reviews__up-button"
-          href="#header"
+          style={{zIndex:'10'}}
+          onClick={(evt) => {
+            evt.preventDefault();
+            window.scroll(0,0);
+          }}
         >
         Наверх
         </a>)}

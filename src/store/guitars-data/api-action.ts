@@ -1,7 +1,7 @@
 import { ThunkActionResult } from '../../types/action';
-import { guitarFailed, guitarRequest, guitarsFailed, guitarsRequest, guitarsSucceeded, guitarsSucceededForPrice, guitarSucceeded } from './action';
+import { commentFailed, commentRequest, commentSucceeded, guitarFailed, guitarRequest, guitarsFailed, guitarsRequest, guitarsSucceeded, guitarsSucceededForPrice, guitarSucceeded, postReviewReset } from './action';
 import { APIRoute, sortingType } from '../../const';
-import { Guitar } from '../../types/guitar';
+import { Comment, Guitar, PostComment } from '../../types/guitar';
 import { getNewParams } from '../../utils';
 import { toast } from 'react-toastify';
 
@@ -64,3 +64,16 @@ export const fetchGuitarAction = (
     dispatch(guitarFailed());
   }
 };
+
+export const postComment = (comment: PostComment): ThunkActionResult =>
+  async (dispatch, _, api) => {
+    dispatch(commentRequest());
+    try {
+      const { data } = await api.post<Comment>(APIRoute.Comments, comment);
+      dispatch(commentSucceeded(data));
+    } catch {
+      dispatch(commentFailed());
+      dispatch(postReviewReset());
+      toast.info('Не удалось отправить отзыв, попробуйте еще раз.');
+    }
+  };
