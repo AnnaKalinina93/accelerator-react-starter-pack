@@ -10,25 +10,75 @@ import { makeFakeGuitar } from '../../utils/mocks';
 const mockStore = configureMockStore([thunk]);
 
 const guitars = new Array(6).fill(null).map(()=>(makeFakeGuitar()));
-const storeWithGuitars = mockStore({
+const guitar = makeFakeGuitar();
+const storeWithGuitar = mockStore({
   [NameSpace.Guitars]: {
     guitarsLoading: false,
     guitarsError: false,
     guitars,
+    guitar,
+    guitarLoading: false,
+    guitarError: false,
   },
 });
 
+const storeWithGuitarLoading = mockStore({
+  [NameSpace.Guitars]: {
+    guitarsLoading: false,
+    guitarsError: false,
+    guitars,
+    guitar: null,
+    guitarLoading: true,
+    guitarError: false,
+  },
+});
+
+const storeWithGuitarError = mockStore({
+  [NameSpace.Guitars]: {
+    guitarsLoading: false,
+    guitarsError: false,
+    guitars,
+    guitar: null,
+    guitarLoading: false,
+    guitarError: true,
+  },
+});
 
 describe('Component: Product', () => {
-  it('should render correctly', () => {
+  it('should render correctly with guitar', () => {
     render(
-      <Provider store={storeWithGuitars}>
+      <Provider store={storeWithGuitar}>
         <MemoryRouter>
           <Product/>
         </MemoryRouter>
       </Provider>);
 
 
-    expect(screen.getByText(/Описание товара/i)).toBeInTheDocument();
+    expect(screen.getByAltText(guitar.name)).toBeInTheDocument();
+    expect(screen.getByText(guitar.description)).toBeInTheDocument();
+    expect(screen.getByRole('link', {name: 'Добавить в корзину'})).toBeInTheDocument();
+  });
+
+  it('should render correctly when guitar loading', () => {
+    render(
+      <Provider store={storeWithGuitarLoading}>
+        <MemoryRouter>
+          <Product/>
+        </MemoryRouter>
+      </Provider>);
+
+    expect(screen.getByText(/Loading/i)).toBeInTheDocument();
+  });
+
+
+  it('should render correctly when guitar error', () => {
+    render(
+      <Provider store={storeWithGuitarError}>
+        <MemoryRouter>
+          <Product/>
+        </MemoryRouter>
+      </Provider>);
+
+    expect(screen.getByText(/Что-то пошло не так. Попробуйте перезагрузить страницу!/i)).toBeInTheDocument();
   });
 });

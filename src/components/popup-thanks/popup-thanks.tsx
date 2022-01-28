@@ -58,6 +58,7 @@ function PopupThanks(): JSX.Element {
             type="button"
             aria-label="Закрыть"
             onClick={handleReviewReset}
+            data-testid="Закрыть"
           >
             <span className="button-cross__icon"></span>
             <span className="modal__close-btn-interactive-area"></span>

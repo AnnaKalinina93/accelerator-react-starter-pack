@@ -36,7 +36,7 @@ describe('Application Routing', () => {
     history.push(AppRoute.Product);
     render(fakeApp);
 
-    expect(screen.getByText(/Описание товара/i)).toBeInTheDocument();
+    expect(screen.getByRole('link', {name: 'Добавить в корзину'})).toBeInTheDocument();
   });
 
   it('should render "NotFoundScreen" when user navigate to non-existent route', () => {
