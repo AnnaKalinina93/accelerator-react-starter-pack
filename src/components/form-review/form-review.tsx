@@ -115,6 +115,7 @@ function FormReview({nameGuitar, formClass, guitarId, onClickFormReview}:FormRev
                   id="user-name"
                   type="text"
                   name="userName"
+                  data-testid="userName"
                   value={formState.userName}
                   autoComplete="off"
                   onChange={handleChange}
@@ -150,6 +151,7 @@ function FormReview({nameGuitar, formClass, guitarId, onClickFormReview}:FormRev
               id="pros"
               type="text"
               name="advantage"
+              data-testid="advantage"
               value={formState.advantage}
               autoComplete="off"
               onChange={handleChange}
@@ -163,6 +165,7 @@ function FormReview({nameGuitar, formClass, guitarId, onClickFormReview}:FormRev
               id="user-name"
               type="text"
               name="disadvantage"
+              data-testid="disadvantage"
               value={formState.disadvantage}
               autoComplete="off"
               onChange={handleChange}
@@ -176,6 +179,7 @@ function FormReview({nameGuitar, formClass, guitarId, onClickFormReview}:FormRev
               id="user-name"
               rows={10}
               name="comment"
+              data-testid="comment"
               value={formState.comment}
               autoComplete="off"
               onChange={handleChange}

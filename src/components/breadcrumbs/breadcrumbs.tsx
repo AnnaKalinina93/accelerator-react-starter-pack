@@ -19,7 +19,10 @@ function Breadcrumbs({name}: BreadcrumbsProps): JSX.Element {
         </Link>
       </li>
       <li className="breadcrumbs__item">
-        <a className="link">{name? name : 'Товар'}</a>
+        <a className="link"
+          data-testid="Товар"
+        >{name? name : 'Товар'}
+        </a>
       </li>
     </ul>
   );

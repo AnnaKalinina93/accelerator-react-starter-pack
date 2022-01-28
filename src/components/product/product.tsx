@@ -9,15 +9,15 @@ import {
   getGuitarError,
   getGuitarLoading
 } from '../../store/guitars-data/selectors';
-import NotFoundScreen from '../not-found-screen/not-found-screen';
 import ReviewsList from '../reviews-list/reviews-list';
 import { nanoid } from 'nanoid';
-import Breadcrumbs from '../breadcrumbs/breadcrumbs__item';
+import Breadcrumbs from '../breadcrumbs/breadcrumbs';
 import LoadingScreen from '../loading-screen/loading-screen';
 import { activeTabs, guitarTranslate } from '../../const';
 import cn from 'classnames';
 import FormReview from '../form-review/form-review';
 import PopupThanks from '../popup-thanks/popup-thanks';
+import GuitarsErrorScreen from '../guitars-error-screen/guitars-error-screen';
 
 type ParamTypes = {
   id: string
@@ -61,7 +61,7 @@ function Product(): JSX.Element {
           <h1 className="page-content__title title title--bigger">{guitar?.name ?? 'Товар'}</h1>
           <Breadcrumbs name={guitar?.name}/>
           {guitarLoading && <LoadingScreen />}
-          {guitarError && <NotFoundScreen />}
+          {guitarError && <GuitarsErrorScreen />}
           {guitar && (
             <>
               <div className="product-container">

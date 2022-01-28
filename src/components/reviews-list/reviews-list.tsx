@@ -39,6 +39,7 @@ function ReviewsList ({comments, onClickFormReview}:ReviewsListProps): JSX.Eleme
       <a
         className="button button--red-border button--big reviews__sumbit-button"
         onClick={()=> onClickFormReview(true)}
+        data-testid="Оставить отзыв"
       >
         Оставить отзыв
       </a>
