@@ -21,17 +21,6 @@ function ReviewsList ({comments, onClickFormReview}:ReviewsListProps): JSX.Eleme
     if (isBefore) { return 1; }
     return -1;
   });
-  // const scrollHandler = (evt: Event) => {
-
-  //   if (evt.target.scrollHieght-(evt.target.documentElement.scrollTop + window.innerHeight)< 100) {
-  //     setCountReviews(countRaviews+3);
-  //   }
-  // };
-
-  // useEffect(() => {
-  //   document.addEventListener('scroll' , scrollHandler);
-  //   return document.removeEventListener('scroll', scrollHandler);
-  // }, [scrollHandler]);
 
   return (
     <section className="reviews">
