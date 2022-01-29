@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/anchor-is-valid */
 import dayjs from 'dayjs';
 import { useState } from 'react';
 import { Comment } from '../../types/guitar';

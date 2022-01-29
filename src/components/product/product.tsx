@@ -1,3 +1,5 @@
+/* eslint-disable react-hooks/exhaustive-deps */
+/* eslint-disable jsx-a11y/anchor-is-valid */
 import Header from '../header/header';
 import Footer from '../footer/footer';
 import { useParams } from 'react-router';
