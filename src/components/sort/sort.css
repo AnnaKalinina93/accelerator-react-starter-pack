@@ -1,11 +1,11 @@
 .catalog-sort__order-button--up{
-  border-bottom-color:#585757a3
+  border-bottom-color:#585757;
+  z-index: 3;
 
 }
 
 .catalog-sort__order-button--active{
   border-bottom-color:#131212;
-
 }
 
 .catalog-sort__order-button--up:hover {
