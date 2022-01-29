@@ -1,0 +1,18 @@
+.catalog-sort__order-button--up{
+  border-bottom-color:#585757a3
+
+}
+
+.catalog-sort__order-button--active{
+  border-bottom-color:#131212;
+
+}
+
+.catalog-sort__order-button--up:hover {
+  border-bottom-color: #c90606;
+}
+
+.catalog-sort__order-button--up:focus {
+  outline: 1px solid #c90606;
+  outline-offset: 1px;
+}
