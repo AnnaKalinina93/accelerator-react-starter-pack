@@ -3,6 +3,7 @@ import cn from 'classnames';
 import { sortingType } from '../../const';
 import { getChangeSort } from '../../store/ui-state/selectors';
 import { activePageChange, sortChangeOrder, sortChangeType } from '../../store/ui-state/action';
+import './sort.css';
 
 function Sort(): JSX.Element {
   const activeSorting = useSelector(getChangeSort);
