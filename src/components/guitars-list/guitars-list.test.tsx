@@ -49,7 +49,7 @@ const storeWithErrorGuitars = mockStore({
   },
 });
 
-const guitars = new Array(6).fill(null).map(()=>(makeFakeGuitar()));
+const guitars = new Array(6).fill(null).map(() => (makeFakeGuitar()));
 
 const storeWithGuitars = mockStore({
   [NameSpace.Guitars]: {
@@ -75,7 +75,7 @@ describe('Component: GuitarsList', () => {
     render(
       <Provider store={storeWithLoadingGuitars}>
         <MemoryRouter>
-          <GuitarsList guitars = {guitars} />
+          <GuitarsList guitars={guitars} />
         </MemoryRouter>
       </Provider>);
 
@@ -86,7 +86,7 @@ describe('Component: GuitarsList', () => {
     render(
       <Provider store={storeWithErrorGuitars}>
         <MemoryRouter>
-          <GuitarsList guitars = {guitars}/>
+          <GuitarsList guitars={guitars} />
         </MemoryRouter>
       </Provider>);
 
@@ -97,10 +97,10 @@ describe('Component: GuitarsList', () => {
     render(
       <Provider store={storeWithGuitars}>
         <MemoryRouter>
-          <GuitarsList guitars = {guitars}/>
+          <GuitarsList guitars={guitars} />
         </MemoryRouter>
       </Provider>);
 
-    expect(screen.getAllByRole('link', {name: 'Купить'}).length).toEqual(guitars.slice(0,9).length);
+    expect(screen.getAllByRole('link', { name: 'Купить' }).length).toEqual(guitars.slice(0, 9).length);
   });
 });

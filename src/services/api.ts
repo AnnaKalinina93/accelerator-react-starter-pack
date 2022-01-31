@@ -1,14 +1,12 @@
-
-import axios, { AxiosInstance, AxiosResponse, AxiosError, AxiosRequestConfig } from 'axios';
+import axios, {
+  AxiosInstance,
+  AxiosResponse,
+  AxiosError,
+  AxiosRequestConfig
+} from 'axios';
 
 const BACKEND_URL = 'https://accelerator-guitar-shop-api-v1.glitch.me';
 const REQUEST_TIMEOUT = 5000;
-
-// enum HttpCode {
-//   Unauthorized = 401,
-// }
-
-// type UnauthorizedCallback = () => void;
 
 export const createAPI = (): AxiosInstance => {
   const api = axios.create({
@@ -22,9 +20,7 @@ export const createAPI = (): AxiosInstance => {
     (error: AxiosError) => Promise.reject(error),
   );
 
-  api.interceptors.request.use(
-    (config: AxiosRequestConfig) =>config,
-  );
+  api.interceptors.request.use((config: AxiosRequestConfig) => config);
 
   return api;
 };

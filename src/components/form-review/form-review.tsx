@@ -6,16 +6,17 @@ import FormStars from '../form-stars/form-stars';
 import { PostComment } from '../../types/guitar';
 import { postComment } from '../../store/guitars-data/api-action';
 import { getIsPostReview } from '../../store/guitars-data/selectors';
+import './form-review.css';
 
 
 type FormReviewProps = {
   nameGuitar: string
   guitarId: number,
   formClass: string,
-  onClickFormReview: (param: boolean)=> void,
+  onClickFormReview: (param: boolean) => void,
 }
 
-function FormReview({nameGuitar, formClass, guitarId, onClickFormReview}:FormReviewProps): JSX.Element {
+function FormReview({ nameGuitar, formClass, guitarId, onClickFormReview }: FormReviewProps): JSX.Element {
   const isPostReview = useSelector(getIsPostReview);
   const dispatch = useDispatch();
 
@@ -36,7 +37,7 @@ function FormReview({nameGuitar, formClass, guitarId, onClickFormReview}:FormRev
   }, [onEscKeyDown]);
 
   useEffect(() => {
-    if( isPostReview ) {
+    if (isPostReview) {
       setFormState({
         userName: '',
         advantage: '',
@@ -47,13 +48,13 @@ function FormReview({nameGuitar, formClass, guitarId, onClickFormReview}:FormRev
       });
       onClickFormReview(false);
     }
-  },[isPostReview]);
+  }, [isPostReview]);
 
   const postReview = (comment: PostComment) => {
     dispatch(postComment(comment));
   };
 
-  const [formState,setFormState] = useState<{ [key: string]: string }>({
+  const [formState, setFormState] = useState<{ [key: string]: string }>({
     userName: '',
     advantage: '',
     disadvantage: '',
@@ -74,12 +75,12 @@ function FormReview({nameGuitar, formClass, guitarId, onClickFormReview}:FormRev
   };
 
   const isDisabled =
-  formState.userName === ''|| formState.rating === '0' || formState.advantage === '' || formState.disadvantage === '';
+    formState.userName === '' || formState.rating === '0' || formState.advantage === '' || formState.disadvantage === '';
   return (
     <div className={formClass}>
       <div className="modal__wrapper">
         <div className="modal__overlay" data-close-modal
-          onClick={()=>onClickFormReview(false)}
+          onClick={() => onClickFormReview(false)}
         >
         </div>
         <div className="modal__content">
@@ -121,7 +122,7 @@ function FormReview({nameGuitar, formClass, guitarId, onClickFormReview}:FormRev
                   autoComplete="off"
                   onChange={handleChange}
                 />
-                {formState.userName === '' && <span className="form-review__warning">Заполните поле</span>}
+                <span className="form-review__warning">{formState.userName === '' ? 'Заполните поле' : ' '}</span>
               </div>
               <div>
                 <span className="form-review__label form-review__label--required">
@@ -157,7 +158,7 @@ function FormReview({nameGuitar, formClass, guitarId, onClickFormReview}:FormRev
               autoComplete="off"
               onChange={handleChange}
             />
-            {formState.advantage === '' && <span className="form-review__warning">Заполните поле</span>}
+            <span className="form-review__warning">{formState.advantage === '' ? 'Заполните поле' : ' '}</span>
             <label className="form-review__label form-review__label--required" htmlFor="user-name">
               Недостатки
             </label>
@@ -171,7 +172,7 @@ function FormReview({nameGuitar, formClass, guitarId, onClickFormReview}:FormRev
               autoComplete="off"
               onChange={handleChange}
             />
-            {formState.disadvantage === '' && <span className="form-review__warning">Заполните поле</span>}
+            <span className="form-review__warning">{formState.disadvantage === '' ? 'Заполните поле' : ' '}</span>
             <label className="form-review__label" htmlFor="user-name">
               Комментарий
             </label>
@@ -186,7 +187,7 @@ function FormReview({nameGuitar, formClass, guitarId, onClickFormReview}:FormRev
               onChange={handleChange}
             >
             </textarea>
-            {formState.comment === '' && <span className="form-review__warning">Заполните поле</span>}
+            <span className="form-review__warning">{formState.comment === '' ? 'Заполните поле' : ' '}</span>
             <button
               className="button button--medium-20 form-review__button"
               type="submit"
@@ -199,7 +200,7 @@ function FormReview({nameGuitar, formClass, guitarId, onClickFormReview}:FormRev
             className="modal__close-btn button-cross"
             type="button"
             aria-label="Закрыть"
-            onClick={()=>onClickFormReview(false)}
+            onClick={() => onClickFormReview(false)}
           >
             <span className="button-cross__icon"></span>
             <span className="modal__close-btn-interactive-area"></span>

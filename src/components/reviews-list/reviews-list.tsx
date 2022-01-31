@@ -6,18 +6,18 @@ import ReviewItem from '../review-item/review-item';
 
 type ReviewsListProps = {
   comments: Comment[],
-  onClickFormReview: (param:boolean)=>void,
+  onClickFormReview: (param: boolean) => void,
 }
 
-function ReviewsList ({comments, onClickFormReview}:ReviewsListProps): JSX.Element {
+function ReviewsList({ comments, onClickFormReview }: ReviewsListProps): JSX.Element {
 
   const [countRaviews, setCountReviews] = useState(3);
 
   const handleClickButton = () => {
-    setCountReviews(countRaviews+3);
+    setCountReviews(countRaviews + 3);
   };
 
-  const sortComments = comments.slice().sort((a,b) => {
+  const sortComments = comments.slice().sort((a, b) => {
     const isBefore = dayjs(a.createAt).isBefore(b.createAt);
     if (isBefore) { return 1; }
     return -1;
@@ -28,15 +28,15 @@ function ReviewsList ({comments, onClickFormReview}:ReviewsListProps): JSX.Eleme
       <h3 className="reviews__title title title--bigger">Отзывы</h3>
       <a
         className="button button--red-border button--big reviews__sumbit-button"
-        onClick={()=> onClickFormReview(true)}
+        onClick={() => onClickFormReview(true)}
         data-testid="Оставить отзыв"
       >
         Оставить отзыв
       </a>
-      {sortComments.length >=1 && sortComments.slice(0, countRaviews).map(
+      {sortComments.length >= 1 && sortComments.slice(0, countRaviews).map(
         (comment) =>
           comment && (
-            <ReviewItem key={comment.id} comment={comment}/>
+            <ReviewItem key={comment.id} comment={comment} />
           ),
       )}
       {sortComments.length > 3 && countRaviews <= sortComments.length && (
@@ -47,16 +47,16 @@ function ReviewsList ({comments, onClickFormReview}:ReviewsListProps): JSX.Eleme
         </button>
       )}
 
-      { sortComments.length &&(
+      {sortComments.length && (
         <a
           className="button button--up button--red-border button--big reviews__up-button"
-          style={{zIndex:'10'}}
+          style={{ zIndex: '10' }}
           onClick={(evt) => {
             evt.preventDefault();
-            window.scroll(0,0);
+            window.scroll(0, 0);
           }}
         >
-        Наверх
+          Наверх
         </a>)}
     </section>
   );

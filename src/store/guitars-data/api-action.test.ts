@@ -7,10 +7,10 @@ import { APIRoute } from '../../const';
 import { State } from '../../types/state';
 import { makeFakeGuitar} from '../../utils/mocks';
 import { fetchGuitarAction, fetchGuitarsAction, fetchGuitarsForPrice, postComment } from './api-action';
-import { guitarsRequest, guitarsSucceeded, guitarsFailed, guitarsSucceededForPrice, commentRequest, commentSucceeded, guitarSucceeded, guitarRequest, guitarFailed } from './action';
+import { guitarsRequest, guitarsSucceeded, guitarsFailed, guitarsSucceededForPrice, commentRequest, commentSucceeded, guitarSucceeded, guitarRequest, guitarFailed, totalGuitars } from './action';
 import { Comment, PostComment } from '../../types/guitar';
 
-describe('Async offers data actions', () => {
+describe('Async guitars data actions', () => {
   const api = createAPI();
   const mockAPI = new MockAdapter(api);
   const middlewares = [thunk.withExtraArgument(api)];
@@ -23,10 +23,11 @@ describe('Async offers data actions', () => {
 
   it('should guitars when server return 200', async () => {
     const store = mockStore();
-    const fakeGuitars = new Array(5).fill(null).map(() => (makeFakeGuitar()));
+    const fakeGuitars = new Array(9).fill(null).map(() => (makeFakeGuitar()));
+    const totalCount = 27;
     mockAPI
-      .onGet(`${APIRoute.Guitars}?_embed=comments`)
-      .reply(200, fakeGuitars);
+      .onGet(`${APIRoute.Guitars}?_embed=comments&_start=0&_limit=9`)
+      .reply(200, fakeGuitars, {['x-total-count']: `${totalCount}`});
 
     expect(store.getActions()).toEqual([]);
 
@@ -34,6 +35,7 @@ describe('Async offers data actions', () => {
 
     expect(store.getActions()).toEqual([
       guitarsRequest(),
+      totalGuitars(totalCount),
       guitarsSucceeded(fakeGuitars),
     ]);
   });

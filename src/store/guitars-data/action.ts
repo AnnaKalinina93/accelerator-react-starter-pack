@@ -30,6 +30,11 @@ export const guitarSucceeded = createAction(
   }),
 );
 
+export const totalGuitars = createAction(ActionType.TotalGuitars,
+  (count: number) => ({
+    payload: count,
+  }));
+
 export const guitarRequest = createAction(ActionType.GuitarRequest);
 
 export const guitarFailed = createAction(ActionType.GuitarFailed);

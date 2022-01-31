@@ -42,7 +42,7 @@ function Filter(): JSX.Element {
     dispatch(priceChange(name, value));
   }, 500);
 
-  const handleChangePrice = ({target}: ChangeEvent<HTMLInputElement>) => {
+  const handleChangePrice = ({ target }: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = target;
 
     setLocalPriceState((prevState) => ({
@@ -53,7 +53,7 @@ function Filter(): JSX.Element {
     debouncedPriceChange(name, value);
   };
 
-  const handleTypesChange = ({target}: ChangeEvent<HTMLInputElement>) => {
+  const handleTypesChange = ({ target }: ChangeEvent<HTMLInputElement>) => {
     const { value } = target;
     const set = new Set(activeGuitarTypes);
 
@@ -68,7 +68,7 @@ function Filter(): JSX.Element {
 
   };
 
-  const handleStringsChange = ({target}: ChangeEvent<HTMLInputElement>) => {
+  const handleStringsChange = ({ target }: ChangeEvent<HTMLInputElement>) => {
     const { value } = target;
     const set = new Set(activeGuitarStrings);
 
@@ -117,7 +117,7 @@ function Filter(): JSX.Element {
       </fieldset>
       <fieldset className="catalog-filter__block">
         <legend className="catalog-filter__block-title">Тип гитар</legend>
-        { Object.entries(guitarsType).map(([key,value]) =>(
+        {Object.entries(guitarsType).map(([key, value]) => (
           <div key={key} className="form-checkbox catalog-filter__block-item">
             <input
               className="visually-hidden"
@@ -137,7 +137,7 @@ function Filter(): JSX.Element {
         <legend className="catalog-filter__block-title">
           Количество струн
         </legend>
-        { Object.entries(numberOfString).map(([key,value]) => (
+        {Object.entries(numberOfString).map(([key, value]) => (
           <div key={key} className="form-checkbox catalog-filter__block-item">
             <input
               className="visually-hidden"

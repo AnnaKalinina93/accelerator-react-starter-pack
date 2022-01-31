@@ -9,7 +9,7 @@ import { makeFakeGuitar } from '../../utils/mocks';
 
 const mockStore = configureMockStore([thunk]);
 
-const guitars = new Array(6).fill(null).map(()=>(makeFakeGuitar()));
+const guitars = new Array(6).fill(null).map(() => (makeFakeGuitar()));
 const guitar = makeFakeGuitar();
 const storeWithGuitar = mockStore({
   [NameSpace.Guitars]: {
@@ -49,21 +49,21 @@ describe('Component: Product', () => {
     render(
       <Provider store={storeWithGuitar}>
         <MemoryRouter>
-          <Product/>
+          <Product />
         </MemoryRouter>
       </Provider>);
 
 
     expect(screen.getByAltText(guitar.name)).toBeInTheDocument();
     expect(screen.getByText(guitar.description)).toBeInTheDocument();
-    expect(screen.getByRole('link', {name: 'Добавить в корзину'})).toBeInTheDocument();
+    expect(screen.getByRole('link', { name: 'Добавить в корзину' })).toBeInTheDocument();
   });
 
   it('should render correctly when guitar loading', () => {
     render(
       <Provider store={storeWithGuitarLoading}>
         <MemoryRouter>
-          <Product/>
+          <Product />
         </MemoryRouter>
       </Provider>);
 
@@ -75,7 +75,7 @@ describe('Component: Product', () => {
     render(
       <Provider store={storeWithGuitarError}>
         <MemoryRouter>
-          <Product/>
+          <Product />
         </MemoryRouter>
       </Provider>);
 

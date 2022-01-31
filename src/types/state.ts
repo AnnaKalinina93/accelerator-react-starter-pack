@@ -8,6 +8,7 @@ export type GuitarsData = {
   guitarsLoading: boolean,
   guitarsError: boolean,
   guitarsForPrice: Guitar[],
+  totalGuitars: number,
   guitar: Guitar | null,
   guitarLoading: boolean,
   guitarError: boolean,
@@ -27,4 +28,5 @@ export type UiState = {
   typeGuitar: string[],
   activeStrings: string[],
   activePage: number,
+  activeSearch: string,
 }

@@ -14,7 +14,7 @@ const history = createMemoryHistory();
 
 const mockStore = configureMockStore([thunk]);
 
-const guitars = new Array(6).fill(null).map(()=>(makeFakeGuitar()));
+const guitars = new Array(6).fill(null).map(() => makeFakeGuitar());
 const guitar = makeFakeGuitar();
 const storeWithGuitar = mockStore({
   [NameSpace.Guitars]: {
@@ -27,17 +27,18 @@ const storeWithGuitar = mockStore({
   },
 });
 
-const name='ssss';
+const name = 'ssss';
 describe('Component: Breadcrumbs', () => {
   it('should render correctly', () => {
     render(
       <Provider store={storeWithGuitar}>
         <MemoryRouter>
-          <Breadcrumbs name={name}/>
+          <Breadcrumbs name={name} />
         </MemoryRouter>
-      </Provider>);
+      </Provider>,
+    );
 
-    expect(screen.getByRole('link',{name: 'Каталог'})).toBeInTheDocument();
+    expect(screen.getByRole('link', { name: 'Каталог' })).toBeInTheDocument();
     expect(screen.getByTestId('Товар')).toBeInTheDocument();
   });
 
@@ -50,13 +51,14 @@ describe('Component: Breadcrumbs', () => {
             <h1>This is main page</h1>
           </Route>
           <Route>
-            <Breadcrumbs/>
+            <Breadcrumbs />
           </Route>
         </Switch>
-      </Router>);
+      </Router>,
+    );
 
     expect(screen.queryByText(/This is main page/i)).not.toBeInTheDocument();
-    userEvent.click(screen.getByRole('link',{name: 'Каталог'}));
+    userEvent.click(screen.getByRole('link', { name: 'Каталог' }));
     expect(screen.getByText(/This is main page/i)).toBeInTheDocument();
   });
 });

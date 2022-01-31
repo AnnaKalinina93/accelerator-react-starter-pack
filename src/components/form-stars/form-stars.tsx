@@ -9,7 +9,7 @@ type FormStarsProps = {
   value: string;
 }
 
-function FormStars({count, title, value, onStartChange}: FormStarsProps): JSX.Element {
+function FormStars({ count, title, value, onStartChange }: FormStarsProps): JSX.Element {
   return (
     <>
       <input

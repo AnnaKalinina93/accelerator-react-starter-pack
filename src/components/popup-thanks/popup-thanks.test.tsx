@@ -11,7 +11,7 @@ import * as Redux from 'react-redux';
 
 const mockStore = configureMockStore([thunk]);
 
-const guitars = new Array(6).fill(null).map(()=>(makeFakeGuitar()));
+const guitars = new Array(6).fill(null).map(() => (makeFakeGuitar()));
 const guitar = makeFakeGuitar();
 const storeWithGuitar = mockStore({
   [NameSpace.Guitars]: {
@@ -28,11 +28,11 @@ describe('Component: Popupthanks', () => {
     render(
       <Provider store={storeWithGuitar}>
         <MemoryRouter>
-          <PopupThanks/>
+          <PopupThanks />
         </MemoryRouter>
       </Provider>);
 
-    expect(screen.getByRole('button',{name: 'К покупкам!'})).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: 'К покупкам!' })).toBeInTheDocument();
     expect(screen.getByTestId('Закрыть')).toBeInTheDocument();
   });
 
@@ -43,12 +43,12 @@ describe('Component: Popupthanks', () => {
     render(
       <Provider store={storeWithGuitar}>
         <MemoryRouter>
-          <PopupThanks/>
+          <PopupThanks />
         </MemoryRouter>
       </Provider>);
 
-    expect(screen.getByRole('button',{name: 'К покупкам!'})).toBeInTheDocument();
-    userEvent.click(screen.getByRole('button',{name: 'К покупкам!'}));
+    expect(screen.getByRole('button', { name: 'К покупкам!' })).toBeInTheDocument();
+    userEvent.click(screen.getByRole('button', { name: 'К покупкам!' }));
     expect(dispatch).toBeCalledTimes(1);
   });
 });

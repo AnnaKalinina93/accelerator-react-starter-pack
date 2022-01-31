@@ -13,7 +13,7 @@ import * as Redux from 'react-redux';
 const mockStore = configureMockStore([thunk]);
 
 
-const guitars = new Array(27).fill(null).map(()=>(makeFakeGuitar()));
+const guitars = new Array(27).fill(null).map(() => (makeFakeGuitar()));
 
 const store = mockStore({
   [NameSpace.Guitars]: {
@@ -37,7 +37,7 @@ const store = mockStore({
 const fakePagination = (
   <Provider store={store}>
     <MemoryRouter>
-      <Pagination pageCount={3}/>
+      <Pagination pageCount={3} />
     </MemoryRouter>
   </Provider>
 );

@@ -1,7 +1,7 @@
 import { createReducer } from '@reduxjs/toolkit';
 import { sortingType } from '../../const';
 import { UiState } from '../../types/state';
-import { sortChangeType, sortChangeOrder, minPriceChange, maxPriceChange, typeGuitarChange, numberOfStringChange, priceChange, activePageChange } from './action';
+import { sortChangeType, sortChangeOrder, minPriceChange, maxPriceChange, typeGuitarChange, numberOfStringChange, priceChange, activePageChange, activeSearchChange } from './action';
 import * as queryString from 'querystring';
 
 const location = window.location;
@@ -47,11 +47,11 @@ if (parsed.page_) {
 }
 
 let activeStrings: string[] = [];
-if (parsed.strings) {
-  if (Array.isArray(parsed.strings)) {
-    activeStrings = parsed.strings as string[];
+if (parsed.stringCount) {
+  if (Array.isArray(parsed.stringCount)) {
+    activeStrings = parsed.stringCount as string[];
   } else {
-    activeStrings = [parsed.strings as string];
+    activeStrings = [parsed.stringCount as string];
   }
 }
 
@@ -62,6 +62,7 @@ const initialState: UiState = {
   typeGuitar,
   activeStrings,
   activePage,
+  activeSearch: '',
 };
 
 export const uiState = createReducer(initialState, (builder) => {
@@ -100,5 +101,9 @@ export const uiState = createReducer(initialState, (builder) => {
 
     .addCase(activePageChange, (state, action) => {
       state.activePage = action.payload;
+    })
+
+    .addCase(activeSearchChange, (state, action) => {
+      state.activeSearch = action.payload;
     });
 });

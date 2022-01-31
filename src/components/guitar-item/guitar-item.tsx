@@ -1,22 +1,14 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
-import { nanoid } from '@reduxjs/toolkit';
 import { Link } from 'react-router-dom';
 import { Guitar } from '../../types/guitar';
+import RatingPanel from '../rating-panel/rating-panel';
 
 type GuitarItemProps = {
   guitar: Guitar
 }
 
-const RATING_COUNT = 5;
-
 function GuitarItem({ guitar }: GuitarItemProps): JSX.Element {
-  const {
-    name,
-    previewImg,
-    rating,
-    price,
-    comments,
-  }= guitar;
+  const { name, previewImg, rating, price, comments } = guitar;
 
   return (
     <div className="product-card">
@@ -27,23 +19,11 @@ function GuitarItem({ guitar }: GuitarItemProps): JSX.Element {
         alt={name}
       />
       <div className="product-card__info">
-        <div className="rate product-card__rate" aria-hidden="true">
-          <span className="visually-hidden">Рейтинг:</span>
-          { new Array(Math.round(rating)).fill(1).map((item) =>(
-            <svg key={nanoid()} width="12" height="11" aria-hidden="true">
-              <use xlinkHref="#icon-full-star"></use>
-            </svg>))}
-          { new Array(RATING_COUNT-Math.round(rating)).fill(1).map((item) =>(
-            <svg key={nanoid()} width="12" height="11" aria-hidden="true">
-              <use xlinkHref="#icon-star"></use>
-            </svg>
-          ))}
-          <span className="rate__count">{comments.length}</span>
-          <span className="rate__message"></span>
-        </div>
+        <RatingPanel count={comments.length} rating={rating} />
         <p className="product-card__title">{name}</p>
         <p className="product-card__price">
-          <span className="visually-hidden">Цена:</span>{price} ₽
+          <span className="visually-hidden">Цена:</span>
+          {price} ₽
         </p>
       </div>
       <div className="product-card__buttons">
