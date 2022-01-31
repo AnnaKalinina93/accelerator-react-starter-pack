@@ -1,21 +1,25 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import { useDispatch, useSelector } from 'react-redux';
-import { getFilterGuitars } from '../../store/guitars-data/selectors';
+import { getGuitars, getTotalGuitars } from '../../store/guitars-data/selectors';
 import Header from '../header/header';
 import Filter from '../filter/filter';
 import Sort from '../sort/sort';
 import GuitarsList from '../guitars-list/guitars-list';
 import Footer from '../footer/footer';
-import { useEffect, useState } from 'react';
-import { fetchGuitarsAction, fetchGuitarsForPrice } from '../../store/guitars-data/api-action';
+import { useEffect } from 'react';
+import {
+  fetchGuitarsAction,
+  fetchGuitarsForPrice
+} from '../../store/guitars-data/api-action';
 import {
   getChangeSort,
   getMaxPrice,
   getMinPrice,
   getGuitarTypes,
   getActivePage,
-  getActiveStrings
+  getActiveStrings,
+  getActiveSearch
 } from '../../store/ui-state/selectors';
 import Pagination from '../pagination/pagination';
 import { redirectToRoute } from '../../store/middlewares/action';
@@ -23,41 +27,62 @@ import { AppRoute } from '../../const';
 import { getNewParams } from '../../utils';
 
 function Catalog(): JSX.Element {
-  const guitars = useSelector(getFilterGuitars);
+  const guitars = useSelector(getGuitars);
   const activeSorting = useSelector(getChangeSort);
   const activeMinPrice = useSelector(getMinPrice);
   const activeMaxPrice = useSelector(getMaxPrice);
   const activeGuitarTypes = useSelector(getGuitarTypes);
   const activePage = useSelector(getActivePage);
   const activeStrings = useSelector(getActiveStrings);
-
-  const [formState, setFormState] = useState('');
+  const totalGuitars = useSelector(getTotalGuitars);
+  const activeSearch = useSelector(getActiveSearch);
 
   const dispatch = useDispatch();
 
-  useEffect( () => {
-    dispatch(fetchGuitarsForPrice(activeGuitarTypes,activeStrings));
-    dispatch(fetchGuitarsAction(activeSorting, activeMinPrice, activeMaxPrice, activeGuitarTypes));
-    const params = getNewParams(activeSorting, activeMinPrice, activeMaxPrice, activeGuitarTypes, activePage, activeStrings);
+  useEffect(() => {
+    dispatch(
+      fetchGuitarsAction(
+        activeSorting,
+        activeMinPrice,
+        activeMaxPrice,
+        activeGuitarTypes,
+        activePage,
+        activeStrings,
+        activeSearch,
+      ),
+    );
+    const params = getNewParams(
+      activeSorting,
+      activeMinPrice,
+      activeMaxPrice,
+      activeGuitarTypes,
+      activeStrings,
+    );
+    if (activePage !== 1) {
+      params.set('page_', String(activePage));
+    }
     if (params.toString() !== '') {
       dispatch(redirectToRoute(`${AppRoute.Main}?${params.toString()}`));
     }
-  },[activeSorting, activeMinPrice, activeMaxPrice, activeGuitarTypes, activePage, activeStrings]);
+  }, [
+    activeSorting,
+    activeMinPrice,
+    activeMaxPrice,
+    activeGuitarTypes,
+    activePage,
+    activeStrings,
+    activeSearch,
+  ]);
 
-  const handleChange = (value: string) => {
-    setFormState(value);
-  };
+  useEffect(() => {
+    dispatch(fetchGuitarsForPrice(activeGuitarTypes, activeStrings));
+  }, [activeGuitarTypes, activeStrings]);
 
-
-  const searchGuitars = guitars.filter((guitar) =>
-    guitar.name.toLowerCase().includes(formState.toLowerCase()),
-  );
-
-  const PAGE_COUNT = Math.ceil(searchGuitars.length/9);
+  const PAGE_COUNT = Math.ceil(totalGuitars / 9);
 
   return (
     <div className="wrapper">
-      <Header onChangeInput={handleChange} />
+      <Header />
       <main className="page-content">
         <div className="container">
           <h1 className="page-content__title title title--bigger">
@@ -76,8 +101,8 @@ function Catalog(): JSX.Element {
           <div className="catalog">
             <Filter />
             <Sort />
-            <GuitarsList guitars={searchGuitars.slice((activePage-1)*9, activePage*9)} />
-            <Pagination pageCount={PAGE_COUNT}/>
+            <GuitarsList guitars={guitars} />
+            <Pagination pageCount={PAGE_COUNT} />
           </div>
         </div>
       </main>

@@ -59,3 +59,10 @@ export const activePageChange = createAction(
     payload: activePage,
   }),
 );
+
+export const activeSearchChange = createAction(
+  ActionType.ActiveSearch,
+  (activeSearch: string) => ({
+    payload: activeSearch,
+  }),
+);

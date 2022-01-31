@@ -18,12 +18,12 @@ describe('Component: GuitarItem', () => {
     render(
       <Provider store={store}>
         <MemoryRouter>
-          <GuitarItem guitar = {guitar}/>
+          <GuitarItem guitar={guitar} />
         </MemoryRouter>
       </Provider>);
     expect(screen.getByAltText(guitar.name)).toBeInTheDocument();
-    expect(screen.getByRole('link', {name: 'Подробнее'})).toBeInTheDocument();
-    expect(screen.getByRole('link', {name: 'Купить'})).toBeInTheDocument();
+    expect(screen.getByRole('link', { name: 'Подробнее' })).toBeInTheDocument();
+    expect(screen.getByRole('link', { name: 'Купить' })).toBeInTheDocument();
 
   });
 });

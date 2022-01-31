@@ -8,10 +8,10 @@ function App(): JSX.Element {
   return (
     <Switch>
       <Route exact path={AppRoute.Main}>
-        <Catalog/>
+        <Catalog />
       </Route>
       <Route exact path={AppRoute.Product}>
-        <Product/>
+        <Product />
       </Route>
       <Route>
         <NotFoundScreen />

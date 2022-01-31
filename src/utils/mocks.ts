@@ -42,6 +42,7 @@ export const makeFakeStore = (): State => ({
     guitarError: false,
     guitarLoading: false,
     isPostComment: false,
+    totalGuitars: 9,
   },
   UI_STATE: {
     activeSort: {
@@ -53,5 +54,6 @@ export const makeFakeStore = (): State => ({
     typeGuitar: Object.values(guitarType).slice(1),
     activeStrings: ['4','6','12'],
     activePage: 1,
+    activeSearch: '',
   },
 });

@@ -9,7 +9,7 @@ import { makeFakeComment, makeFakeGuitar } from '../../utils/mocks';
 
 const mockStore = configureMockStore([thunk]);
 
-const guitars = new Array(6).fill(null).map(()=>(makeFakeGuitar()));
+const guitars = new Array(6).fill(null).map(() => (makeFakeGuitar()));
 const guitar = makeFakeGuitar();
 const storeWithGuitar = mockStore({
   [NameSpace.Guitars]: {
@@ -27,11 +27,11 @@ describe('Component: ReviewItem', () => {
     render(
       <Provider store={storeWithGuitar}>
         <MemoryRouter>
-          <ReviewItem comment={comment}/>
+          <ReviewItem comment={comment} />
         </MemoryRouter>
       </Provider>);
 
-    expect(screen.getByRole('heading',{name: 'Комментарий:'})).toBeInTheDocument();
+    expect(screen.getByRole('heading', { name: 'Комментарий:' })).toBeInTheDocument();
     expect(screen.getByText(comment.advantage)).toBeInTheDocument();
     expect(screen.getByText(comment.userName)).toBeInTheDocument();
   });

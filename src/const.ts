@@ -15,16 +15,9 @@ export enum SortingRout {
 }
 
 export enum FilterPriceRout {
-  default = '',
-  from = 'price_gte',
-  to = 'price_lte',
-}
-
-export enum FilterTypeGuitarRout {
-  default = '',
-  acoustic = '&type=acoustic',
-  electric = '&type=electric',
-  ukulele = '&type=ukulele',
+  Default = '',
+  From = 'price_gte',
+  To = 'price_lte',
 }
 
 export const sortingType = {

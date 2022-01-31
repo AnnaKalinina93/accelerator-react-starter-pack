@@ -29,7 +29,7 @@ export function getTypesFromStrings ( string: string): string[] {
   }
 }
 
-export function getNewParams (activeSorting: {type: string, order: string}, activeMinPrice: string, activeMaxPrice: string, activeGuitarTypes: string[], activePage?: number, activeStrings?: string[]): URLSearchParams {
+export function getNewParams (activeSorting: {type: string, order: string}, activeMinPrice: string, activeMaxPrice: string, activeGuitarTypes: string[], activeStrings?: string[], activeSearch?:string, activePage?: number): URLSearchParams {
   const params = new URLSearchParams('');
   if (activeSorting.type !== sortingType.type.default && activeSorting.order !== sortingType.order.default) {
     params.set(SortingRout.Type, activeSorting.type);
@@ -44,29 +44,33 @@ export function getNewParams (activeSorting: {type: string, order: string}, acti
     params.set(SortingRout.Order, activeSorting.order);
   }
   if (activeMinPrice) {
-    params.set(FilterPriceRout.from, activeMinPrice);
+    params.set(FilterPriceRout.From, activeMinPrice);
   }
   if (activeMaxPrice) {
-    params.set(FilterPriceRout.to, activeMaxPrice);
+    params.set(FilterPriceRout.To, activeMaxPrice);
   }
   if (activeGuitarTypes.length) {
     activeGuitarTypes.map((type)=>params.append('type', type));
   }
-  if (activePage !== 1 && activePage) {
-    params.set('page_', String(activePage));
+  if (activePage) {
+    params.append('_start',String((activePage-1)*9));
+    params.append('_end',String(activePage*9));
   }
   if (activeStrings && activeStrings.length) {
-    activeStrings.forEach((item)=>params.append('strings', item));
+    activeStrings.forEach((item)=>params.append('stringCount', item));
+  }
+  if (activeSearch && activeSearch !== '') {
+    params.append('name_like',activeSearch);
   }
   return params;
 }
 
 export function getSortInput (guitars: Guitar[], value: string): Guitar[] {
-  return guitars.sort((a,b)=> {
+  return [...guitars].sort((a,b)=> {
     const index1 = a.name.toLowerCase().indexOf(value.toLowerCase());
     const index2 = b.name.toLowerCase().indexOf(value.toLowerCase());
     if ( index1 > index2) { return 1;}
     if ( index2> index1) { return -1;}
-    else {return 0;}
+    return 0;
   });
 }

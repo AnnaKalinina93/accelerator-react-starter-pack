@@ -2,16 +2,14 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import { ChangeEvent, useState } from 'react';
 import cn from 'classnames';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { getGuitars } from '../../store/guitars-data/selectors';
 import { Link } from 'react-router-dom';
 import { getSortInput } from '../../utils';
+import { useDebouncedCallback } from 'use-debounce';
+import { activePageChange, activeSearchChange } from '../../store/ui-state/action';
 
-type HeaderProps = {
-  onChangeInput?: (value: any) => void
-}
-
-function Header({ onChangeInput }: HeaderProps): JSX.Element {
+function Header(): JSX.Element {
 
   const guitars = useSelector(getGuitars);
   const [formInput, setFormInput] = useState({
@@ -23,8 +21,22 @@ function Header({ onChangeInput }: HeaderProps): JSX.Element {
     hidden: !formInput.touched || formInput.value === '',
   });
 
-  const selectedGuitars = guitars.filter((guitar) => guitar.name.toLowerCase().includes(formInput.value.toLowerCase()));
-  const selectedGuitarsByName = getSortInput(selectedGuitars,formInput.value);
+  const dispatch = useDispatch();
+
+  const debouncedInputChange = useDebouncedCallback((value) => {
+    dispatch(activePageChange(1));
+    dispatch(activeSearchChange(value));
+  }, 500);
+
+  const handleChangeInput = ({ target }: ChangeEvent<HTMLInputElement>) => {
+    setFormInput({
+      touched: true,
+      value: target.value,
+    });
+    debouncedInputChange(target.value);
+  };
+
+  //const selectedGuitarsByName = getSortInput(guitars,formInput.value);
 
   return (
     <header className="header" id="#header">
@@ -78,22 +90,14 @@ function Header({ onChangeInput }: HeaderProps): JSX.Element {
               type="text"
               autoComplete="off"
               placeholder="что вы ищите?"
-              onChange={({ target }: ChangeEvent<HTMLInputElement>) => {
-                setFormInput({
-                  touched: true,
-                  value: target.value,
-                });
-                if (onChangeInput) {
-                  return onChangeInput(target.value);
-                }
-              }}
+              onChange={handleChangeInput}
             />
             <label className="visually-hidden" htmlFor="search">
               Поиск
             </label>
           </form>
           <ul className={searchClass}>
-            { selectedGuitarsByName.map((guitar)=> (
+            {guitars.length && getSortInput(guitars, formInput.value).map((guitar) => (
               <li key={guitar.id} className="form-search__select-item">
                 <Link to={`/product/${guitar.id}`} className="form-search__select-item" tabIndex={0}>{guitar.name}</Link>
               </li>

@@ -1,12 +1,11 @@
 import { render, screen } from '@testing-library/react';
 import { configureMockStore } from '@jedmao/redux-mock-store';
-import FormStars from './form-stars';
+import RatingPanel from './rating-panel';
 import thunk from 'redux-thunk';
 import { Provider } from 'react-redux';
 import { MemoryRouter } from 'react-router-dom';
 import { NameSpace } from '../../store/root-reduser';
 import { makeFakeGuitar } from '../../utils/mocks';
-import userEvent from '@testing-library/user-event';
 
 const mockStore = configureMockStore([thunk]);
 
@@ -22,22 +21,20 @@ const storeWithGuitar = mockStore({
     guitarError: false,
   },
 });
-const count = '3';
-const title = '3-start';
-const value = '3';
-const onStartChange = jest.fn();
-describe('Component: FormStars', () => {
+const count = 10;
+const rating = 4;
+describe('Component: ReviewItem', () => {
   it('should render correctly', () => {
     render(
       <Provider store={storeWithGuitar}>
         <MemoryRouter>
-          <FormStars count={count} title={title} onStartChange={onStartChange} value={value} />
+          <RatingPanel count={count} rating={rating} />
         </MemoryRouter>
       </Provider>);
 
-    expect(screen.getByTestId(count)).not.toBeNull();
-    userEvent.click(screen.getByTestId(count));
-    expect(screen.getByTestId(count)).toBeChecked();
-  });
+    expect(screen.getAllByTestId('full').length).toEqual(4);
+    expect(screen.getByTestId('notFull')).toBeInTheDocument();
+    expect(screen.getByText(count)).toBeInTheDocument();
 
+  });
 });

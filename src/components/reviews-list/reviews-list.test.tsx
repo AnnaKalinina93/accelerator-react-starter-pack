@@ -10,7 +10,7 @@ import userEvent from '@testing-library/user-event';
 
 const mockStore = configureMockStore([thunk]);
 
-const guitars = new Array(6).fill(null).map(()=>(makeFakeGuitar()));
+const guitars = new Array(6).fill(null).map(() => (makeFakeGuitar()));
 const guitar = makeFakeGuitar();
 const storeWithGuitar = mockStore({
   [NameSpace.Guitars]: {
@@ -22,27 +22,26 @@ const storeWithGuitar = mockStore({
     guitarError: false,
   },
 });
-const comments = new Array(6).fill(null).map(()=>(makeFakeComment()));
+const comments = new Array(6).fill(null).map(() => (makeFakeComment()));
 const onClickFormReview = jest.fn();
 describe('Component: ReviewsList', () => {
   it('should render correctly', () => {
     render(
       <Provider store={storeWithGuitar}>
         <MemoryRouter>
-          <ReviewsList comments={comments} onClickFormReview={onClickFormReview}/>
+          <ReviewsList comments={comments} onClickFormReview={onClickFormReview} />
         </MemoryRouter>
       </Provider>);
 
-
     expect(screen.getByText('Отзывы')).toBeInTheDocument();
-    expect(screen.getAllByRole('heading',{name: 'Комментарий:'}).length).toEqual(guitar.comments.slice(0,3).length);
-    expect(screen.getByRole('button', {name: 'Показать еще отзывы'})).toBeInTheDocument();
+    expect(screen.getAllByRole('heading', { name: 'Комментарий:' }).length).toEqual(guitar.comments.slice(0, 3).length);
+    expect(screen.getByRole('button', { name: 'Показать еще отзывы' })).toBeInTheDocument();
   });
   it('should render popup review', () => {
     render(
       <Provider store={storeWithGuitar}>
         <MemoryRouter>
-          <ReviewsList comments={comments} onClickFormReview={onClickFormReview}/>
+          <ReviewsList comments={comments} onClickFormReview={onClickFormReview} />
         </MemoryRouter>
       </Provider>);
 

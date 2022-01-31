@@ -5,22 +5,22 @@ import cn from 'classnames';
 import { activePageChange } from '../../store/ui-state/action';
 
 type PaginationProps = {
-pageCount : number;
+  pageCount: number;
 }
 
-function Pagination({pageCount}: PaginationProps): JSX.Element {
+function Pagination({ pageCount }: PaginationProps): JSX.Element {
   const activePage = useSelector(getActivePage);
   const dispatch = useDispatch();
-  const paginationPages = Array.from({ length: pageCount }, (_, i) =>  i + 1);
+  const paginationPages = Array.from({ length: pageCount }, (_, i) => i + 1);
 
   const handleChangePage = (page: number) => {
     dispatch(activePageChange(page));
   };
 
-  const START_PAGE_COUNT = activePage % 3 === 1 && activePage!==1 ? activePage +1: 0;
-  const FINISH_PAGE_COUNT = START_PAGE_COUNT+3;
+  const START_PAGE_COUNT = activePage % 3 === 1 && activePage !== 1 ? activePage + 1 : 0;
+  const FINISH_PAGE_COUNT = START_PAGE_COUNT + 3;
 
-  if (!pageCount) {
+  if (pageCount < 2) {
     return (
       <div className="pagination page-content__pagination"></div>
     );
@@ -28,21 +28,21 @@ function Pagination({pageCount}: PaginationProps): JSX.Element {
   return (
     <div className="pagination page-content__pagination">
       <ul className="pagination__list">
-        { activePage !== 1 && (
+        {activePage !== 1 && (
           <li className="pagination__page pagination__page--next" id="next">
             <a className="link pagination__page-link"
               data-testid="назад"
-              onClick={()=>handleChangePage(activePage-1)}
+              onClick={() => handleChangePage(activePage - 1)}
             >
-            Назад
+              Назад
             </a>
           </li>)}
-        { paginationPages.slice(START_PAGE_COUNT,FINISH_PAGE_COUNT).map((page)=> {
-          const classLink = cn('pagination__page',{'pagination__page--active': activePage === page});
+        {paginationPages.slice(START_PAGE_COUNT, FINISH_PAGE_COUNT).map((page) => {
+          const classLink = cn('pagination__page', { 'pagination__page--active': activePage === page });
           return (
             <li key={page} className={classLink}>
               <a className="link pagination__page-link"
-                onClick={()=>handleChangePage(page)}
+                onClick={() => handleChangePage(page)}
                 data-testid={page}
               >
                 {page}
@@ -50,13 +50,13 @@ function Pagination({pageCount}: PaginationProps): JSX.Element {
             </li>
           );
         })}
-        {activePage !== pageCount && pageCount > 1  && (
+        {activePage !== pageCount && pageCount > 1 && (
           <li className="pagination__page pagination__page--next" id="next">
             <a className="link pagination__page-link"
-              onClick={()=>handleChangePage(activePage+1)}
+              onClick={() => handleChangePage(activePage + 1)}
               data-testid="далее"
             >
-            Далее
+              Далее
             </a>
           </li>)}
       </ul>

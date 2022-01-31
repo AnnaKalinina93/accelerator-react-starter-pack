@@ -42,10 +42,10 @@ function Sort(): JSX.Element {
     });
   };
 
-  const sortTypePriceClass =cn('catalog-sort__type-button',{'catalog-sort__type-button--active ': activeSorting.type === sortingType.type.price});
-  const sortTypePopularityClass =cn('catalog-sort__type-button',{'catalog-sort__type-button--active ': activeSorting.type === sortingType.type.rating});
-  const sortPriceIncreaseClass =cn('catalog-sort__order-button catalog-sort__order-button--up',{'catalog-sort__order-button--active': activeSorting.order === sortingType.order.increase});
-  const sortPriceDecreaseClass = cn('catalog-sort__order-button catalog-sort__order-button--down',{ 'catalog-sort__order-button--active': activeSorting.order === sortingType.order.decrease});
+  const sortTypePriceClass = cn('catalog-sort__type-button', { 'catalog-sort__type-button--active ': activeSorting.type === sortingType.type.price });
+  const sortTypePopularityClass = cn('catalog-sort__type-button', { 'catalog-sort__type-button--active ': activeSorting.type === sortingType.type.rating });
+  const sortPriceIncreaseClass = cn('catalog-sort__order-button catalog-sort__order-button--up', { 'catalog-sort__order-button--active': activeSorting.order === sortingType.order.increase });
+  const sortPriceDecreaseClass = cn('catalog-sort__order-button catalog-sort__order-button--down', { 'catalog-sort__order-button--active': activeSorting.order === sortingType.order.decrease });
   return (
     <div className="catalog-sort">
       <h2 className="catalog-sort__title">Сортировать:</h2>

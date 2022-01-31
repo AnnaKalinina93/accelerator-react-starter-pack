@@ -14,6 +14,7 @@ describe('Reduser: UiState', () => {
       typeGuitar: [],
       activeStrings: [],
       activePage: 1,
+      activeSearch: '',
     };
     expect(uiState(state, sortChangeOrder(sortingType.order.increase)))
       .toEqual({
@@ -26,6 +27,7 @@ describe('Reduser: UiState', () => {
         typeGuitar: [],
         activeStrings: [],
         activePage: 1,
+        activeSearch: '',
       });
   });
 
@@ -40,6 +42,7 @@ describe('Reduser: UiState', () => {
       typeGuitar: [],
       activeStrings: [],
       activePage: 1,
+      activeSearch: '',
     };
     expect(uiState(state, sortChangeType(sortingType.type.price)))
       .toEqual({
@@ -52,6 +55,7 @@ describe('Reduser: UiState', () => {
         typeGuitar: [],
         activeStrings: [],
         activePage: 1,
+        activeSearch: '',
       });
   });
 
@@ -66,6 +70,7 @@ describe('Reduser: UiState', () => {
       typeGuitar: [],
       activeStrings: [],
       activePage: 1,
+      activeSearch: '',
     };
     expect(uiState(state, minPriceChange('2000')))
       .toEqual({
@@ -78,6 +83,7 @@ describe('Reduser: UiState', () => {
         typeGuitar: [],
         activeStrings: [],
         activePage: 1,
+        activeSearch: '',
       });
   });
 
@@ -92,6 +98,7 @@ describe('Reduser: UiState', () => {
       typeGuitar: [],
       activeStrings: [],
       activePage: 1,
+      activeSearch: '',
     };
     expect(uiState(state, maxPriceChange('25000')))
       .toEqual({
@@ -104,6 +111,7 @@ describe('Reduser: UiState', () => {
         typeGuitar: [],
         activeStrings: [],
         activePage: 1,
+        activeSearch: '',
       });
   });
 
@@ -118,6 +126,7 @@ describe('Reduser: UiState', () => {
       typeGuitar: [],
       activeStrings: [],
       activePage: 1,
+      activeSearch: '',
     };
     expect(uiState(state, typeGuitarChange([guitarsType.acoustic])))
       .toEqual({
@@ -130,6 +139,7 @@ describe('Reduser: UiState', () => {
         typeGuitar: [guitarsType.acoustic],
         activeStrings: [],
         activePage: 1,
+        activeSearch: '',
       });
   });
 
@@ -144,6 +154,7 @@ describe('Reduser: UiState', () => {
       typeGuitar: [],
       activeStrings: [],
       activePage: 1,
+      activeSearch: '',
     };
     expect(uiState(state, numberOfStringChange(['4'])))
       .toEqual({
@@ -156,6 +167,7 @@ describe('Reduser: UiState', () => {
         typeGuitar: [],
         activeStrings: ['4'],
         activePage: 1,
+        activeSearch: '',
       });
   });
 
@@ -170,6 +182,7 @@ describe('Reduser: UiState', () => {
       typeGuitar: [],
       activeStrings: [],
       activePage: 1,
+      activeSearch: '',
     };
     expect(uiState(state, activePageChange(2)))
       .toEqual({
@@ -182,6 +195,7 @@ describe('Reduser: UiState', () => {
         typeGuitar: [],
         activeStrings: [],
         activePage: 2,
+        activeSearch: '',
       });
   });
 });

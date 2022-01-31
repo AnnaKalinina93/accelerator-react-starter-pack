@@ -13,7 +13,7 @@ import * as Redux from 'react-redux';
 const mockStore = configureMockStore([thunk]);
 
 
-const guitars = new Array(27).fill(null).map(()=>(makeFakeGuitar()));
+const guitars = new Array(27).fill(null).map(() => (makeFakeGuitar()));
 
 const store = mockStore({
   [NameSpace.Guitars]: {
@@ -37,7 +37,7 @@ const store = mockStore({
 const fakeSort = (
   <Provider store={store}>
     <MemoryRouter>
-      <Sort/>
+      <Sort />
     </MemoryRouter>
   </Provider>
 );
@@ -47,9 +47,8 @@ describe('Component: Sort', () => {
     render(fakeSort);
 
     expect(screen.getByText(/Сортировать/i)).toBeInTheDocument();
-    expect(screen.getByRole('button', {name: 'по цене'})).toBeInTheDocument();
-    expect(screen.getByRole('button', {name: 'по популярности'})).toBeInTheDocument();
-
+    expect(screen.getByRole('button', { name: 'по цене' })).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: 'по популярности' })).toBeInTheDocument();
   });
 
   it('should сhange sort on popular when click button', () => {
@@ -58,8 +57,8 @@ describe('Component: Sort', () => {
     useDispatch.mockReturnValue(dispatch);
     render(fakeSort);
 
-    expect(screen.getByRole('button', {name: 'по популярности'})).toHaveClass('catalog-sort__type-button');
-    userEvent.click(screen.getByRole('button', {name: 'по популярности'}));
+    expect(screen.getByRole('button', { name: 'по популярности' })).toHaveClass('catalog-sort__type-button');
+    userEvent.click(screen.getByRole('button', { name: 'по популярности' }));
     expect(dispatch).toBeCalledTimes(3);
   });
 });

@@ -11,7 +11,7 @@ import * as Redux from 'react-redux';
 
 const mockStore = configureMockStore([thunk]);
 
-const guitars = new Array(6).fill(null).map(()=>(makeFakeGuitar()));
+const guitars = new Array(6).fill(null).map(() => (makeFakeGuitar()));
 const guitar = makeFakeGuitar();
 const storeWithGuitar = mockStore({
   [NameSpace.Guitars]: {
@@ -31,13 +31,13 @@ describe('Component: FormStars', () => {
     render(
       <Provider store={storeWithGuitar}>
         <MemoryRouter>
-          <FormReview nameGuitar={nameGuitar} guitarId={3} formClass={formClass} onClickFormReview={onClickFormReview}/>
+          <FormReview nameGuitar={nameGuitar} guitarId={3} formClass={formClass} onClickFormReview={onClickFormReview} />
         </MemoryRouter>
       </Provider>);
 
-    expect(screen.getByRole('button',{name: 'Отправить отзыв'})).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: 'Отправить отзыв' })).toBeInTheDocument();
     expect(screen.getByText(nameGuitar)).toBeInTheDocument();
-    expect(screen.getByRole('textbox', {name: 'Ваше Имя Достоинства Недостатки Комментарий'})).toBeInTheDocument();
+    expect(screen.getByRole('textbox', { name: 'Ваше Имя Достоинства Недостатки Комментарий' })).toBeInTheDocument();
   });
 
   it('should call dispatch when user write review', () => {
@@ -47,7 +47,7 @@ describe('Component: FormStars', () => {
     render(
       <Provider store={storeWithGuitar}>
         <MemoryRouter>
-          <FormReview nameGuitar={nameGuitar} guitarId={3} formClass={formClass} onClickFormReview={onClickFormReview}/>
+          <FormReview nameGuitar={nameGuitar} guitarId={3} formClass={formClass} onClickFormReview={onClickFormReview} />
         </MemoryRouter>
       </Provider>);
 
@@ -59,9 +59,9 @@ describe('Component: FormStars', () => {
 
     expect(screen.getByDisplayValue(/keks/i)).toBeInTheDocument();
     expect(screen.getByDisplayValue(/fff/i)).toBeInTheDocument();
-    expect(screen.getByRole('button',{name:/Отправить отзыв/i})).toBeEnabled();
+    expect(screen.getByRole('button', { name: /Отправить отзыв/i })).toBeEnabled();
 
-    userEvent.click(screen.getByRole('button',{name:/Отправить отзыв/i}));
+    userEvent.click(screen.getByRole('button', { name: /Отправить отзыв/i }));
     expect(dispatch).toBeCalledTimes(1);
   });
 });

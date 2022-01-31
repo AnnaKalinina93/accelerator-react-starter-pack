@@ -1,5 +1,5 @@
 import { ThunkActionResult } from '../../types/action';
-import { commentFailed, commentRequest, commentSucceeded, guitarFailed, guitarRequest, guitarsFailed, guitarsRequest, guitarsSucceeded, guitarsSucceededForPrice, guitarSucceeded, postReviewReset } from './action';
+import { commentFailed, commentRequest, commentSucceeded, guitarFailed, guitarRequest, guitarsFailed, guitarsRequest, guitarsSucceeded, guitarsSucceededForPrice, guitarSucceeded, postReviewReset, totalGuitars } from './action';
 import { APIRoute, sortingType } from '../../const';
 import { Comment, Guitar, PostComment } from '../../types/guitar';
 import { getNewParams } from '../../utils';
@@ -13,13 +13,18 @@ export const fetchGuitarsAction = (
   minPrice = '',
   maxPrice = '',
   activeTypes: string[] = [],
+  activePage = 1,
+  activeStrings: string[] = [],
+  activeSearch = '',
 ): ThunkActionResult => async (dispatch, _, api): Promise<void> => {
   const baseURL = `${APIRoute.Guitars}?_embed=comments`;
-  const params = getNewParams(activeSorting, minPrice, maxPrice, activeTypes);
+  const params = getNewParams(activeSorting, minPrice, maxPrice, activeTypes, activeStrings, activeSearch, activePage);
   const url = params.toString() ? `${baseURL}&${params.toString()}` : baseURL;
   dispatch(guitarsRequest());
   try {
-    const { data } = await api.get<Guitar[]>(url);
+    const { data, headers } = await api.get<Guitar[]>(url);
+    const count = headers['x-total-count'];
+    dispatch(totalGuitars(Number(count)));
     dispatch(guitarsSucceeded(data));
   } catch {
     dispatch(guitarsFailed());
@@ -33,7 +38,7 @@ export const fetchGuitarsForPrice = (
   const baseURL = `${APIRoute.Guitars}?_embed=comments`;
   const params = new URLSearchParams('');
   if (activeTypes.length) {
-    activeTypes.map((type)=>params.append('type', type));
+    activeTypes.map((type) => params.append('type', type));
   }
   const url = params.toString() ? `${baseURL}&${params.toString()}` : baseURL;
   try {

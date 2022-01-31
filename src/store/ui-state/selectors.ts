@@ -74,3 +74,6 @@ export const selectDisabledTypesCheckboxes = createSelector(
 
 export const getActivePage = (state: State): number =>
   state[NameSpace.Ui].activePage;
+
+export const getActiveSearch = (state: State): string =>
+  state[NameSpace.Ui].activeSearch;

@@ -13,7 +13,6 @@ const mockStore = configureMockStore([thunk]);
 const history = createMemoryHistory();
 
 const store = mockStore(makeFakeStore());
-
 const fakeApp = (
   <Provider store={store}>
     <Router history={history}>
@@ -22,13 +21,12 @@ const fakeApp = (
   </Provider>
 );
 
-
 describe('Application Routing', () => {
   it('should render "Catalog" when user navigate to "/"', () => {
     history.push(AppRoute.Main);
     render(fakeApp);
 
-    expect(screen.getByRole('link', {name: 'Каталог'})).toBeInTheDocument();
+    expect(screen.getByRole('link', { name: 'Каталог' })).toBeInTheDocument();
     expect(screen.getByText(/Сортировать/i)).toBeInTheDocument();
   });
 
@@ -36,7 +34,9 @@ describe('Application Routing', () => {
     history.push(AppRoute.Product);
     render(fakeApp);
 
-    expect(screen.getByRole('link', {name: 'Добавить в корзину'})).toBeInTheDocument();
+    expect(
+      screen.getByRole('link', { name: 'Добавить в корзину' }),
+    ).toBeInTheDocument();
   });
 
   it('should render "NotFoundScreen" when user navigate to non-existent route', () => {

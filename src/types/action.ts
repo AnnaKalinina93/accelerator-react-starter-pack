@@ -8,6 +8,7 @@ export enum ActionType {
   GuitarsRequest = 'catalog/guitarsRequest',
   GuitarsFailed = 'catalog/guitarsFailed',
   GuitarsForPriceSucceeded = 'catalog/guitarsForPriceSucceeded',
+  TotalGuitars = 'catalog/totalGuitars',
   GuitarRequest = 'product/guitarRequest',
   GuitarSucceeded = 'product/guitarSucceeded',
   GuitarFailed = 'product/guitarFailed',
@@ -23,6 +24,7 @@ export enum ActionType {
   TypeGuitar = 'catalog/typeGuitar',
   NumberOfString = 'catalog/numberOfString',
   ActivePage = 'catalog/activePage',
+  ActiveSearch = 'catalog/activeSearch',
   PostReviewReset = 'product/postReviewReset'
 }
 

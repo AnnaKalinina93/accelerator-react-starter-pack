@@ -12,7 +12,6 @@ import {
   getGuitarLoading
 } from '../../store/guitars-data/selectors';
 import ReviewsList from '../reviews-list/reviews-list';
-import { nanoid } from 'nanoid';
 import Breadcrumbs from '../breadcrumbs/breadcrumbs';
 import LoadingScreen from '../loading-screen/loading-screen';
 import { activeTabs, guitarTranslate } from '../../const';
@@ -20,11 +19,11 @@ import cn from 'classnames';
 import FormReview from '../form-review/form-review';
 import PopupThanks from '../popup-thanks/popup-thanks';
 import GuitarsErrorScreen from '../guitars-error-screen/guitars-error-screen';
+import RatingPanel from '../rating-panel/rating-panel';
 
 type ParamTypes = {
   id: string
 }
-const RATING_COUNT = 5;
 
 function Product(): JSX.Element {
   const { id }: ParamTypes = useParams();
@@ -50,18 +49,18 @@ function Product(): JSX.Element {
     setFormReviewState(param);
   };
 
-  const characteristicsClass = cn('button button--medium tabs__button', {'button--black-border': tabsState === activeTabs.description});
-  const characteristicsTableClass = cn('tabs__table', {hidden: tabsState === activeTabs.description});
-  const descriptionClass = cn('button button--medium tabs__button', {'button--black-border': tabsState === activeTabs.characteristics});
-  const descriptionParagraphClass = cn('tabs__product-description', {hidden: tabsState === activeTabs.characteristics});
-  const formClass = cn ('modal modal--review modal-for-ui-kit', {'is-active': formReviewState === true});
+  const characteristicsClass = cn('button button--medium tabs__button', { 'button--black-border': tabsState === activeTabs.description });
+  const characteristicsTableClass = cn('tabs__table', { hidden: tabsState === activeTabs.description });
+  const descriptionClass = cn('button button--medium tabs__button', { 'button--black-border': tabsState === activeTabs.characteristics });
+  const descriptionParagraphClass = cn('tabs__product-description', { hidden: tabsState === activeTabs.characteristics });
+  const formClass = cn('modal modal--review modal-for-ui-kit', { 'is-active': formReviewState === true });
   return (
     <div className="wrapper">
       <Header />
       <main className="page-content">
         <div className="container">
           <h1 className="page-content__title title title--bigger">{guitar?.name ?? 'Товар'}</h1>
-          <Breadcrumbs name={guitar?.name}/>
+          <Breadcrumbs name={guitar?.name} />
           {guitarLoading && <LoadingScreen />}
           {guitarError && <GuitarsErrorScreen />}
           {guitar && (
@@ -78,36 +77,7 @@ function Product(): JSX.Element {
                   <h2 className="product-container__title title title--big title--uppercase">
                     {guitar.name}
                   </h2>
-                  <div
-                    className="rate product-container__rating"
-                    aria-hidden="true"
-                  >
-                    <span className="visually-hidden">Рейтинг:</span>
-                    {new Array(Math.round(guitar.rating)).fill(1).map((item) => (
-                      <svg
-                        key={nanoid()}
-                        width="12"
-                        height="11"
-                        aria-hidden="true"
-                      >
-                        <use xlinkHref="#icon-full-star"></use>
-                      </svg>
-                    ))}
-                    {new Array(RATING_COUNT - Math.round(guitar.rating))
-                      .fill(1)
-                      .map((item) => (
-                        <svg
-                          key={nanoid()}
-                          width="12"
-                          height="11"
-                          aria-hidden="true"
-                        >
-                          <use xlinkHref="#icon-star"></use>
-                        </svg>
-                      ))}
-                    <span className="rate__count"></span>
-                    <span className="rate__message"></span>
-                  </div>
+                  <RatingPanel rating={guitar.rating} />
                   <div className="tabs">
                     <a
                       className={characteristicsClass}
@@ -161,9 +131,9 @@ function Product(): JSX.Element {
                   </a>
                 </div>
               </div>
-              <ReviewsList comments={guitar.comments} onClickFormReview={handleClickFormReview}/>
-              <FormReview nameGuitar={guitar.name} guitarId={guitar.id} formClass={formClass} onClickFormReview={handleClickFormReview}/>
-              {formReviewState === false && <PopupThanks/>}
+              <ReviewsList comments={guitar.comments} onClickFormReview={handleClickFormReview} />
+              <FormReview nameGuitar={guitar.name} guitarId={guitar.id} formClass={formClass} onClickFormReview={handleClickFormReview} />
+              {formReviewState === false && <PopupThanks />}
             </>
           )}
         </div>

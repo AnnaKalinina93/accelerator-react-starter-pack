@@ -20,6 +20,7 @@ describe('Reduser: GuitarsData', () => {
       guitarLoading: false,
       guitarError: false,
       isPostComment: false,
+      totalGuitars:9,
     };
     expect(guitarsData(state, guitarsRequest()))
       .toEqual({
@@ -34,6 +35,7 @@ describe('Reduser: GuitarsData', () => {
         guitarLoading: false,
         guitarError: false,
         isPostComment: false,
+        totalGuitars:9,
       });
   });
 
@@ -50,6 +52,7 @@ describe('Reduser: GuitarsData', () => {
       guitarLoading: false,
       guitarError: false,
       isPostComment: false,
+      totalGuitars:9,
     };
     expect(guitarsData(state, guitarsSucceeded(guitars)))
       .toEqual({
@@ -64,6 +67,7 @@ describe('Reduser: GuitarsData', () => {
         guitarLoading: false,
         guitarError: false,
         isPostComment: false,
+        totalGuitars:9,
       });
   });
 
@@ -80,6 +84,7 @@ describe('Reduser: GuitarsData', () => {
       guitarLoading: false,
       guitarError: false,
       isPostComment: false,
+      totalGuitars:9,
     };
     expect(guitarsData(state, guitarsFailed()))
       .toEqual({
@@ -94,6 +99,7 @@ describe('Reduser: GuitarsData', () => {
         guitarLoading: false,
         guitarError: false,
         isPostComment: false,
+        totalGuitars:9,
       });
   });
 
@@ -110,6 +116,7 @@ describe('Reduser: GuitarsData', () => {
       guitarLoading: false,
       guitarError: false,
       isPostComment: false,
+      totalGuitars:9,
     };
     expect(guitarsData(state, guitarSucceeded(guitar)))
       .toEqual({
@@ -124,6 +131,7 @@ describe('Reduser: GuitarsData', () => {
         guitarLoading: false,
         guitarError: false,
         isPostComment: false,
+        totalGuitars:9,
       });
   });
 
@@ -140,6 +148,7 @@ describe('Reduser: GuitarsData', () => {
       guitarLoading: false,
       guitarError: false,
       isPostComment: false,
+      totalGuitars:9,
     };
     expect(guitarsData(state, guitarRequest()))
       .toEqual({
@@ -154,6 +163,7 @@ describe('Reduser: GuitarsData', () => {
         guitarLoading: true,
         guitarError: false,
         isPostComment: false,
+        totalGuitars:9,
       });
   });
 
@@ -170,6 +180,7 @@ describe('Reduser: GuitarsData', () => {
       guitarLoading: false,
       guitarError: false,
       isPostComment: false,
+      totalGuitars:9,
     };
     expect(guitarsData(state, guitarFailed()))
       .toEqual({
@@ -184,6 +195,7 @@ describe('Reduser: GuitarsData', () => {
         guitarLoading: false,
         guitarError: true,
         isPostComment: false,
+        totalGuitars:9,
       });
   });
 
@@ -200,6 +212,7 @@ describe('Reduser: GuitarsData', () => {
       guitarLoading: false,
       guitarError: false,
       isPostComment: false,
+      totalGuitars:9,
     };
     const newGuitar = {
       ...guitar,
@@ -217,6 +230,7 @@ describe('Reduser: GuitarsData', () => {
         guitarLoading: false,
         guitarError: false,
         isPostComment: true,
+        totalGuitars:9,
       });
   });
 
@@ -233,6 +247,7 @@ describe('Reduser: GuitarsData', () => {
       guitarLoading: false,
       guitarError: false,
       isPostComment: false,
+      totalGuitars:9,
     };
     expect(guitarsData(state, commentRequest()))
       .toEqual({
@@ -247,6 +262,7 @@ describe('Reduser: GuitarsData', () => {
         guitarLoading: false,
         guitarError: false,
         isPostComment: false,
+        totalGuitars:9,
       });
   });
 
@@ -264,6 +280,7 @@ describe('Reduser: GuitarsData', () => {
       guitarLoading: false,
       guitarError: false,
       isPostComment: false,
+      totalGuitars:9,
     };
     expect(guitarsData(state, commentFailed()))
       .toEqual({
@@ -278,6 +295,7 @@ describe('Reduser: GuitarsData', () => {
         guitarLoading: false,
         guitarError: false,
         isPostComment: false,
+        totalGuitars:9,
       });
   });
 
@@ -294,6 +312,7 @@ describe('Reduser: GuitarsData', () => {
       guitarLoading: false,
       guitarError: false,
       isPostComment: true,
+      totalGuitars:9,
     };
     expect(guitarsData(state, postReviewReset()))
       .toEqual({
@@ -308,6 +327,7 @@ describe('Reduser: GuitarsData', () => {
         guitarLoading: false,
         guitarError: false,
         isPostComment: false,
+        totalGuitars:9,
       });
   });
 });

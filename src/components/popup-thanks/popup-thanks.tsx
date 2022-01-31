@@ -24,7 +24,7 @@ function PopupThanks(): JSX.Element {
     return () => document.removeEventListener('keydown', onEscKeyDown);
   }, [onEscKeyDown]);
 
-  const popupClass = cn('modal modal--success modal-for-ui-kit',{'is-active': isPostReview});
+  const popupClass = cn('modal modal--success modal-for-ui-kit', { 'is-active': isPostReview });
   const handleReviewReset = () => {
     dispatch(postReviewReset());
   };
