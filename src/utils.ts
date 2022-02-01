@@ -70,7 +70,7 @@ export function getSortInput (guitars: Guitar[], value: string): Guitar[] {
     const index1 = a.name.toLowerCase().indexOf(value.toLowerCase());
     const index2 = b.name.toLowerCase().indexOf(value.toLowerCase());
     if ( index1 > index2) { return 1;}
-    if ( index2> index1) { return -1;}
+    if ( index2 > index1) { return -1;}
     return 0;
   });
 }

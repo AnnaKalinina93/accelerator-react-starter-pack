@@ -26,8 +26,8 @@ describe('Async guitars data actions', () => {
     const fakeGuitars = new Array(9).fill(null).map(() => (makeFakeGuitar()));
     const totalCount = 27;
     mockAPI
-      .onGet(`${APIRoute.Guitars}?_embed=comments&_start=0&_limit=9`)
-      .reply(200, fakeGuitars, {['x-total-count']: `${totalCount}`});
+      .onGet(`${APIRoute.Guitars}?_embed=comments&_start=0&_end=9`)
+      .reply(200, fakeGuitars, {'x-total-count': `${totalCount}`});
 
     expect(store.getActions()).toEqual([]);
 
@@ -44,7 +44,7 @@ describe('Async guitars data actions', () => {
     const store = mockStore();
 
     mockAPI
-      .onGet(`${APIRoute.Guitars}?_embed=comments`)
+      .onGet(`${APIRoute.Guitars}?_embed=comments&_start=0&_end=9`)
       .reply(404, []);
 
     expect(store.getActions()).toEqual([]);
