@@ -2,8 +2,7 @@ import { ChangeEvent, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { guitarsType, numberOfString } from '../../const';
 import { typeGuitarChange, numberOfStringChange, priceChange, activePageChange } from '../../store/ui-state/action';
-import { getGuitarTypes, getActiveStrings, selectDisabledStringCheckboxes, selectDisabledTypesCheckboxes } from '../../store/ui-state/selectors';
-import { selectPrices } from '../../store/guitars-data/selectors';
+import { getGuitarTypes, getActiveStrings, selectDisabledStringCheckboxes, selectDisabledTypesCheckboxes, getMaxPrice, getMinPrice } from '../../store/ui-state/selectors';
 import { useDebouncedCallback } from 'use-debounce';
 
 const typesPrices = {
@@ -13,7 +12,8 @@ const typesPrices = {
 
 function Filter(): JSX.Element {
   const dispatch = useDispatch();
-  const { minPrice, maxPrice } = useSelector(selectPrices);
+  const minPrice = useSelector(getMinPrice);
+  const maxPrice = useSelector(getMaxPrice);
   const activeGuitarTypes = useSelector(getGuitarTypes);
   const activeGuitarStrings = useSelector(getActiveStrings);
   const disabledStringCheckboxes = useSelector(selectDisabledStringCheckboxes);
@@ -27,12 +27,12 @@ function Filter(): JSX.Element {
 
     let correctedPrice = value;
 
-    if (Number(value) < minPrice && name === typesPrices.minPrice) {
-      correctedPrice = minPrice.toString();
+    if (Number(value) < Number(minPrice) && name === typesPrices.minPrice) {
+      correctedPrice = minPrice;
     }
 
-    if (Number(value) > maxPrice && name === typesPrices.maxPrice) {
-      correctedPrice = maxPrice.toString();
+    if (Number(value) > Number(maxPrice) && name === typesPrices.maxPrice) {
+      correctedPrice = maxPrice;
     }
 
     setLocalPriceState((prevState) => ({

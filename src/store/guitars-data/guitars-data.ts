@@ -7,7 +7,6 @@ import {
   commentFailed,
   commentRequest,
   commentSucceeded,
-  guitarsSucceededForPrice,
   guitarFailed,
   guitarRequest,
   guitarSucceeded,
@@ -23,7 +22,6 @@ const initialState: GuitarsData = {
   comment: null,
   commentLoading: false,
   commentError: false,
-  guitarsForPrice : [],
   guitar: null,
   guitarLoading: false,
   guitarError: false,
@@ -50,11 +48,6 @@ export const guitarsData = createReducer(initialState, (builder) => {
 
     .addCase(totalGuitars, (state, action) => {
       state.totalGuitars = action.payload;
-    })
-
-
-    .addCase(guitarsSucceededForPrice, (state, action) => {
-      state.guitarsForPrice = action.payload;
     })
 
     .addCase(guitarRequest, (state) => {

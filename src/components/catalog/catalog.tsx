@@ -10,7 +10,8 @@ import Footer from '../footer/footer';
 import { useEffect } from 'react';
 import {
   fetchGuitarsAction,
-  fetchGuitarsForPrice
+  fetchGuitarsForMaxPrice,
+  fetchGuitarsForMinPrice
 } from '../../store/guitars-data/api-action';
 import {
   getChangeSort,
@@ -75,7 +76,8 @@ function Catalog(): JSX.Element {
   ]);
 
   useEffect(() => {
-    dispatch(fetchGuitarsForPrice(activeGuitarTypes, activeStrings));
+    dispatch(fetchGuitarsForMinPrice(activeGuitarTypes, activeStrings));
+    dispatch(fetchGuitarsForMaxPrice(activeGuitarTypes, activeStrings));
   }, [activeGuitarTypes, activeStrings]);
 
   const PAGE_COUNT = Math.ceil(totalGuitars / 9);
