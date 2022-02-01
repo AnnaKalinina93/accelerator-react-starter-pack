@@ -1,9 +1,10 @@
 import { ThunkActionResult } from '../../types/action';
-import { commentFailed, commentRequest, commentSucceeded, guitarFailed, guitarRequest, guitarsFailed, guitarsRequest, guitarsSucceeded, guitarsSucceededForPrice, guitarSucceeded, postReviewReset, totalGuitars } from './action';
-import { APIRoute, sortingType } from '../../const';
+import { commentFailed, commentRequest, commentSucceeded, guitarFailed, guitarRequest, guitarsFailed, guitarsRequest, guitarsSucceeded, guitarSucceeded, postReviewReset, totalGuitars } from './action';
+import { APIRoute, SortingRout, sortingType } from '../../const';
 import { Comment, Guitar, PostComment } from '../../types/guitar';
 import { getNewParams } from '../../utils';
 import { toast } from 'react-toastify';
+import { maxPriceChange, minPriceChange } from '../ui-state/action';
 
 export const fetchGuitarsAction = (
   activeSorting = {
@@ -31,30 +32,55 @@ export const fetchGuitarsAction = (
   }
 };
 
-export const fetchGuitarsForPrice = (
+export const fetchGuitarsForMinPrice = (
   activeTypes: string[] = [],
   activeStrings: string[] = [],
 ): ThunkActionResult => async (dispatch, _, api): Promise<void> => {
-  const baseURL = `${APIRoute.Guitars}?_embed=comments`;
+  const baseURL = `${APIRoute.Guitars}?`;
   const params = new URLSearchParams('');
   if (activeTypes.length) {
     activeTypes.map((type) => params.append('type', type));
   }
+  params.append(SortingRout.Type, sortingType.type.price);
+  params.append(SortingRout.Order, sortingType.order.increase);
+  params.append('_start','0');
+  params.append('_end','1');
+  if (activeStrings.length) {
+    activeStrings.forEach((item)=>params.append('stringCount', item));
+  }
   const url = params.toString() ? `${baseURL}&${params.toString()}` : baseURL;
   try {
     const { data } = await api.get<Guitar[]>(url);
-    if (activeStrings.length) {
-      let currentGuitars: Guitar[] = [];
-      activeStrings.forEach((count) => {
-        const selectedGuitars = data.filter((guitar) => guitar.stringCount === Number(count));
-        currentGuitars = [...currentGuitars, ...selectedGuitars];
-      });
-      dispatch(guitarsSucceededForPrice(currentGuitars));
-    } else {
-      dispatch(guitarsSucceededForPrice(data));
-    }
+    const guitar = data[0];
+    dispatch(minPriceChange(String(guitar.price)));
   } catch {
-    toast.info('Не удалось пересчитать минималльную и максимальную цену');
+    toast.info('Не удалось пересчитать минималльную цену');
+  }
+};
+
+export const fetchGuitarsForMaxPrice = (
+  activeTypes: string[] = [],
+  activeStrings: string[] = [],
+): ThunkActionResult => async (dispatch, _, api): Promise<void> => {
+  const baseURL = `${APIRoute.Guitars}?`;
+  const params = new URLSearchParams('');
+  if (activeTypes.length) {
+    activeTypes.map((type) => params.append('type', type));
+  }
+  params.append(SortingRout.Type, sortingType.type.price);
+  params.append(SortingRout.Order, sortingType.order.decrease);
+  params.append('_start','0');
+  params.append('_end','1');
+  if (activeStrings.length) {
+    activeStrings.forEach((item)=>params.append('stringCount', item));
+  }
+  const url = params.toString() ? `${baseURL}&${params.toString()}` : baseURL;
+  try {
+    const { data } = await api.get<Guitar[]>(url);
+    const guitar = data[0];
+    dispatch(maxPriceChange(String(guitar.price)));
+  } catch {
+    toast.info('Не удалось пересчитать максимальную цену');
   }
 };
 

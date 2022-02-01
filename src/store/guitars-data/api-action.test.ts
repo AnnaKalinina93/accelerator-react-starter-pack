@@ -6,9 +6,10 @@ import { createAPI } from '../../services/api';
 import { APIRoute } from '../../const';
 import { State } from '../../types/state';
 import { makeFakeGuitar} from '../../utils/mocks';
-import { fetchGuitarAction, fetchGuitarsAction, fetchGuitarsForPrice, postComment } from './api-action';
-import { guitarsRequest, guitarsSucceeded, guitarsFailed, guitarsSucceededForPrice, commentRequest, commentSucceeded, guitarSucceeded, guitarRequest, guitarFailed, totalGuitars } from './action';
+import { fetchGuitarAction, fetchGuitarsAction, fetchGuitarsForMaxPrice, fetchGuitarsForMinPrice, postComment } from './api-action';
+import { guitarsRequest, guitarsSucceeded, guitarsFailed, commentRequest, commentSucceeded, guitarSucceeded, guitarRequest, guitarFailed, totalGuitars } from './action';
 import { Comment, PostComment } from '../../types/guitar';
+import { maxPriceChange, minPriceChange } from '../ui-state/action';
 
 describe('Async guitars data actions', () => {
   const api = createAPI();
@@ -57,34 +58,36 @@ describe('Async guitars data actions', () => {
     ]);
   });
 
-  it('should guitars for price when server return 200', async () => {
+  it('should guitars for min price when server return 200', async () => {
     const store = mockStore();
-    const fakeGuitars = new Array(5).fill(null).map(() => (makeFakeGuitar()));
+    const fakeGuitars = [makeFakeGuitar()];
     mockAPI
-      .onGet(`${APIRoute.Guitars}?_embed=comments`)
+      .onGet(`${APIRoute.Guitars}?&_sort=price&_order=asc&_start=0&_end=1`)
       .reply(200, fakeGuitars);
 
     expect(store.getActions()).toEqual([]);
 
-    await store.dispatch(fetchGuitarsForPrice());
+    await store.dispatch(fetchGuitarsForMinPrice());
 
     expect(store.getActions()).toEqual([
-      guitarsSucceededForPrice(fakeGuitars),
+      minPriceChange( String(fakeGuitars[0].price)),
     ]);
   });
 
-  it('should return guitars for price error when server return 404', async () => {
+  it('should guitars for max price when server return 200', async () => {
     const store = mockStore();
-
+    const fakeGuitars = [makeFakeGuitar()];
     mockAPI
-      .onGet(`${APIRoute.Guitars}?_embed=comments`)
-      .reply(404, []);
+      .onGet(`${APIRoute.Guitars}?&_sort=price&_order=desc&_start=0&_end=1`)
+      .reply(200, fakeGuitars);
 
     expect(store.getActions()).toEqual([]);
 
-    await store.dispatch(fetchGuitarsForPrice());
+    await store.dispatch(fetchGuitarsForMaxPrice());
 
-    expect(store.getActions()).toEqual([]);
+    expect(store.getActions()).toEqual([
+      maxPriceChange( String(fakeGuitars[0].price)),
+    ]);
   });
 
   it('should post comment on server and return new reviews', async () => {
