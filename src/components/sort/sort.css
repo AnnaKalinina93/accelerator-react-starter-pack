@@ -34,3 +34,7 @@
 .catalog-sort__type-button {
   color: #585757
 }
+
+.catalog-sort__order-button {
+  border-style: solid;
+}

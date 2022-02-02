@@ -36,8 +36,6 @@ function Header(): JSX.Element {
     debouncedInputChange(target.value);
   };
 
-  //const selectedGuitarsByName = getSortInput(guitars,formInput.value);
-
   return (
     <header className="header" id="#header">
       <div className="container header__wrapper">
