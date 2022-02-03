@@ -104,7 +104,7 @@ function Header(): JSX.Element {
             </label>
           </form>
           <ul className={searchClass}>
-            {guitars.length && getSortInput(guitars, formInput.value).map((guitar) => (
+            {guitars.length >=1 && getSortInput(guitars, formInput.value).map((guitar) => (
               <li key={guitar.id} className="form-search__select-item">
                 <Link to={`/product/${guitar.id}`} className="form-search__select-item" tabIndex={0}>{guitar.name}</Link>
               </li>
