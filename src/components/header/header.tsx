@@ -11,13 +11,15 @@ import { activePageChange, activeSearchChange } from '../../store/ui-state/actio
 import { fetchSearchGuitarsAction } from '../../store/guitars-data/api-action';
 import { redirectToRoute } from '../../store/middlewares/action';
 import { AppRoute } from '../../const';
+import { getActiveSearch } from '../../store/ui-state/selectors';
 
 function Header(): JSX.Element {
 
   const guitars = useSelector(getSearchGuitars);
+  const activeSearch = useSelector(getActiveSearch);
   const [formInput, setFormInput] = useState({
     touched: false,
-    value: '',
+    value: activeSearch,
   });
 
   const searchClass = cn('form-search__select-list', {
@@ -94,6 +96,7 @@ function Header(): JSX.Element {
               type="text"
               autoComplete="off"
               placeholder="что вы ищите?"
+              value={formInput.value}
               onChange={handleChangeInput}
             />
             <label className="visually-hidden" htmlFor="search">
