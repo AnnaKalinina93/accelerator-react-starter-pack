@@ -69,7 +69,6 @@ function Sort(): JSX.Element {
         <button
           className={sortPriceIncreaseClass}
           aria-label="По возрастанию"
-          tabIndex={-1}
           onClick={handleUpClick}
         />
         <button

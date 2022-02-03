@@ -1,5 +1,5 @@
 import { ThunkActionResult } from '../../types/action';
-import { commentFailed, commentRequest, commentSucceeded, guitarFailed, guitarRequest, guitarsFailed, guitarsRequest, guitarsSucceeded, guitarSucceeded, postReviewReset, totalGuitars } from './action';
+import { commentFailed, commentRequest, commentSucceeded, guitarFailed, guitarRequest, guitarsFailed, guitarsRequest, guitarsSucceeded, guitarSucceeded, postReviewReset, searchGuitarsSucceeded, totalGuitars } from './action';
 import { APIRoute, SortingRout, sortingType } from '../../const';
 import { Comment, Guitar, PostComment } from '../../types/guitar';
 import { getNewParams } from '../../utils';
@@ -29,6 +29,22 @@ export const fetchGuitarsAction = (
     dispatch(guitarsSucceeded(data));
   } catch {
     dispatch(guitarsFailed());
+  }
+};
+
+export const fetchSearchGuitarsAction = (
+  activeSearch = '',
+): ThunkActionResult => async (dispatch, _, api): Promise<void> => {
+  const baseURL = `${APIRoute.Guitars}?_embed=comments`;
+  const params = new URLSearchParams('');
+  params.append('name_like',activeSearch);
+
+  const url = params.toString() ? `${baseURL}&${params.toString()}` : baseURL;
+  try {
+    const { data } = await api.get<Guitar[]>(url);
+    dispatch(searchGuitarsSucceeded(data));
+  } catch {
+    toast.info('Не удалось найти нужный товар, попробуйте еще раз.');
   }
 };
 
