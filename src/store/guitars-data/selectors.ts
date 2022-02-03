@@ -11,7 +11,7 @@ export const getGuitarsError = (state: State): boolean =>
 export const getTotalGuitars = (state: State): number =>
   state[NameSpace.Guitars].totalGuitars;
 export const getSearchGuitars = (state: State): Guitar[] =>
-  state[NameSpace.Guitars].guitars;
+  state[NameSpace.Guitars].searchGuitars;
 
 export const getGuitar = (state: State): Guitar | null =>
   state[NameSpace.Guitars].guitar;

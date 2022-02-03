@@ -19,6 +19,7 @@ const storeWithGuitar = mockStore({
     guitar,
     guitarLoading: false,
     guitarError: false,
+    searchGuitars: [],
   },
 });
 
@@ -30,6 +31,7 @@ const storeWithGuitarLoading = mockStore({
     guitar: null,
     guitarLoading: true,
     guitarError: false,
+    searchGuitars: [],
   },
 });
 
@@ -41,6 +43,7 @@ const storeWithGuitarError = mockStore({
     guitar: null,
     guitarLoading: false,
     guitarError: true,
+    searchGuitars: [],
   },
 });
 

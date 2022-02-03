@@ -9,6 +9,8 @@ import { getSortInput } from '../../utils';
 import { useDebouncedCallback } from 'use-debounce';
 import { activePageChange, activeSearchChange } from '../../store/ui-state/action';
 import { fetchSearchGuitarsAction } from '../../store/guitars-data/api-action';
+import { redirectToRoute } from '../../store/middlewares/action';
+import { AppRoute } from '../../const';
 
 function Header(): JSX.Element {
 
@@ -73,7 +75,9 @@ function Header(): JSX.Element {
           <form
             className="form-search__form"
           >
-            <button className="form-search__submit" type="submit">
+            <button className="form-search__submit" type="submit"
+              onClick = {()=> dispatch(redirectToRoute(AppRoute.Main))}
+            >
               <svg
                 className="form-search__icon"
                 width="14"
