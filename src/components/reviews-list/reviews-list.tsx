@@ -47,7 +47,7 @@ function ReviewsList({ comments, onClickFormReview }: ReviewsListProps): JSX.Ele
         </button>
       )}
 
-      {sortComments.length && (
+      {sortComments.length>=1 && (
         <a
           className="button button--up button--red-border button--big reviews__up-button"
           style={{ zIndex: '10' }}
