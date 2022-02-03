@@ -3,15 +3,16 @@
 import { ChangeEvent, useState } from 'react';
 import cn from 'classnames';
 import { useDispatch, useSelector } from 'react-redux';
-import { getGuitars } from '../../store/guitars-data/selectors';
+import { getSearchGuitars } from '../../store/guitars-data/selectors';
 import { Link } from 'react-router-dom';
 import { getSortInput } from '../../utils';
 import { useDebouncedCallback } from 'use-debounce';
 import { activePageChange, activeSearchChange } from '../../store/ui-state/action';
+import { fetchSearchGuitarsAction } from '../../store/guitars-data/api-action';
 
 function Header(): JSX.Element {
 
-  const guitars = useSelector(getGuitars);
+  const guitars = useSelector(getSearchGuitars);
   const [formInput, setFormInput] = useState({
     touched: false,
     value: '',
@@ -26,6 +27,7 @@ function Header(): JSX.Element {
   const debouncedInputChange = useDebouncedCallback((value) => {
     dispatch(activePageChange(1));
     dispatch(activeSearchChange(value));
+    dispatch(fetchSearchGuitarsAction(value));
   }, 500);
 
   const handleChangeInput = ({ target }: ChangeEvent<HTMLInputElement>) => {

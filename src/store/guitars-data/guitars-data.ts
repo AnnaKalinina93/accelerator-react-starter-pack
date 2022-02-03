@@ -11,7 +11,8 @@ import {
   guitarRequest,
   guitarSucceeded,
   postReviewReset,
-  totalGuitars
+  totalGuitars,
+  searchGuitarsSucceeded
 } from './action';
 
 const initialState: GuitarsData = {
@@ -19,6 +20,7 @@ const initialState: GuitarsData = {
   guitarsLoading: false,
   guitarsError: false,
   totalGuitars: 0,
+  searchGuitars:[],
   comment: null,
   commentLoading: false,
   commentError: false,
@@ -58,6 +60,10 @@ export const guitarsData = createReducer(initialState, (builder) => {
       state.guitarLoading = false;
       state.guitarError = false;
       state.guitar = action.payload;
+    })
+
+    .addCase(searchGuitarsSucceeded, (state, action) => {
+      state.searchGuitars = action.payload;
     })
 
     .addCase(guitarFailed, (state) => {

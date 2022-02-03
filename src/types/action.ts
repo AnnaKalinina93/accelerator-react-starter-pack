@@ -8,6 +8,7 @@ export enum ActionType {
   GuitarsRequest = 'catalog/guitarsRequest',
   GuitarsFailed = 'catalog/guitarsFailed',
   TotalGuitars = 'catalog/totalGuitars',
+  SearchGuitarsSucceeded = 'catalog/searchGuitarsSucceeded',
   GuitarRequest = 'product/guitarRequest',
   GuitarSucceeded = 'product/guitarSucceeded',
   GuitarFailed = 'product/guitarFailed',
