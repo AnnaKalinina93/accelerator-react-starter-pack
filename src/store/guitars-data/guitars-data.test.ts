@@ -1,5 +1,5 @@
 import { guitarsData } from './guitars-data';
-import { guitarsRequest, guitarsFailed, guitarsSucceeded, guitarSucceeded, guitarRequest, guitarFailed, commentRequest, commentSucceeded, commentFailed, postReviewReset } from './action' ;
+import { guitarsRequest, guitarsFailed, guitarsSucceeded, guitarSucceeded, guitarRequest, guitarFailed, commentRequest, commentSucceeded, commentFailed, postReviewReset, searchGuitarsSucceeded } from './action' ;
 import { GuitarsData } from '../../types/state';
 import { makeFakeComment, makeFakeGuitar } from '../../utils/mocks';
 
@@ -103,6 +103,38 @@ describe('Reduser: GuitarsData', () => {
       });
   });
 
+
+  it('should add search guitars in state', () => {
+    const state: GuitarsData = {
+      guitars: [],
+      guitarsLoading: false,
+      guitarsError: false,
+      searchGuitars: [],
+      comment: null,
+      commentLoading: false,
+      commentError: false,
+      guitar: null,
+      guitarLoading: false,
+      guitarError: false,
+      isPostComment: false,
+      totalGuitars:9,
+    };
+    expect(guitarsData(state, searchGuitarsSucceeded(guitars)))
+      .toEqual({
+        guitars: [],
+        guitarsLoading: false,
+        guitarsError: false,
+        searchGuitars: guitars,
+        comment: null,
+        commentLoading: false,
+        commentError: false,
+        guitar: null,
+        guitarLoading: false,
+        guitarError: false,
+        isPostComment: false,
+        totalGuitars:9,
+      });
+  });
   it('should add guitar in state', () => {
     const state: GuitarsData = {
       guitars: [],

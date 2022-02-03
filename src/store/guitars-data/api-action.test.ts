@@ -6,8 +6,8 @@ import { createAPI } from '../../services/api';
 import { APIRoute } from '../../const';
 import { State } from '../../types/state';
 import { makeFakeGuitar} from '../../utils/mocks';
-import { fetchGuitarAction, fetchGuitarsAction, fetchGuitarsForMaxPrice, fetchGuitarsForMinPrice, postComment } from './api-action';
-import { guitarsRequest, guitarsSucceeded, guitarsFailed, commentRequest, commentSucceeded, guitarSucceeded, guitarRequest, guitarFailed, totalGuitars } from './action';
+import { fetchGuitarAction, fetchGuitarsAction, fetchGuitarsForMaxPrice, fetchGuitarsForMinPrice, fetchSearchGuitarsAction, postComment } from './api-action';
+import { guitarsRequest, guitarsSucceeded, guitarsFailed, commentRequest, commentSucceeded, guitarSucceeded, guitarRequest, guitarFailed, totalGuitars, searchGuitarsSucceeded } from './action';
 import { Comment, PostComment } from '../../types/guitar';
 import { maxPriceChange, minPriceChange } from '../ui-state/action';
 
@@ -90,6 +90,21 @@ describe('Async guitars data actions', () => {
     ]);
   });
 
+  it('should  search guitars  when server return 200', async () => {
+    const store = mockStore();
+    const fakeGuitars = new Array(9).fill(null).map(() => (makeFakeGuitar()));
+    mockAPI
+      .onGet(`${APIRoute.Guitars}?_embed=comments&name_like=`)
+      .reply(200, fakeGuitars);
+
+    expect(store.getActions()).toEqual([]);
+
+    await store.dispatch(fetchSearchGuitarsAction());
+
+    expect(store.getActions()).toEqual([
+      searchGuitarsSucceeded(fakeGuitars),
+    ]);
+  });
   it('should post comment on server and return new reviews', async () => {
     const store = mockStore();
     const fakePostComment: PostComment = {
