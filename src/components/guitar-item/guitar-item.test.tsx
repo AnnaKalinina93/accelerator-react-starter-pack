@@ -18,7 +18,7 @@ describe('Component: GuitarItem', () => {
     render(
       <Provider store={store}>
         <MemoryRouter>
-          <GuitarItem guitar={guitar} />
+          <GuitarItem guitar={guitar} onClickAddToCart={jest.fn()}/>
         </MemoryRouter>
       </Provider>);
     expect(screen.getByAltText(guitar.name)).toBeInTheDocument();

@@ -48,3 +48,18 @@ export const commentRequest = createAction(ActionType.CommentRequest);
 export const commentFailed = createAction(ActionType.CommentFailed);
 
 export const postReviewReset = createAction(ActionType.PostReviewReset);
+
+
+export const addCartGuitars = createAction(
+  ActionType.AddCartGuitars,
+  (guitar: Guitar) => ({
+    payload: guitar,
+  }),
+);
+
+export const removalCartGuitars = createAction(
+  ActionType.RemovalCartGuitars,
+  (guitar: Guitar) => ({
+    payload: guitar,
+  }),
+);

@@ -2,13 +2,22 @@
 import { Link } from 'react-router-dom';
 import { Guitar } from '../../types/guitar';
 import RatingPanel from '../rating-panel/rating-panel';
+import { isGuitarInCart } from '../../utils';
+import { useDispatch, useSelector } from 'react-redux';
+import { getCartGuitarsWithCount } from '../../store/guitars-data/selectors';
+import { redirectToRoute } from '../../store/middlewares/action';
+import { AppRoute } from '../../const';
+import { isActivePopupAddCartChange } from '../../store/ui-state/action';
 
 type GuitarItemProps = {
-  guitar: Guitar
+  guitar: Guitar,
+  onClickAddToCart: (guitar: Guitar) => void,
 }
 
-function GuitarItem({ guitar }: GuitarItemProps): JSX.Element {
+function GuitarItem({ guitar, onClickAddToCart }: GuitarItemProps): JSX.Element {
   const { name, previewImg, rating, price, comments } = guitar;
+  const guitarsMap = useSelector(getCartGuitarsWithCount);
+  const dispatch = useDispatch();
 
   return (
     <div className="product-card">
@@ -30,12 +39,17 @@ function GuitarItem({ guitar }: GuitarItemProps): JSX.Element {
         <Link to={`/product/${guitar.id}`} className="button button--mini">
           Подробнее
         </Link>
-        <a
-          className="button button--red button--mini button--add-to-cart"
-          href="#"
-        >
-          Купить
-        </a>
+        {!isGuitarInCart(guitar, guitarsMap) && (
+          <a
+            className="button button--red button--mini button--add-to-cart"
+            onClick={() => {
+              onClickAddToCart(guitar);
+              dispatch(isActivePopupAddCartChange(true));}}
+          >
+            Купить
+          </a>)}
+        {isGuitarInCart(guitar, guitarsMap) && (
+          <button className="button button--red-border button--mini button--in-cart" onClick={() => dispatch(redirectToRoute(AppRoute.Cart))}>В Корзине</button>)}
       </div>
     </div>
   );

@@ -77,3 +77,9 @@ export const getActivePage = (state: State): number =>
 
 export const getActiveSearch = (state: State): string =>
   state[NameSpace.Ui].activeSearch;
+
+export const getIsActivePopupAddCart = (state: State): boolean=>
+  state[NameSpace.Ui].isActivePopupAddCart;
+
+export const getIsActivePopupAddCartSuccess = (state: State): boolean=>
+  state[NameSpace.Ui].isActivePopupAddCartSuccess;

@@ -3,7 +3,7 @@
 import { ChangeEvent, useState } from 'react';
 import cn from 'classnames';
 import { useDispatch, useSelector } from 'react-redux';
-import { getSearchGuitars } from '../../store/guitars-data/selectors';
+import { getCartGuitars, getSearchGuitars } from '../../store/guitars-data/selectors';
 import { Link } from 'react-router-dom';
 import { getSortInput } from '../../utils';
 import { useDebouncedCallback } from 'use-debounce';
@@ -16,6 +16,7 @@ import { getActiveSearch } from '../../store/ui-state/selectors';
 function Header(): JSX.Element {
 
   const guitars = useSelector(getSearchGuitars);
+  const guitarsCart = useSelector(getCartGuitars);
   const activeSearch = useSelector(getActiveSearch);
   const [formInput, setFormInput] = useState({
     touched: false,
@@ -78,7 +79,7 @@ function Header(): JSX.Element {
             className="form-search__form"
           >
             <button className="form-search__submit" type="submit"
-              onClick = {()=> dispatch(redirectToRoute(AppRoute.Main))}
+              onClick={() => dispatch(redirectToRoute(AppRoute.Main))}
             >
               <svg
                 className="form-search__icon"
@@ -104,14 +105,14 @@ function Header(): JSX.Element {
             </label>
           </form>
           <ul className={searchClass}>
-            {guitars.length >=1 && getSortInput(guitars, formInput.value).map((guitar) => (
+            {guitars.length >= 1 && getSortInput(guitars, formInput.value).map((guitar) => (
               <li key={guitar.id} className="form-search__select-item">
                 <Link to={`/product/${guitar.id}`} className="form-search__select-item" tabIndex={0}>{guitar.name}</Link>
               </li>
             ))}
           </ul>
         </div>
-        <a className="header__cart-link" href="#" aria-label="Корзина">
+        <a className="header__cart-link" aria-label="Корзина" onClick={() => dispatch(redirectToRoute(AppRoute.Cart))}>
           <svg
             className="header__cart-icon"
             width="14"
@@ -120,8 +121,8 @@ function Header(): JSX.Element {
           >
             <use xlinkHref="#icon-basket"></use>
           </svg>
-          <span className="visually-hidden">Перейти в корзину</span>
-          <span className="header__cart-count">2</span>
+          <span className="visually-hidden" >Перейти в корзину</span>
+          {guitarsCart.length > 0 && <span className="header__cart-count">{guitarsCart.length}</span>}
         </a>
       </div>
     </header>

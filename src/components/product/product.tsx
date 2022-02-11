@@ -20,6 +20,10 @@ import FormReview from '../form-review/form-review';
 import PopupThanks from '../popup-thanks/popup-thanks';
 import GuitarsErrorScreen from '../guitars-error-screen/guitars-error-screen';
 import RatingPanel from '../rating-panel/rating-panel';
+import PopupAddCart from '../popup-add-cart/popup-add-cart';
+import PopupAddToCartSucceeded from '../popup-add-to-cart-succeeded/popup-add-to-cart-succeeded';
+import { getIsActivePopupAddCart, getIsActivePopupAddCartSuccess } from '../../store/ui-state/selectors';
+import { isActivePopupAddCartChange } from '../../store/ui-state/action';
 
 type ParamTypes = {
   id: string
@@ -30,8 +34,11 @@ function Product(): JSX.Element {
   const guitar = useSelector(getGuitar);
   const guitarLoading = useSelector(getGuitarLoading);
   const guitarError = useSelector(getGuitarError);
+  const isActivePopupAddCart = useSelector(getIsActivePopupAddCart);
+  const isActivePopupAddCartSuccess = useSelector(getIsActivePopupAddCartSuccess);
   const [tabsState, setTabsState] = useState(activeTabs.characteristics);
   const [formReviewState, setFormReviewState] = useState(false);
+
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(fetchGuitarAction(id));
@@ -54,6 +61,10 @@ function Product(): JSX.Element {
   const descriptionClass = cn('button button--medium tabs__button', { 'button--black-border': tabsState === activeTabs.characteristics });
   const descriptionParagraphClass = cn('tabs__product-description', { hidden: tabsState === activeTabs.characteristics });
   const formClass = cn('modal modal--review modal-for-ui-kit', { 'is-active': formReviewState === true });
+
+  const classPopupAddCart = cn('modal modal-for-ui-kit', {'is-active' : isActivePopupAddCart});
+  const classPopupAddCartSucceeded = cn('modal modal--success modal-for-ui-kit', {'is-active' : isActivePopupAddCartSuccess});
+
   return (
     <div className="wrapper">
       <Header />
@@ -125,7 +136,7 @@ function Product(): JSX.Element {
                   </p>
                   <a
                     className="button button--red button--big product-container__button"
-                    href="#"
+                    onClick={()=>dispatch(isActivePopupAddCartChange(true))}
                   >
                     Добавить в корзину
                   </a>
@@ -134,6 +145,8 @@ function Product(): JSX.Element {
               <ReviewsList comments={guitar.comments} onClickFormReview={handleClickFormReview} />
               <FormReview nameGuitar={guitar.name} guitarId={guitar.id} formClass={formClass} onClickFormReview={handleClickFormReview} />
               {formReviewState === false && <PopupThanks />}
+              <PopupAddCart guitar={guitar} classPopup={classPopupAddCart}/>
+              <PopupAddToCartSucceeded classSucceeded={classPopupAddCartSucceeded}/>
             </>
           )}
         </div>

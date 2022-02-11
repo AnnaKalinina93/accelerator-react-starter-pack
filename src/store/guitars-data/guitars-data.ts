@@ -12,7 +12,9 @@ import {
   guitarSucceeded,
   postReviewReset,
   totalGuitars,
-  searchGuitarsSucceeded
+  searchGuitarsSucceeded,
+  addCartGuitars,
+  removalCartGuitars
 } from './action';
 
 const initialState: GuitarsData = {
@@ -28,6 +30,7 @@ const initialState: GuitarsData = {
   guitarLoading: false,
   guitarError: false,
   isPostComment: false,
+  cartGuitars: [],
 };
 
 export const guitarsData = createReducer(initialState, (builder) => {
@@ -95,6 +98,18 @@ export const guitarsData = createReducer(initialState, (builder) => {
       state.commentError = false;
       state.comment = null;
       state.isPostComment = false;
+    })
+
+    .addCase(addCartGuitars, (state, action) => {
+      state.cartGuitars = [...state.cartGuitars, action.payload];
+    })
+
+    .addCase(removalCartGuitars, (state, action) => {
+      const searchGuitars = state.cartGuitars.filter((guitar)=>guitar.id === action.payload.id);
+      const indexFirstSearch = state.cartGuitars.indexOf(searchGuitars[0]);
+      state.cartGuitars = [...state.cartGuitars.slice(0,indexFirstSearch-1), ...state.cartGuitars.slice(indexFirstSearch+1, state.cartGuitars.length)];
     });
+
 });
+
 

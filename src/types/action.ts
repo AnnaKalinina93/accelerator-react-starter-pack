@@ -25,7 +25,11 @@ export enum ActionType {
   NumberOfString = 'catalog/numberOfString',
   ActivePage = 'catalog/activePage',
   ActiveSearch = 'catalog/activeSearch',
-  PostReviewReset = 'product/postReviewReset'
+  PostReviewReset = 'product/postReviewReset',
+  AddCartGuitars = 'cart/addCartGuitars',
+  RemovalCartGuitars = 'cart/removalCartGuitars',
+  IsActivePopupAddCartChange = 'cart/isActivePopupAddCartChange',
+  IsActivePopupAddCartSuccessChange = 'cart/isActivePopupAddCartSuccessChange',
 }
 
 export type ThunkActionResult<R = Promise<void>> = ThunkAction<

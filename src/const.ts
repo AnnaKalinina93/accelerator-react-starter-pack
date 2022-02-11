@@ -6,6 +6,7 @@ export enum APIRoute {
 export enum AppRoute {
   Main = '/',
   Product = '/product/:id',
+  Cart = '/cart',
 }
 
 export enum SortingRout {

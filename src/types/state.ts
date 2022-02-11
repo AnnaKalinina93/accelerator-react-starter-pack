@@ -16,6 +16,7 @@ export type GuitarsData = {
   commentLoading: boolean,
   commentError: boolean,
   isPostComment: boolean,
+  cartGuitars: Guitar[],
 }
 
 export type UiState = {
@@ -29,4 +30,6 @@ export type UiState = {
   activeStrings: string[],
   activePage: number,
   activeSearch: string,
+  isActivePopupAddCart: boolean,
+  isActivePopupAddCartSuccess: boolean,
 }

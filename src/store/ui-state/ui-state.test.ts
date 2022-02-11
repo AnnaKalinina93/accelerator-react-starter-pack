@@ -15,6 +15,8 @@ describe('Reduser: UiState', () => {
       activeStrings: [],
       activePage: 1,
       activeSearch: '',
+      isActivePopupAddCart: false,
+      isActivePopupAddCartSuccess: false,
     };
     expect(uiState(state, sortChangeOrder(sortingType.order.increase)))
       .toEqual({
@@ -28,6 +30,8 @@ describe('Reduser: UiState', () => {
         activeStrings: [],
         activePage: 1,
         activeSearch: '',
+        isActivePopupAddCart: false,
+        isActivePopupAddCartSuccess: false,
       });
   });
 
@@ -43,6 +47,8 @@ describe('Reduser: UiState', () => {
       activeStrings: [],
       activePage: 1,
       activeSearch: '',
+      isActivePopupAddCart: false,
+      isActivePopupAddCartSuccess: false,
     };
     expect(uiState(state, sortChangeType(sortingType.type.price)))
       .toEqual({
@@ -56,6 +62,8 @@ describe('Reduser: UiState', () => {
         activeStrings: [],
         activePage: 1,
         activeSearch: '',
+        isActivePopupAddCart: false,
+        isActivePopupAddCartSuccess: false,
       });
   });
 
@@ -71,6 +79,8 @@ describe('Reduser: UiState', () => {
       activeStrings: [],
       activePage: 1,
       activeSearch: '',
+      isActivePopupAddCart: false,
+      isActivePopupAddCartSuccess: false,
     };
     expect(uiState(state, minPriceChange('2000')))
       .toEqual({
@@ -84,6 +94,8 @@ describe('Reduser: UiState', () => {
         activeStrings: [],
         activePage: 1,
         activeSearch: '',
+        isActivePopupAddCart: false,
+        isActivePopupAddCartSuccess: false,
       });
   });
 
@@ -99,6 +111,8 @@ describe('Reduser: UiState', () => {
       activeStrings: [],
       activePage: 1,
       activeSearch: '',
+      isActivePopupAddCart: false,
+      isActivePopupAddCartSuccess: false,
     };
     expect(uiState(state, maxPriceChange('25000')))
       .toEqual({
@@ -112,6 +126,8 @@ describe('Reduser: UiState', () => {
         activeStrings: [],
         activePage: 1,
         activeSearch: '',
+        isActivePopupAddCart: false,
+        isActivePopupAddCartSuccess: false,
       });
   });
 
@@ -127,6 +143,8 @@ describe('Reduser: UiState', () => {
       activeStrings: [],
       activePage: 1,
       activeSearch: '',
+      isActivePopupAddCart: false,
+      isActivePopupAddCartSuccess: false,
     };
     expect(uiState(state, typeGuitarChange([guitarsType.acoustic])))
       .toEqual({
@@ -140,6 +158,8 @@ describe('Reduser: UiState', () => {
         activeStrings: [],
         activePage: 1,
         activeSearch: '',
+        isActivePopupAddCart: false,
+        isActivePopupAddCartSuccess: false,
       });
   });
 
@@ -155,6 +175,8 @@ describe('Reduser: UiState', () => {
       activeStrings: [],
       activePage: 1,
       activeSearch: '',
+      isActivePopupAddCart: false,
+      isActivePopupAddCartSuccess: false,
     };
     expect(uiState(state, numberOfStringChange(['4'])))
       .toEqual({
@@ -168,6 +190,8 @@ describe('Reduser: UiState', () => {
         activeStrings: ['4'],
         activePage: 1,
         activeSearch: '',
+        isActivePopupAddCart: false,
+        isActivePopupAddCartSuccess: false,
       });
   });
 
@@ -183,6 +207,8 @@ describe('Reduser: UiState', () => {
       activeStrings: [],
       activePage: 1,
       activeSearch: '',
+      isActivePopupAddCart: false,
+      isActivePopupAddCartSuccess: false,
     };
     expect(uiState(state, activePageChange(2)))
       .toEqual({
@@ -196,6 +222,8 @@ describe('Reduser: UiState', () => {
         activeStrings: [],
         activePage: 2,
         activeSearch: '',
+        isActivePopupAddCart: false,
+        isActivePopupAddCartSuccess: false,
       });
   });
 });
