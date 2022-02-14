@@ -43,6 +43,7 @@ export const makeFakeStore = (): State => ({
     guitarLoading: false,
     isPostComment: false,
     totalGuitars: 9,
+    cartGuitars:[],
   },
   UI_STATE: {
     activeSort: {
@@ -55,5 +56,8 @@ export const makeFakeStore = (): State => ({
     activeStrings: ['4','6','12'],
     activePage: 1,
     activeSearch: '',
+    isActivePopupAddCart: false,
+    isActivePopupAddCartSuccess: false,
+    isActivePopupDeleteGuitarCart: false,
   },
 });

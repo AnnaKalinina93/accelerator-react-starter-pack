@@ -74,3 +74,16 @@ export function getSortInput (guitars: Guitar[], value: string): Guitar[] {
     return 0;
   });
 }
+
+export function getTotalPrice (guitarsMap: Map<number, Guitar[]>): number {
+  let sum = 0;
+  [...guitarsMap.entries()].forEach(([id, guitars]) => sum = sum+guitars[0].price*guitars.length);
+  return sum;
+}
+
+export function isGuitarInCart (guitar: Guitar, guitarsMap: Map<number, Guitar[]>): boolean {
+  const filterGuitars = [...guitarsMap.entries()].filter(([id, guitars]) => guitar.id === guitars[0].id);
+  if (filterGuitars.length > 0) {
+    return true;
+  } return false;
+}

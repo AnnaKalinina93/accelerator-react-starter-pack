@@ -1,6 +1,7 @@
 import { NameSpace } from '../root-reduser';
 import { State } from '../../types/state';
 import { Comment, Guitar } from '../../types/guitar';
+import { createSelector } from 'reselect';
 
 export const getGuitars = (state: State): Guitar[] =>
   state[NameSpace.Guitars].guitars;
@@ -25,3 +26,19 @@ export const getComment = (state: State): Comment | null =>
 
 export const getIsPostReview = (state: State): boolean =>
   state[NameSpace.Guitars].isPostComment;
+
+export const getCartGuitars = (state: State): Guitar[] =>
+  state[NameSpace.Guitars].cartGuitars;
+export const getCartGuitarsWithCount = createSelector([getCartGuitars], (guitars) => {
+  const map = new Map<number,Guitar[]>();
+  guitars.forEach((guitar) => {
+    if (!map.has(guitar.id)) {
+      map.set(guitar.id, [guitar]);
+    } else {
+      const mapGuitars = map.get(guitar.id) as Guitar[];
+      map.set(guitar.id, [...mapGuitars,guitar]);
+    }
+  });
+  return map;
+},
+);

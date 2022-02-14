@@ -1,4 +1,5 @@
 import { createReducer } from '@reduxjs/toolkit';
+import { Guitar } from '../../types/guitar';
 import { GuitarsData } from '../../types/state';
 import {
   guitarsFailed,
@@ -12,7 +13,10 @@ import {
   guitarSucceeded,
   postReviewReset,
   totalGuitars,
-  searchGuitarsSucceeded
+  searchGuitarsSucceeded,
+  addCartGuitars,
+  removalCartGuitars,
+  countCartGuitarsChange
 } from './action';
 
 const initialState: GuitarsData = {
@@ -28,6 +32,7 @@ const initialState: GuitarsData = {
   guitarLoading: false,
   guitarError: false,
   isPostComment: false,
+  cartGuitars: [],
 };
 
 export const guitarsData = createReducer(initialState, (builder) => {
@@ -95,6 +100,25 @@ export const guitarsData = createReducer(initialState, (builder) => {
       state.commentError = false;
       state.comment = null;
       state.isPostComment = false;
+    })
+
+    .addCase(addCartGuitars, (state, action) => {
+      state.cartGuitars = [...state.cartGuitars, action.payload];
+    })
+
+    .addCase(removalCartGuitars, (state, action) => {
+      const guitars = state.cartGuitars.slice();
+      const indexFirstSearch = guitars.findIndex((guitar)=> guitar.id === action.payload.id);
+      guitars.splice(indexFirstSearch,1);
+      state.cartGuitars = guitars;
+    })
+
+    .addCase(countCartGuitarsChange, (state, action) => {
+      const guitars = state.cartGuitars.slice();
+      const guitarsWithoutSelectGuitar = guitars.filter((guitar) => guitar.id !== action.payload.guitar.id);
+      const selectGuitars = new Array(action.payload.count).fill(action.payload.guitar) as Guitar[];
+      state.cartGuitars = [...guitarsWithoutSelectGuitar, ...selectGuitars];
     });
 });
+
 

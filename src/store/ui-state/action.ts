@@ -66,3 +66,25 @@ export const activeSearchChange = createAction(
     payload: activeSearch,
   }),
 );
+
+
+export const isActivePopupAddCartChange = createAction(
+  ActionType.IsActivePopupAddCartChange,
+  (isActiveAddCart: boolean) => ({
+    payload: isActiveAddCart,
+  }),
+);
+
+export const isActivePopupAddCartSuccessChange = createAction(
+  ActionType.IsActivePopupAddCartSuccessChange,
+  (isActiveAddCart: boolean) => ({
+    payload: isActiveAddCart,
+  }),
+);
+
+export const isActivePopupDeleteGuitarCartChange = createAction(
+  ActionType.IsActivePopupDeleteGuitarCartChange,
+  (isActiveDeleteGuitarCart: boolean) => ({
+    payload: isActiveDeleteGuitarCart,
+  }),
+);
