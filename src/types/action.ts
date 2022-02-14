@@ -28,8 +28,10 @@ export enum ActionType {
   PostReviewReset = 'product/postReviewReset',
   AddCartGuitars = 'cart/addCartGuitars',
   RemovalCartGuitars = 'cart/removalCartGuitars',
+  CountCartGuitarsChange = 'cart/countCartGuitarsChange',
   IsActivePopupAddCartChange = 'cart/isActivePopupAddCartChange',
   IsActivePopupAddCartSuccessChange = 'cart/isActivePopupAddCartSuccessChange',
+  IsActivePopupDeleteGuitarCartChange = 'cart/isActivePopupDeleteGuitarCartChange',
 }
 
 export type ThunkActionResult<R = Promise<void>> = ThunkAction<

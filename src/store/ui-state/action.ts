@@ -81,3 +81,10 @@ export const isActivePopupAddCartSuccessChange = createAction(
     payload: isActiveAddCart,
   }),
 );
+
+export const isActivePopupDeleteGuitarCartChange = createAction(
+  ActionType.IsActivePopupDeleteGuitarCartChange,
+  (isActiveDeleteGuitarCart: boolean) => ({
+    payload: isActiveDeleteGuitarCart,
+  }),
+);

@@ -6,12 +6,20 @@ import { getCartGuitarsWithCount } from '../../store/guitars-data/selectors';
 import CartItem from '../cart-item/cart-item';
 import CouponCart from '../coupon-cart/coupon-cart';
 import { getTotalPrice } from '../../utils';
+import PopupDeleteGuitars from '../popup-delete-guitars/popup-delete-guitars';
+import { useState } from 'react';
+import { Guitar } from '../../types/guitar';
 
 function Cart(): JSX.Element {
   const guitarsMap = useSelector(getCartGuitarsWithCount);
+  const [selectGuitar, setSelectGuitar] = useState<Guitar | null>( null);
   document.body.style.overflow = 'auto';
   const totalPrice = getTotalPrice(guitarsMap);
   const bonus = 0;
+  const handleDeleteClick = (guitar: Guitar) => {
+    setSelectGuitar(guitar);
+  };
+
   return (
     <>
       <Header />
@@ -20,7 +28,7 @@ function Cart(): JSX.Element {
           <h1 className="title title--bigger page-content__title">Корзина</h1>
           <Breadcrumbs />
           <div className="cart">
-            {[...guitarsMap.entries()].map(([id, guitars])=> <CartItem key={id} guitars={guitars}/>)}
+            {[...guitarsMap.entries()].map(([id, guitars])=> <CartItem key={id} guitars={guitars} onDeleteClick={handleDeleteClick}/>)}
             <div className="cart__footer">
               <CouponCart />
               <div className="cart__total-info">
@@ -31,6 +39,7 @@ function Cart(): JSX.Element {
               </div>
             </div>
           </div>
+          {selectGuitar !== null && <PopupDeleteGuitars guitar={selectGuitar}/>}
         </div>
       </main>
       <Footer />

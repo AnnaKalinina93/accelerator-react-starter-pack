@@ -32,4 +32,5 @@ export type UiState = {
   activeSearch: string,
   isActivePopupAddCart: boolean,
   isActivePopupAddCartSuccess: boolean,
+  isActivePopupDeleteGuitarCart: boolean,
 }

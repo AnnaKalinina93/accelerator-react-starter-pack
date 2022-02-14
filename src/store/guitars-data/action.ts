@@ -63,3 +63,12 @@ export const removalCartGuitars = createAction(
     payload: guitar,
   }),
 );
+
+export const countCartGuitarsChange = createAction(
+  ActionType.CountCartGuitarsChange,
+  (guitar: Guitar,
+    count: number) => ({
+    payload: {guitar, count},
+  }),
+);
+

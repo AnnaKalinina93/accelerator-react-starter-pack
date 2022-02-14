@@ -58,5 +58,6 @@ export const makeFakeStore = (): State => ({
     activeSearch: '',
     isActivePopupAddCart: false,
     isActivePopupAddCartSuccess: false,
+    isActivePopupDeleteGuitarCart: false,
   },
 });

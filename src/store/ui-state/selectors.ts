@@ -83,3 +83,6 @@ export const getIsActivePopupAddCart = (state: State): boolean=>
 
 export const getIsActivePopupAddCartSuccess = (state: State): boolean=>
   state[NameSpace.Ui].isActivePopupAddCartSuccess;
+
+export const getIsActivePopupDeleteGuitarCart = (state: State): boolean=>
+  state[NameSpace.Ui].isActivePopupDeleteGuitarCart;
