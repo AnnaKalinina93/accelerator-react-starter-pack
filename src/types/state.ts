@@ -17,6 +17,8 @@ export type GuitarsData = {
   commentError: boolean,
   isPostComment: boolean,
   cartGuitars: Guitar[],
+  discount: number,
+  isPostCoupon: boolean | null,
 }
 
 export type UiState = {
@@ -33,4 +35,5 @@ export type UiState = {
   isActivePopupAddCart: boolean,
   isActivePopupAddCartSuccess: boolean,
   isActivePopupDeleteGuitarCart: boolean,
+  promoCod: string,
 }

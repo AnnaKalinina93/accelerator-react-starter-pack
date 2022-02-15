@@ -81,6 +81,10 @@ export function getTotalPrice (guitarsMap: Map<number, Guitar[]>): number {
   return sum;
 }
 
+export function getDiscountFromPrice (price: number, discount: number): number {
+  return price*discount/100;
+}
+
 export function isGuitarInCart (guitar: Guitar, guitarsMap: Map<number, Guitar[]>): boolean {
   const filterGuitars = [...guitarsMap.entries()].filter(([id, guitars]) => guitar.id === guitars[0].id);
   if (filterGuitars.length > 0) {

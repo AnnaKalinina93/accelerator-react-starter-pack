@@ -32,6 +32,9 @@ export enum ActionType {
   IsActivePopupAddCartChange = 'cart/isActivePopupAddCartChange',
   IsActivePopupAddCartSuccessChange = 'cart/isActivePopupAddCartSuccessChange',
   IsActivePopupDeleteGuitarCartChange = 'cart/isActivePopupDeleteGuitarCartChange',
+  PromoCodAdding = 'cart/promoCodAdding',
+  DiscountSucceeded = 'cart/discountSucceeded',
+  IsPostCoupon = 'cart/isPostCoupon'
 }
 
 export type ThunkActionResult<R = Promise<void>> = ThunkAction<

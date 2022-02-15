@@ -29,6 +29,7 @@ export const getIsPostReview = (state: State): boolean =>
 
 export const getCartGuitars = (state: State): Guitar[] =>
   state[NameSpace.Guitars].cartGuitars;
+
 export const getCartGuitarsWithCount = createSelector([getCartGuitars], (guitars) => {
   const map = new Map<number,Guitar[]>();
   guitars.forEach((guitar) => {
@@ -42,3 +43,9 @@ export const getCartGuitarsWithCount = createSelector([getCartGuitars], (guitars
   return map;
 },
 );
+
+export const getDiscount = (state: State): number =>
+  state[NameSpace.Guitars].discount;
+
+export const getIsPostCoupon = (state: State): boolean | null =>
+  state[NameSpace.Guitars].isPostCoupon;

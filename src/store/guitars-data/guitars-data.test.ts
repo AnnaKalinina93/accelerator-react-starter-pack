@@ -22,6 +22,8 @@ describe('Reduser: GuitarsData', () => {
       isPostComment: false,
       totalGuitars:9,
       cartGuitars:[],
+      discount: 0,
+      isPostCoupon: null,
     };
     expect(guitarsData(state, guitarsRequest()))
       .toEqual({
@@ -38,6 +40,8 @@ describe('Reduser: GuitarsData', () => {
         isPostComment: false,
         totalGuitars:9,
         cartGuitars:[],
+        discount: 0,
+        isPostCoupon: null,
       });
   });
 
@@ -56,6 +60,8 @@ describe('Reduser: GuitarsData', () => {
       isPostComment: false,
       totalGuitars:9,
       cartGuitars:[],
+      discount: 0,
+      isPostCoupon: null,
     };
     expect(guitarsData(state, guitarsSucceeded(guitars)))
       .toEqual({
@@ -72,6 +78,8 @@ describe('Reduser: GuitarsData', () => {
         isPostComment: false,
         totalGuitars:9,
         cartGuitars:[],
+        discount: 0,
+        isPostCoupon: null,
       });
   });
 
@@ -90,6 +98,8 @@ describe('Reduser: GuitarsData', () => {
       isPostComment: false,
       totalGuitars:9,
       cartGuitars:[],
+      discount: 0,
+      isPostCoupon: null,
     };
     expect(guitarsData(state, guitarsFailed()))
       .toEqual({
@@ -106,6 +116,8 @@ describe('Reduser: GuitarsData', () => {
         isPostComment: false,
         totalGuitars:9,
         cartGuitars:[],
+        discount: 0,
+        isPostCoupon: null,
       });
   });
 
@@ -125,6 +137,8 @@ describe('Reduser: GuitarsData', () => {
       isPostComment: false,
       totalGuitars:9,
       cartGuitars:[],
+      discount: 0,
+      isPostCoupon: null,
     };
     expect(guitarsData(state, searchGuitarsSucceeded(guitars)))
       .toEqual({
@@ -141,6 +155,8 @@ describe('Reduser: GuitarsData', () => {
         isPostComment: false,
         totalGuitars:9,
         cartGuitars:[],
+        discount: 0,
+        isPostCoupon: null,
       });
   });
   it('should add guitar in state', () => {
@@ -158,6 +174,8 @@ describe('Reduser: GuitarsData', () => {
       isPostComment: false,
       totalGuitars:9,
       cartGuitars:[],
+      discount: 0,
+      isPostCoupon: null,
     };
     expect(guitarsData(state, guitarSucceeded(guitar)))
       .toEqual({
@@ -174,6 +192,8 @@ describe('Reduser: GuitarsData', () => {
         isPostComment: false,
         totalGuitars:9,
         cartGuitars:[],
+        discount: 0,
+        isPostCoupon: null,
       });
   });
 
@@ -192,6 +212,8 @@ describe('Reduser: GuitarsData', () => {
       isPostComment: false,
       totalGuitars:9,
       cartGuitars:[],
+      discount: 0,
+      isPostCoupon: null,
     };
     expect(guitarsData(state, guitarRequest()))
       .toEqual({
@@ -208,6 +230,8 @@ describe('Reduser: GuitarsData', () => {
         isPostComment: false,
         totalGuitars:9,
         cartGuitars:[],
+        discount: 0,
+        isPostCoupon: null,
       });
   });
 
@@ -226,6 +250,8 @@ describe('Reduser: GuitarsData', () => {
       isPostComment: false,
       totalGuitars:9,
       cartGuitars:[],
+      discount: 0,
+      isPostCoupon: null,
     };
     expect(guitarsData(state, guitarFailed()))
       .toEqual({
@@ -242,6 +268,8 @@ describe('Reduser: GuitarsData', () => {
         isPostComment: false,
         totalGuitars:9,
         cartGuitars:[],
+        discount: 0,
+        isPostCoupon: null,
       });
   });
 
@@ -260,6 +288,8 @@ describe('Reduser: GuitarsData', () => {
       isPostComment: false,
       totalGuitars:9,
       cartGuitars:[],
+      discount: 0,
+      isPostCoupon: null,
     };
     const newGuitar = {
       ...guitar,
@@ -279,6 +309,8 @@ describe('Reduser: GuitarsData', () => {
         isPostComment: true,
         totalGuitars:9,
         cartGuitars:[],
+        discount: 0,
+        isPostCoupon: null,
       });
   });
 
@@ -297,6 +329,8 @@ describe('Reduser: GuitarsData', () => {
       isPostComment: false,
       totalGuitars:9,
       cartGuitars:[],
+      discount: 0,
+      isPostCoupon: null,
     };
     expect(guitarsData(state, commentRequest()))
       .toEqual({
@@ -313,6 +347,8 @@ describe('Reduser: GuitarsData', () => {
         isPostComment: false,
         totalGuitars:9,
         cartGuitars:[],
+        discount: 0,
+        isPostCoupon: null,
       });
   });
 
@@ -332,6 +368,8 @@ describe('Reduser: GuitarsData', () => {
       isPostComment: false,
       totalGuitars:9,
       cartGuitars:[],
+      discount: 0,
+      isPostCoupon: null,
     };
     expect(guitarsData(state, commentFailed()))
       .toEqual({
@@ -348,6 +386,8 @@ describe('Reduser: GuitarsData', () => {
         isPostComment: false,
         totalGuitars:9,
         cartGuitars:[],
+        discount: 0,
+        isPostCoupon: null,
       });
   });
 
@@ -366,6 +406,8 @@ describe('Reduser: GuitarsData', () => {
       isPostComment: true,
       totalGuitars:9,
       cartGuitars:[],
+      discount: 0,
+      isPostCoupon: null,
     };
     expect(guitarsData(state, postReviewReset()))
       .toEqual({
@@ -382,6 +424,8 @@ describe('Reduser: GuitarsData', () => {
         isPostComment: false,
         totalGuitars:9,
         cartGuitars:[],
+        discount: 0,
+        isPostCoupon: null,
       });
   });
 });

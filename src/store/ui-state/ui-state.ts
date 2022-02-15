@@ -1,7 +1,7 @@
 import { createReducer } from '@reduxjs/toolkit';
 import { sortingType } from '../../const';
 import { UiState } from '../../types/state';
-import { sortChangeType, sortChangeOrder, minPriceChange, maxPriceChange, typeGuitarChange, numberOfStringChange, priceChange, activePageChange, activeSearchChange, isActivePopupAddCartChange, isActivePopupAddCartSuccessChange, isActivePopupDeleteGuitarCartChange } from './action';
+import { sortChangeType, sortChangeOrder, minPriceChange, maxPriceChange, typeGuitarChange, numberOfStringChange, priceChange, activePageChange, activeSearchChange, isActivePopupAddCartChange, isActivePopupAddCartSuccessChange, isActivePopupDeleteGuitarCartChange, promoCodAdding } from './action';
 import * as queryString from 'querystring';
 
 const location = window.location;
@@ -66,6 +66,7 @@ const initialState: UiState = {
   isActivePopupAddCart: false,
   isActivePopupAddCartSuccess: false,
   isActivePopupDeleteGuitarCart: false,
+  promoCod: 'Введите промокод',
 };
 
 export const uiState = createReducer(initialState, (builder) => {
@@ -120,5 +121,9 @@ export const uiState = createReducer(initialState, (builder) => {
 
     .addCase(isActivePopupDeleteGuitarCartChange, (state, action) => {
       state.isActivePopupDeleteGuitarCart = action.payload;
+    })
+
+    .addCase(promoCodAdding, (state, action) => {
+      state.promoCod = action.payload;
     });
 });

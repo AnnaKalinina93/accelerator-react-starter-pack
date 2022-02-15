@@ -1,5 +1,5 @@
 import { ThunkActionResult } from '../../types/action';
-import { commentFailed, commentRequest, commentSucceeded, guitarFailed, guitarRequest, guitarsFailed, guitarsRequest, guitarsSucceeded, guitarSucceeded, postReviewReset, searchGuitarsSucceeded, totalGuitars } from './action';
+import { commentFailed, commentRequest, commentSucceeded, discountSucceeded, guitarFailed, guitarRequest, guitarsFailed, guitarsRequest, guitarsSucceeded, guitarSucceeded, isPostCoupon, postReviewReset, searchGuitarsSucceeded, totalGuitars } from './action';
 import { APIRoute, SortingRout, sortingType } from '../../const';
 import { Comment, Guitar, PostComment } from '../../types/guitar';
 import { getNewParams } from '../../utils';
@@ -122,5 +122,20 @@ export const postComment = (comment: PostComment): ThunkActionResult =>
       dispatch(commentFailed());
       dispatch(postReviewReset());
       toast.info('Не удалось отправить отзыв, попробуйте еще раз.');
+    }
+  };
+
+export const postCoupon = (promoCod: string): ThunkActionResult =>
+  async (dispatch, _, api) => {
+    const coupon = {
+      coupon: promoCod,
+    };
+    try {
+      const { data } = await api.post<string>(APIRoute.Coupons, coupon);
+      dispatch(discountSucceeded(Number(data)));
+      dispatch(isPostCoupon(true));
+    } catch {
+      dispatch(discountSucceeded(0));
+      dispatch(isPostCoupon(false));
     }
   };

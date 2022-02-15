@@ -72,3 +72,16 @@ export const countCartGuitarsChange = createAction(
   }),
 );
 
+export const discountSucceeded = createAction(
+  ActionType.DiscountSucceeded,
+  (discount: number) => ({
+    payload: discount,
+  }),
+);
+
+export const isPostCoupon = createAction(
+  ActionType.IsPostCoupon,
+  (postCoupon: boolean | null) => ({
+    payload: postCoupon,
+  }),
+);

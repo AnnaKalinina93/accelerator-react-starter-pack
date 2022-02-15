@@ -88,3 +88,10 @@ export const isActivePopupDeleteGuitarCartChange = createAction(
     payload: isActiveDeleteGuitarCart,
   }),
 );
+
+export const promoCodAdding = createAction(
+  ActionType.PromoCodAdding,
+  (promoCod: string) => ({
+    payload: promoCod,
+  }),
+);
