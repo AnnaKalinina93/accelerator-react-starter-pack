@@ -59,7 +59,7 @@ function CartItem({ guitars, onDeleteClick }: CartItemProps): JSX.Element {
         onClick={handleDeleteClick}
       ><span className="button-cross__icon"></span><span className="cart-item__close-button-interactive-area"></span>
       </button>
-      <div className="cart-item__image"><img src="img/content/guitar-2.jpg" width="55" height="130" alt="ЭлектроГитара Честер bass" />
+      <div className="cart-item__image"><img src={`img/content/${guitars[0].previewImg.slice(4)}`} width="55" height="130" alt={guitars[0].name} />
       </div>
       <div className="product-info cart-item__info">
         <p className="product-info__title">{guitars[0].name}</p>
@@ -69,6 +69,7 @@ function CartItem({ guitars, onDeleteClick }: CartItemProps): JSX.Element {
       <div className="cart-item__price">{guitars[0].price} ₽</div>
       <div className="quantity cart-item__quantity">
         <button className="quantity__button" aria-label="Уменьшить количество"
+          data-testid="Уменьшить количество"
           onClick={handleDecreaseClick}
         >
           <svg width="8" height="8" aria-hidden="true">
@@ -80,6 +81,7 @@ function CartItem({ guitars, onDeleteClick }: CartItemProps): JSX.Element {
           onChange={handleChangeCount}
         />
         <button className="quantity__button" aria-label="Увеличить количество"
+          data-testid="Увеличить количество"
           onClick={handleIncreaseClick}
         >
           <svg width="8" height="8" aria-hidden="true">

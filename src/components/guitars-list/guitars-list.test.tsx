@@ -27,6 +27,11 @@ const storeWithLoadingGuitars = mockStore({
     typeGuitar: [],
     activeStrings: [],
     activePage: 1,
+    activeSearch: 1,
+    isActivePopupAddCart: false,
+    isActivePopupAddCartSuccess: false,
+    isActivePopupDeleteGuitarCart: true,
+    promoCod: '',
   },
 });
 
@@ -46,6 +51,11 @@ const storeWithErrorGuitars = mockStore({
     typeGuitar: [],
     activeStrings: [],
     activePage: 1,
+    activeSearch: 1,
+    isActivePopupAddCart: false,
+    isActivePopupAddCartSuccess: false,
+    isActivePopupDeleteGuitarCart: true,
+    promoCod: '',
   },
 });
 
@@ -56,6 +66,7 @@ const storeWithGuitars = mockStore({
     guitarsLoading: false,
     guitarsError: false,
     guitars,
+    cartGuitars: guitars,
   },
   [NameSpace.Ui]: {
     activeSort: {
@@ -67,6 +78,11 @@ const storeWithGuitars = mockStore({
     typeGuitar: [],
     activeStrings: [],
     activePage: 1,
+    activeSearch: 1,
+    isActivePopupAddCart: false,
+    isActivePopupAddCartSuccess: false,
+    isActivePopupDeleteGuitarCart: true,
+    promoCod: '',
   },
 });
 
@@ -101,6 +117,6 @@ describe('Component: GuitarsList', () => {
         </MemoryRouter>
       </Provider>);
 
-    expect(screen.getAllByRole('link', { name: 'Купить' }).length).toEqual(guitars.slice(0, 9).length);
+    expect(screen.getAllByRole('link', { name: 'Подробнее' }).length).toEqual(guitars.slice(0, 9).length);
   });
 });

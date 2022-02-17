@@ -16,7 +16,9 @@ import {
   searchGuitarsSucceeded,
   addCartGuitars,
   removalCartGuitars,
-  countCartGuitarsChange
+  countCartGuitarsChange,
+  discountSucceeded,
+  isPostCoupon
 } from './action';
 
 const initialState: GuitarsData = {
@@ -33,6 +35,8 @@ const initialState: GuitarsData = {
   guitarError: false,
   isPostComment: false,
   cartGuitars: [],
+  discount: 0,
+  isPostCoupon: null,
 };
 
 export const guitarsData = createReducer(initialState, (builder) => {
@@ -118,6 +122,14 @@ export const guitarsData = createReducer(initialState, (builder) => {
       const guitarsWithoutSelectGuitar = guitars.filter((guitar) => guitar.id !== action.payload.guitar.id);
       const selectGuitars = new Array(action.payload.count).fill(action.payload.guitar) as Guitar[];
       state.cartGuitars = [...guitarsWithoutSelectGuitar, ...selectGuitars];
+    })
+
+    .addCase(discountSucceeded, (state, action) => {
+      state.discount= action.payload;
+    })
+
+    .addCase(isPostCoupon, (state, action) => {
+      state.isPostCoupon= action.payload;
     });
 });
 

@@ -1,6 +1,6 @@
 import { render, screen } from '@testing-library/react';
 import { configureMockStore } from '@jedmao/redux-mock-store';
-import PopupThanks from './popup-thanks';
+import PopupAddCart from './popup-add-cart';
 import thunk from 'redux-thunk';
 import { Provider } from 'react-redux';
 import { MemoryRouter } from 'react-router-dom';
@@ -22,34 +22,39 @@ const storeWithGuitar = mockStore({
     guitarLoading: false,
     guitarError: false,
   },
+  [NameSpace.Ui]: {
+    isActivePopupAddCart: false,
+    isActivePopupAddCartSuccess: false,
+    isActivePopupDeleteGuitarCart: true,
+    promoCod: '',
+  },
 });
-describe('Component: Popupthanks', () => {
+describe('Component: PopupAddCart', () => {
   it('should render correctly', () => {
     render(
       <Provider store={storeWithGuitar}>
         <MemoryRouter>
-          <PopupThanks />
+          <PopupAddCart guitar={guitar} classPopup={'modal modal-for-ui-kit is-active'}/>
         </MemoryRouter>
       </Provider>);
 
-    expect(screen.getByRole('button', { name: 'К покупкам!' })).toBeInTheDocument();
-    expect(screen.getByTestId('Закрыть')).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: 'Добавить в корзину' })).toBeInTheDocument();
+    expect(screen.getByText(guitar.name)).toBeInTheDocument();
   });
 
-  it('should call dispatch when click button', () => {
+  it('should call dispatch when click button Добавить в корзину', () => {
     const dispatch = jest.fn();
     const useDispatch = jest.spyOn(Redux, 'useDispatch');
     useDispatch.mockReturnValue(dispatch);
     render(
       <Provider store={storeWithGuitar}>
         <MemoryRouter>
-          <PopupThanks />
+          <PopupAddCart guitar={guitar} classPopup={'modal modal-for-ui-kit is-active'}/>
         </MemoryRouter>
       </Provider>);
 
-    expect(screen.getByRole('button', { name: 'К покупкам!' })).toBeInTheDocument();
-    userEvent.click(screen.getByRole('button', { name: 'К покупкам!' }));
-    expect(dispatch).toBeCalledTimes(1);
+    expect(screen.getByRole('button', { name: 'Добавить в корзину' })).toBeInTheDocument();
+    userEvent.click(screen.getByRole('button', { name: 'Добавить в корзину' }));
+    expect(dispatch).toBeCalledTimes(3);
   });
-
 });

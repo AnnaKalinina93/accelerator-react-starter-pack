@@ -35,8 +35,7 @@ describe('Application Routing', () => {
     render(fakeApp);
 
     expect(
-      screen.getByRole('link', { name: 'Добавить в корзину' }),
-    ).toBeInTheDocument();
+      screen.getByRole('button', { name: 'Добавить в корзину' })).toBeInTheDocument();
   });
 
   it('should render "NotFoundScreen" when user navigate to non-existent route', () => {
@@ -45,5 +44,12 @@ describe('Application Routing', () => {
 
     expect(screen.getByText('404. Page not found')).toBeInTheDocument();
     expect(screen.getByText('Вернуться на главную')).toBeInTheDocument();
+  });
+
+
+  it('should render "Cart" when user navigate to "/cart"', () => {
+    history.push(AppRoute.Cart);
+    render(fakeApp);
+    expect(screen.getByText('Промокод на скидку')).toBeInTheDocument();
   });
 });

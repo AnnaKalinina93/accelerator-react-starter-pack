@@ -44,6 +44,8 @@ export const makeFakeStore = (): State => ({
     isPostComment: false,
     totalGuitars: 9,
     cartGuitars:[],
+    discount: 0,
+    isPostCoupon: false,
   },
   UI_STATE: {
     activeSort: {
@@ -59,5 +61,6 @@ export const makeFakeStore = (): State => ({
     isActivePopupAddCart: false,
     isActivePopupAddCartSuccess: false,
     isActivePopupDeleteGuitarCart: false,
+    promoCod: '',
   },
 });
