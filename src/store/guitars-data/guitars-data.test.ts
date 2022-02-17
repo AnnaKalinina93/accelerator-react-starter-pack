@@ -1,5 +1,5 @@
 import { guitarsData } from './guitars-data';
-import { guitarsRequest, guitarsFailed, guitarsSucceeded, guitarSucceeded, guitarRequest, guitarFailed, commentRequest, commentSucceeded, commentFailed, postReviewReset, searchGuitarsSucceeded } from './action' ;
+import { guitarsRequest, guitarsFailed, guitarsSucceeded, guitarSucceeded, guitarRequest, guitarFailed, commentRequest, commentSucceeded, commentFailed, postReviewReset, searchGuitarsSucceeded, addCartGuitars, removalCartGuitars, countCartGuitarsChange, discountSucceeded, isPostCoupon } from './action' ;
 import { GuitarsData } from '../../types/state';
 import { makeFakeComment, makeFakeGuitar } from '../../utils/mocks';
 
@@ -426,6 +426,196 @@ describe('Reduser: GuitarsData', () => {
         cartGuitars:[],
         discount: 0,
         isPostCoupon: null,
+      });
+  });
+
+  it('should change cartGuitars when adding guitar in state', () => {
+    const state: GuitarsData = {
+      guitars: [],
+      guitarsLoading: false,
+      guitarsError: false,
+      searchGuitars: [],
+      comment: null,
+      commentLoading: false,
+      commentError: false,
+      guitar: guitar,
+      guitarLoading: false,
+      guitarError: false,
+      isPostComment: false,
+      totalGuitars:9,
+      cartGuitars:[],
+      discount: 0,
+      isPostCoupon: null,
+    };
+    expect(guitarsData(state, addCartGuitars(guitar)))
+      .toEqual({
+        guitars: [],
+        guitarsLoading: false,
+        guitarsError: false,
+        searchGuitars: [],
+        comment: null,
+        commentLoading: false,
+        commentError: false,
+        guitar: guitar,
+        guitarLoading: false,
+        guitarError: false,
+        isPostComment: false,
+        totalGuitars:9,
+        cartGuitars:[guitar],
+        discount: 0,
+        isPostCoupon: null,
+      });
+  });
+
+  it('should change cartGuitars when remove guitar in state', () => {
+    const state: GuitarsData = {
+      guitars: [],
+      guitarsLoading: false,
+      guitarsError: false,
+      searchGuitars: [],
+      comment: null,
+      commentLoading: false,
+      commentError: false,
+      guitar: guitar,
+      guitarLoading: false,
+      guitarError: false,
+      isPostComment: false,
+      totalGuitars:9,
+      cartGuitars:[guitar],
+      discount: 0,
+      isPostCoupon: null,
+    };
+    expect(guitarsData(state, removalCartGuitars(guitar)))
+      .toEqual({
+        guitars: [],
+        guitarsLoading: false,
+        guitarsError: false,
+        searchGuitars: [],
+        comment: null,
+        commentLoading: false,
+        commentError: false,
+        guitar: guitar,
+        guitarLoading: false,
+        guitarError: false,
+        isPostComment: false,
+        totalGuitars:9,
+        cartGuitars:[],
+        discount: 0,
+        isPostCoupon: null,
+      });
+  });
+
+  it('should change cartGuitars when adding 2 guitar in state', () => {
+    const state: GuitarsData = {
+      guitars: [],
+      guitarsLoading: false,
+      guitarsError: false,
+      searchGuitars: [],
+      comment: null,
+      commentLoading: false,
+      commentError: false,
+      guitar: guitar,
+      guitarLoading: false,
+      guitarError: false,
+      isPostComment: false,
+      totalGuitars:9,
+      cartGuitars:[],
+      discount: 0,
+      isPostCoupon: null,
+    };
+    expect(guitarsData(state, countCartGuitarsChange(guitar, 2)))
+      .toEqual({
+        guitars: [],
+        guitarsLoading: false,
+        guitarsError: false,
+        searchGuitars: [],
+        comment: null,
+        commentLoading: false,
+        commentError: false,
+        guitar: guitar,
+        guitarLoading: false,
+        guitarError: false,
+        isPostComment: false,
+        totalGuitars:9,
+        cartGuitars:[guitar, guitar],
+        discount: 0,
+        isPostCoupon: null,
+      });
+  });
+
+  it('should change discount in state', () => {
+    const state: GuitarsData = {
+      guitars: [],
+      guitarsLoading: false,
+      guitarsError: false,
+      searchGuitars: [],
+      comment: null,
+      commentLoading: false,
+      commentError: false,
+      guitar: guitar,
+      guitarLoading: false,
+      guitarError: false,
+      isPostComment: false,
+      totalGuitars:9,
+      cartGuitars:[],
+      discount: 0,
+      isPostCoupon: null,
+    };
+    expect(guitarsData(state, discountSucceeded(15)))
+      .toEqual({
+        guitars: [],
+        guitarsLoading: false,
+        guitarsError: false,
+        searchGuitars: [],
+        comment: null,
+        commentLoading: false,
+        commentError: false,
+        guitar: guitar,
+        guitarLoading: false,
+        guitarError: false,
+        isPostComment: false,
+        totalGuitars:9,
+        cartGuitars:[],
+        discount: 15,
+        isPostCoupon: null,
+      });
+  });
+
+  it('should change isPostCoupon in state', () => {
+    const state: GuitarsData = {
+      guitars: [],
+      guitarsLoading: false,
+      guitarsError: false,
+      searchGuitars: [],
+      comment: null,
+      commentLoading: false,
+      commentError: false,
+      guitar: guitar,
+      guitarLoading: false,
+      guitarError: false,
+      isPostComment: false,
+      totalGuitars:9,
+      cartGuitars:[],
+      discount: 0,
+      isPostCoupon: null,
+    };
+    expect(guitarsData(state, isPostCoupon(true)))
+      .toEqual({
+        guitars: [],
+        guitarsLoading: false,
+        guitarsError: false,
+        searchGuitars: [],
+        comment: null,
+        commentLoading: false,
+        commentError: false,
+        guitar: guitar,
+        guitarLoading: false,
+        guitarError: false,
+        isPostComment: false,
+        totalGuitars:9,
+        cartGuitars:[],
+        discount: 0,
+        isPostCoupon: true,
       });
   });
 });

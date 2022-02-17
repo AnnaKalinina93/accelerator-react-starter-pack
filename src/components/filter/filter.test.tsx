@@ -13,7 +13,7 @@ import * as Redux from 'react-redux';
 const mockStore = configureMockStore([thunk]);
 
 
-const guitars = new Array(27).fill(null).map(()=>(makeFakeGuitar()));
+const guitars = new Array(27).fill(null).map(() => (makeFakeGuitar()));
 
 const store = mockStore({
   [NameSpace.Guitars]: {
@@ -38,7 +38,7 @@ const store = mockStore({
 const fakeFilter = (
   <Provider store={store}>
     <MemoryRouter>
-      <Filter/>
+      <Filter />
     </MemoryRouter>
   </Provider>
 );
@@ -48,11 +48,11 @@ describe('Component: Filter', () => {
     render(fakeFilter);
 
     expect(screen.getByText(/Фильтр/i)).toBeInTheDocument();
-    expect(screen.getByRole('group', {name: 'Цена, ₽'})).toBeInTheDocument();
-    expect(screen.getByRole('group', {name: 'Тип гитар'})).toBeInTheDocument();
-    expect(screen.getByRole('group', {name: 'Количество струн'})).toBeInTheDocument();
-    expect(screen.getByRole('checkbox', {name: 'Акустические гитары'})).toBeInTheDocument();
-    expect(screen.getByRole('checkbox', {name: '6'})).toBeInTheDocument();
+    expect(screen.getByRole('group', { name: 'Цена, ₽' })).toBeInTheDocument();
+    expect(screen.getByRole('group', { name: 'Тип гитар' })).toBeInTheDocument();
+    expect(screen.getByRole('group', { name: 'Количество струн' })).toBeInTheDocument();
+    expect(screen.getByRole('checkbox', { name: 'Акустические гитары' })).toBeInTheDocument();
+    expect(screen.getByRole('checkbox', { name: '6' })).toBeInTheDocument();
 
   });
 
@@ -62,8 +62,8 @@ describe('Component: Filter', () => {
     useDispatch.mockReturnValue(dispatch);
     render(fakeFilter);
 
-    expect(screen.getByRole('checkbox', {name: 'Акустические гитары'})).toBeInTheDocument();
-    userEvent.click(screen.getByRole('checkbox', {name: 'Акустические гитары'}));
+    expect(screen.getByRole('checkbox', { name: 'Акустические гитары' })).toBeInTheDocument();
+    userEvent.click(screen.getByRole('checkbox', { name: 'Акустические гитары' }));
     expect(dispatch).toBeCalledTimes(2);
   });
 
@@ -73,8 +73,8 @@ describe('Component: Filter', () => {
     useDispatch.mockReturnValue(dispatch);
     render(fakeFilter);
 
-    expect(screen.getByRole('checkbox', {name: '6'})).toBeInTheDocument();
-    userEvent.click(screen.getByRole('checkbox', {name: '6'}));
+    expect(screen.getByRole('checkbox', { name: '6' })).toBeInTheDocument();
+    userEvent.click(screen.getByRole('checkbox', { name: '6' }));
     expect(dispatch).toBeCalledTimes(2);
   });
 

@@ -18,12 +18,12 @@ describe('Component: GuitarItem', () => {
     render(
       <Provider store={store}>
         <MemoryRouter>
-          <GuitarItem guitar={guitar} onClickAddToCart={jest.fn()}/>
+          <GuitarItem guitar={guitar} onClickAddToCart={jest.fn()} />
         </MemoryRouter>
       </Provider>);
     expect(screen.getByAltText(guitar.name)).toBeInTheDocument();
     expect(screen.getByRole('link', { name: 'Подробнее' })).toBeInTheDocument();
-    expect(screen.getByRole('link', { name: 'Купить' })).toBeInTheDocument();
+    expect(screen.getByTestId('Купить')).toBeInTheDocument();
 
   });
 });

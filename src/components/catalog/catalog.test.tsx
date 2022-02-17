@@ -9,6 +9,7 @@ import Catalog from './catalog';
 import thunk from 'redux-thunk';
 
 const mockStore = configureMockStore([thunk]);
+const guitars = new Array(6).fill(null).map(() => (makeFakeGuitar()));
 
 
 const storeWithLoadingGuitars = mockStore({
@@ -18,6 +19,7 @@ const storeWithLoadingGuitars = mockStore({
     guitars: [],
     guitarsForPrice: [],
     searchGuitars: [],
+    cartGuitars: guitars,
   },
   [NameSpace.Ui]: {
     activeSort: {
@@ -29,7 +31,6 @@ const storeWithLoadingGuitars = mockStore({
     typeGuitar: [],
     activeStrings: [],
     activePage: 1,
-    searchGuitars: [],
   },
 });
 
@@ -40,6 +41,7 @@ const storeWithErrorGuitars = mockStore({
     guitars: [],
     guitarsForPrice: [],
     searchGuitars: [],
+    cartGuitars: guitars,
   },
   [NameSpace.Ui]: {
     activeSort: {
@@ -54,7 +56,6 @@ const storeWithErrorGuitars = mockStore({
   },
 });
 
-const guitars = new Array(6).fill(null).map(() => (makeFakeGuitar()));
 
 const storeWithGuitars = mockStore({
   [NameSpace.Guitars]: {
@@ -63,6 +64,7 @@ const storeWithGuitars = mockStore({
     guitars,
     guitarsForPrice: [],
     searchGuitars: [],
+    cartGuitars: guitars,
   },
   [NameSpace.Ui]: {
     activeSort: {
@@ -110,6 +112,6 @@ describe('Component: Catalog', () => {
 
     expect(screen.getByRole('link', { name: 'Каталог' })).toBeInTheDocument();
     expect(screen.getByText(/Сортировать/i)).toBeInTheDocument();
-    expect(screen.getAllByRole('link', { name: 'Купить' }).length).toEqual(guitars.slice(0, 9).length);
+    expect(screen.getAllByRole('link', { name: 'Подробнее' }).length).toEqual(guitars.slice(0, 9).length);
   });
 });

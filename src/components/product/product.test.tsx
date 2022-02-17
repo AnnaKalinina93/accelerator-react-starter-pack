@@ -20,6 +20,14 @@ const storeWithGuitar = mockStore({
     guitarLoading: false,
     guitarError: false,
     searchGuitars: [],
+    cartGuitars: guitars,
+  },
+  [NameSpace.Ui]: {
+    activeSearch: 1,
+    isActivePopupAddCart: false,
+    isActivePopupAddCartSuccess: false,
+    isActivePopupDeleteGuitarCart: true,
+    promoCod: '',
   },
 });
 
@@ -32,6 +40,14 @@ const storeWithGuitarLoading = mockStore({
     guitarLoading: true,
     guitarError: false,
     searchGuitars: [],
+    cartGuitars: guitars,
+  },
+  [NameSpace.Ui]: {
+    activeSearch: 1,
+    isActivePopupAddCart: false,
+    isActivePopupAddCartSuccess: false,
+    isActivePopupDeleteGuitarCart: true,
+    promoCod: '',
   },
 });
 
@@ -44,6 +60,14 @@ const storeWithGuitarError = mockStore({
     guitarLoading: false,
     guitarError: true,
     searchGuitars: [],
+    cartGuitars: guitars,
+  },
+  [NameSpace.Ui]: {
+    activeSearch: 1,
+    isActivePopupAddCart: false,
+    isActivePopupAddCartSuccess: false,
+    isActivePopupDeleteGuitarCart: true,
+    promoCod: '',
   },
 });
 
@@ -59,7 +83,7 @@ describe('Component: Product', () => {
 
     expect(screen.getByAltText(guitar.name)).toBeInTheDocument();
     expect(screen.getByText(guitar.description)).toBeInTheDocument();
-    expect(screen.getByRole('link', { name: 'Добавить в корзину' })).toBeInTheDocument();
+    expect(screen.getByTestId('Добавить в корзину')).toBeInTheDocument();
   });
 
   it('should render correctly when guitar loading', () => {

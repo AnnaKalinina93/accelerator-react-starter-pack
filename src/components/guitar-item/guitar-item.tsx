@@ -45,6 +45,7 @@ function GuitarItem({ guitar, onClickAddToCart }: GuitarItemProps): JSX.Element 
             onClick={() => {
               onClickAddToCart(guitar);
               dispatch(isActivePopupAddCartChange(true));}}
+            data-testid="Купить"
           >
             Купить
           </a>)}

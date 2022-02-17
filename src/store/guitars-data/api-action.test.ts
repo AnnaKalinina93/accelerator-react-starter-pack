@@ -6,8 +6,8 @@ import { createAPI } from '../../services/api';
 import { APIRoute } from '../../const';
 import { State } from '../../types/state';
 import { makeFakeGuitar} from '../../utils/mocks';
-import { fetchGuitarAction, fetchGuitarsAction, fetchGuitarsForMaxPrice, fetchGuitarsForMinPrice, fetchSearchGuitarsAction, postComment } from './api-action';
-import { guitarsRequest, guitarsSucceeded, guitarsFailed, commentRequest, commentSucceeded, guitarSucceeded, guitarRequest, guitarFailed, totalGuitars, searchGuitarsSucceeded } from './action';
+import { fetchGuitarAction, fetchGuitarsAction, fetchGuitarsForMaxPrice, fetchGuitarsForMinPrice, fetchSearchGuitarsAction, postComment, postCoupon } from './api-action';
+import { guitarsRequest, guitarsSucceeded, guitarsFailed, commentRequest, commentSucceeded, guitarSucceeded, guitarRequest, guitarFailed, totalGuitars, searchGuitarsSucceeded, discountSucceeded, isPostCoupon } from './action';
 import { Comment, PostComment } from '../../types/guitar';
 import { maxPriceChange, minPriceChange } from '../ui-state/action';
 
@@ -174,6 +174,43 @@ describe('Async guitars data actions', () => {
     expect(store.getActions()).toEqual([
       guitarRequest(),
       guitarFailed(),
+    ]);
+  });
+
+  it('should post coupon on server and return new discount', async () => {
+    const store = mockStore();
+    const coupon = 'light-333';
+    const discount ='15';
+
+    mockAPI
+      .onPost(`${APIRoute.Coupons}`)
+      .reply(200, discount);
+
+    expect(store.getActions()).toEqual([]);
+
+    await store.dispatch(postCoupon(coupon));
+
+    expect(store.getActions()).toEqual([
+      discountSucceeded(Number(discount)),
+      isPostCoupon(true),
+    ]);
+  });
+
+  it('should post coupon on server and return 400', async () => {
+    const store = mockStore();
+    const coupon = 'aaa';
+
+    mockAPI
+      .onPost(`${APIRoute.Coupons}`)
+      .reply(400, []);
+
+    expect(store.getActions()).toEqual([]);
+
+    await store.dispatch(postCoupon(coupon));
+
+    expect(store.getActions()).toEqual([
+      discountSucceeded(0),
+      isPostCoupon(false),
     ]);
   });
 });

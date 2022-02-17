@@ -28,6 +28,7 @@ function CouponCart(): JSX.Element {
         <div className="form-input coupon__input">
           <label className="visually-hidden">Промокод</label>
           <input type="text" placeholder={promoCod} id="coupon" name="coupon"
+            data-testid="coupon"
             value={inputPromoCod}
             onChange={handlePromoInput}
           />

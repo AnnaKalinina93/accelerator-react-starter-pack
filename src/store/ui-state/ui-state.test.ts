@@ -1,5 +1,5 @@
 import { uiState } from './ui-state';
-import { sortChangeOrder, sortChangeType, activePageChange, numberOfStringChange, typeGuitarChange, minPriceChange, maxPriceChange} from './action' ;
+import { sortChangeOrder, sortChangeType, activePageChange, numberOfStringChange, typeGuitarChange, minPriceChange, maxPriceChange, isActivePopupAddCartChange, isActivePopupAddCartSuccessChange, isActivePopupDeleteGuitarCartChange, promoCodAdding} from './action' ;
 import { UiState } from '../../types/state';
 import { guitarsType, sortingType } from '../../const';
 describe('Reduser: UiState', () => {
@@ -252,6 +252,150 @@ describe('Reduser: UiState', () => {
         isActivePopupAddCartSuccess: false,
         isActivePopupDeleteGuitarCart: false,
         promoCod: '',
+      });
+  });
+
+  it('should change isActivePopupAddCart in state', () => {
+    const state: UiState = {
+      activeSort: {
+        type: sortingType.type.default,
+        order: sortingType.order.default,
+      },
+      minPrice: '',
+      maxPrice: '',
+      typeGuitar: [],
+      activeStrings: [],
+      activePage: 1,
+      activeSearch: '',
+      isActivePopupAddCart: false,
+      isActivePopupAddCartSuccess: false,
+      isActivePopupDeleteGuitarCart: false,
+      promoCod: '',
+    };
+    expect(uiState(state, isActivePopupAddCartChange(true)))
+      .toEqual({
+        activeSort: {
+          type: sortingType.type.default,
+          order: sortingType.order.default,
+        },
+        minPrice: '',
+        maxPrice: '',
+        typeGuitar: [],
+        activeStrings: [],
+        activePage: 1,
+        activeSearch: '',
+        isActivePopupAddCart: true,
+        isActivePopupAddCartSuccess: false,
+        isActivePopupDeleteGuitarCart: false,
+        promoCod: '',
+      });
+  });
+
+  it('should change isActivePopupAddCartSuccess in state', () => {
+    const state: UiState = {
+      activeSort: {
+        type: sortingType.type.default,
+        order: sortingType.order.default,
+      },
+      minPrice: '',
+      maxPrice: '',
+      typeGuitar: [],
+      activeStrings: [],
+      activePage: 1,
+      activeSearch: '',
+      isActivePopupAddCart: false,
+      isActivePopupAddCartSuccess: false,
+      isActivePopupDeleteGuitarCart: false,
+      promoCod: '',
+    };
+    expect(uiState(state, isActivePopupAddCartSuccessChange(true)))
+      .toEqual({
+        activeSort: {
+          type: sortingType.type.default,
+          order: sortingType.order.default,
+        },
+        minPrice: '',
+        maxPrice: '',
+        typeGuitar: [],
+        activeStrings: [],
+        activePage: 1,
+        activeSearch: '',
+        isActivePopupAddCart: false,
+        isActivePopupAddCartSuccess: true,
+        isActivePopupDeleteGuitarCart: false,
+        promoCod: '',
+      });
+  });
+
+  it('should change isActivePopupDeleteGuitarCart in state', () => {
+    const state: UiState = {
+      activeSort: {
+        type: sortingType.type.default,
+        order: sortingType.order.default,
+      },
+      minPrice: '',
+      maxPrice: '',
+      typeGuitar: [],
+      activeStrings: [],
+      activePage: 1,
+      activeSearch: '',
+      isActivePopupAddCart: false,
+      isActivePopupAddCartSuccess: false,
+      isActivePopupDeleteGuitarCart: false,
+      promoCod: '',
+    };
+    expect(uiState(state, isActivePopupDeleteGuitarCartChange(true)))
+      .toEqual({
+        activeSort: {
+          type: sortingType.type.default,
+          order: sortingType.order.default,
+        },
+        minPrice: '',
+        maxPrice: '',
+        typeGuitar: [],
+        activeStrings: [],
+        activePage: 1,
+        activeSearch: '',
+        isActivePopupAddCart: false,
+        isActivePopupAddCartSuccess: false,
+        isActivePopupDeleteGuitarCart: true,
+        promoCod: '',
+      });
+  });
+
+  it('should change promoCod in state', () => {
+    const state: UiState = {
+      activeSort: {
+        type: sortingType.type.default,
+        order: sortingType.order.default,
+      },
+      minPrice: '',
+      maxPrice: '',
+      typeGuitar: [],
+      activeStrings: [],
+      activePage: 1,
+      activeSearch: '',
+      isActivePopupAddCart: false,
+      isActivePopupAddCartSuccess: false,
+      isActivePopupDeleteGuitarCart: false,
+      promoCod: '',
+    };
+    expect(uiState(state, promoCodAdding('aaa')))
+      .toEqual({
+        activeSort: {
+          type: sortingType.type.default,
+          order: sortingType.order.default,
+        },
+        minPrice: '',
+        maxPrice: '',
+        typeGuitar: [],
+        activeStrings: [],
+        activePage: 1,
+        activeSearch: '',
+        isActivePopupAddCart: false,
+        isActivePopupAddCartSuccess: false,
+        isActivePopupDeleteGuitarCart: false,
+        promoCod: 'aaa',
       });
   });
 });

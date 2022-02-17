@@ -1,6 +1,6 @@
 import { render, screen } from '@testing-library/react';
 import { configureMockStore } from '@jedmao/redux-mock-store';
-import PopupThanks from './popup-thanks';
+import CouponCart from './coupon-cart';
 import thunk from 'redux-thunk';
 import { Provider } from 'react-redux';
 import { MemoryRouter } from 'react-router-dom';
@@ -11,8 +11,8 @@ import * as Redux from 'react-redux';
 
 const mockStore = configureMockStore([thunk]);
 
-const guitars = new Array(6).fill(null).map(() => (makeFakeGuitar()));
 const guitar = makeFakeGuitar();
+const guitars = [guitar, guitar];
 const storeWithGuitar = mockStore({
   [NameSpace.Guitars]: {
     guitarsLoading: false,
@@ -21,35 +21,45 @@ const storeWithGuitar = mockStore({
     guitar,
     guitarLoading: false,
     guitarError: false,
+    searchGuitars: [],
+  },
+  [NameSpace.Ui]: {
+    activeSearch: 1,
+    isActivePopupAddCart: false,
+    isActivePopupAddCartSuccess: false,
+    isActivePopupDeleteGuitarCart: true,
+    promoCod: '',
   },
 });
-describe('Component: Popupthanks', () => {
+
+describe('Component: CouponCart', () => {
   it('should render correctly', () => {
     render(
       <Provider store={storeWithGuitar}>
         <MemoryRouter>
-          <PopupThanks />
+          <CouponCart/>
         </MemoryRouter>
       </Provider>);
 
-    expect(screen.getByRole('button', { name: 'К покупкам!' })).toBeInTheDocument();
-    expect(screen.getByTestId('Закрыть')).toBeInTheDocument();
+    expect(screen.getByText('Промокод на скидку')).toBeInTheDocument();
+    expect(screen.getByRole('button', {name: 'Применить'})).toBeInTheDocument();
   });
 
-  it('should call dispatch when click button', () => {
+  it('should render correctly when user write input and click button', () => {
     const dispatch = jest.fn();
     const useDispatch = jest.spyOn(Redux, 'useDispatch');
     useDispatch.mockReturnValue(dispatch);
     render(
       <Provider store={storeWithGuitar}>
         <MemoryRouter>
-          <PopupThanks />
+          <CouponCart/>
         </MemoryRouter>
       </Provider>);
 
-    expect(screen.getByRole('button', { name: 'К покупкам!' })).toBeInTheDocument();
-    userEvent.click(screen.getByRole('button', { name: 'К покупкам!' }));
-    expect(dispatch).toBeCalledTimes(1);
+    expect(screen.getByTestId('coupon')).toBeInTheDocument();
+    userEvent.type(screen.getByTestId('coupon'), 'aaa');
+    expect(screen.getByTestId('coupon')).toHaveValue('aaa');
+    userEvent.click(screen.getByRole('button', {name: 'Применить'}));
+    expect(dispatch).toBeCalledTimes(2);
   });
-
 });

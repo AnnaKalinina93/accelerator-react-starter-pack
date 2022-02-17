@@ -137,6 +137,7 @@ function Product(): JSX.Element {
                   <a
                     className="button button--red button--big product-container__button"
                     onClick={()=>dispatch(isActivePopupAddCartChange(true))}
+                    data-testid="Добавить в корзину"
                   >
                     Добавить в корзину
                   </a>
