@@ -5,11 +5,11 @@ import { AppRoute } from '../../const';
 import { redirectToRoute } from '../../store/middlewares/action';
 import { isActivePopupAddCartSuccessChange } from '../../store/ui-state/action';
 
-type PopupAddToCartSucceeded = {
+type PopupAddToCartSucceededProps = {
   classSucceeded: string,
 }
 
-function PopupAddToCartSucceeded({ classSucceeded }: PopupAddToCartSucceeded): JSX.Element {
+function PopupAddToCartSucceeded({ classSucceeded }: PopupAddToCartSucceededProps): JSX.Element {
   const dispatch = useDispatch();
   const onEscKeyDown = useCallback((evt) => {
     if (evt.key === 'Escape' || evt.key === 'Esc') {
