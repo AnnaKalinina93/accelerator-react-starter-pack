@@ -49,7 +49,7 @@ function PopupDeleteGuitars({ guitar }: PopupDeleteGuitarsProps): JSX.Element {
           <div className="modal__overlay" data-close-modal></div>
           <div className="modal__content">
             <h2 className="modal__header title title--medium title--red">Удалить этот товар?</h2>
-            <div className="modal__info"><img className="modal__img" src={`/img/content/${guitar.previewImg.slice(4)}`} width="67" height="137" alt="Честер bass" />
+            <div className="modal__info"><img className="modal__img" src={`/img/content/${guitar.previewImg.slice(4)}`} width="67" height="137" alt={guitar.name} />
               <div className="modal__info-wrapper">
                 <h3 className="modal__product-name title title--little title--uppercase">{guitar.name}</h3>
                 <p className="modal__product-params modal__product-params--margin-11">Артикул: {guitar.vendorCode}</p>
