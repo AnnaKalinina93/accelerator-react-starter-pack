@@ -10,8 +10,11 @@ function CouponCart(): JSX.Element {
   const isPostPromoCod = useSelector(getIsPostCoupon);
   const [inputPromoCod, setInputPromoCod] = useState('');
   const dispatch = useDispatch();
+  const validateCoupon = (coupon: string) => !coupon.includes(' ');
   const handlePromoInput = ({ target }: ChangeEvent<HTMLInputElement>) => {
-    setInputPromoCod(target.value);
+    if (validateCoupon(target.value)) {
+      setInputPromoCod(target.value);
+    }
   };
 
   return (
@@ -27,7 +30,11 @@ function CouponCart(): JSX.Element {
       >
         <div className="form-input coupon__input">
           <label className="visually-hidden">Промокод</label>
-          <input type="text" placeholder={promoCod} id="coupon" name="coupon"
+          <input
+            type="text"
+            placeholder={promoCod}
+            id="coupon"
+            name="coupon"
             data-testid="coupon"
             value={inputPromoCod}
             onChange={handlePromoInput}

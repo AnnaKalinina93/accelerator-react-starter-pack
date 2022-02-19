@@ -28,6 +28,7 @@ export enum ActionType {
   PostReviewReset = 'product/postReviewReset',
   AddCartGuitars = 'cart/addCartGuitars',
   RemovalCartGuitars = 'cart/removalCartGuitars',
+  RemovalAllGuitars = 'cart/removalAllGuitars',
   CountCartGuitarsChange = 'cart/countCartGuitarsChange',
   IsActivePopupAddCartChange = 'cart/isActivePopupAddCartChange',
   IsActivePopupAddCartSuccessChange = 'cart/isActivePopupAddCartSuccessChange',

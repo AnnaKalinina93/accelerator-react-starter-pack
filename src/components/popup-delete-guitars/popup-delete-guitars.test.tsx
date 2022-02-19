@@ -11,8 +11,8 @@ import * as Redux from 'react-redux';
 
 const mockStore = configureMockStore([thunk]);
 
-const guitars = new Array(6).fill(null).map(() => (makeFakeGuitar()));
 const guitar = makeFakeGuitar();
+const guitars = [guitar,guitar];
 const storeWithGuitar = mockStore({
   [NameSpace.Guitars]: {
     guitarsLoading: false,
@@ -34,7 +34,7 @@ describe('Component: PopupDelete', () => {
     render(
       <Provider store={storeWithGuitar}>
         <MemoryRouter>
-          <PopupDeleteGuitars guitar={guitar} />
+          <PopupDeleteGuitars guitars={guitars} />
         </MemoryRouter>
       </Provider>);
 
@@ -49,7 +49,7 @@ describe('Component: PopupDelete', () => {
     render(
       <Provider store={storeWithGuitar}>
         <MemoryRouter>
-          <PopupDeleteGuitars guitar={guitar} />
+          <PopupDeleteGuitars guitars={guitars} />
         </MemoryRouter>
       </Provider>);
 
@@ -65,7 +65,7 @@ describe('Component: PopupDelete', () => {
     render(
       <Provider store={storeWithGuitar}>
         <MemoryRouter>
-          <PopupDeleteGuitars guitar={guitar} />
+          <PopupDeleteGuitars guitars={guitars} />
         </MemoryRouter>
       </Provider>);
 

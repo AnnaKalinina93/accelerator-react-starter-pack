@@ -8,7 +8,7 @@ import { ChangeEvent, useState } from 'react';
 
 type CartItemProps = {
   guitars: Guitar[],
-  onDeleteClick: (guitar: Guitar) => void,
+  onDeleteClick: (guitars: Guitar[]) => void,
 }
 
 function CartItem({ guitars, onDeleteClick }: CartItemProps): JSX.Element {
@@ -30,20 +30,22 @@ function CartItem({ guitars, onDeleteClick }: CartItemProps): JSX.Element {
     }
   }, 500);
   const handleDeleteClick = () => {
-    onDeleteClick(guitars[0]);
+    onDeleteClick(guitars);
     dispatch(isActivePopupDeleteGuitarCartChange(true));
   };
 
   const handleDecreaseClick = () => {
+    setInputCount('');
     if (guitars.length > 1) {
       dispatch(removalCartGuitars(guitars[0]));
     } else {
-      onDeleteClick(guitars[0]);
+      onDeleteClick(guitars);
       dispatch(isActivePopupDeleteGuitarCartChange(true));
     }
   };
 
   const handleIncreaseClick = () => {
+    setInputCount('');
     dispatch(addCartGuitars(guitars[0]));
   };
 
@@ -76,7 +78,14 @@ function CartItem({ guitars, onDeleteClick }: CartItemProps): JSX.Element {
             <use xlinkHref="#icon-minus"></use>
           </svg>
         </button>
-        <input className="quantity__input" type="number" placeholder={String(guitars.length)} id="2-count" name="2-count" min="0" max="99"
+        <input
+          className="quantity__input"
+          type="number"
+          placeholder={String(guitars.length)}
+          id="2-count"
+          name="2-count"
+          min="0"
+          max="99"
           value={inputCount}
           onChange={handleChangeCount}
         />

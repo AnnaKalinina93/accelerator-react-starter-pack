@@ -18,7 +18,8 @@ import {
   removalCartGuitars,
   countCartGuitarsChange,
   discountSucceeded,
-  isPostCoupon
+  isPostCoupon,
+  removalAllGuitars
 } from './action';
 
 const initialState: GuitarsData = {
@@ -115,6 +116,16 @@ export const guitarsData = createReducer(initialState, (builder) => {
       const indexFirstSearch = guitars.findIndex((guitar)=> guitar.id === action.payload.id);
       guitars.splice(indexFirstSearch,1);
       state.cartGuitars = guitars;
+    })
+
+    .addCase(removalAllGuitars, (state, action) => {
+      const guitars = state.cartGuitars.slice();
+      const currentGuitars = action.payload;
+      currentGuitars.forEach((guitar) => {
+        const indexFirstSearch = guitars.findIndex((item)=> item.id === guitar.id);
+        guitars.splice(indexFirstSearch,1);
+      });
+      state.cartGuitars = guitars.filter((guitar)=> !currentGuitars.includes(guitar));
     })
 
     .addCase(countCartGuitarsChange, (state, action) => {

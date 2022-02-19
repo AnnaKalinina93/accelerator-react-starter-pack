@@ -112,7 +112,11 @@ function Header(): JSX.Element {
             ))}
           </ul>
         </div>
-        <a className="header__cart-link" aria-label="Корзина" onClick={() => dispatch(redirectToRoute(AppRoute.Cart))}>
+        <a className="header__cart-link"
+          aria-label="Корзина"
+          style={{cursor: 'pointer'}}
+          onClick={() => dispatch(redirectToRoute(AppRoute.Cart))}
+        >
           <svg
             className="header__cart-icon"
             width="14"
