@@ -80,8 +80,6 @@ describe('Component: Product', () => {
         </MemoryRouter>
       </Provider>);
 
-
-    expect(screen.getByAltText(guitar.name)).toBeInTheDocument();
     expect(screen.getByText(guitar.description)).toBeInTheDocument();
     expect(screen.getByTestId('Добавить в корзину')).toBeInTheDocument();
   });

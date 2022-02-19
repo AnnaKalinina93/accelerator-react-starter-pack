@@ -6,12 +6,12 @@ import { Guitar } from '../../types/guitar';
 import cn from 'classnames';
 import { useCallback, useEffect } from 'react';
 import { isActivePopupDeleteGuitarCartChange } from '../../store/ui-state/action';
-import { removalCartGuitars } from '../../store/guitars-data/action';
+import { removalAllGuitars } from '../../store/guitars-data/action';
 
 type PopupDeleteGuitarsProps = {
-  guitar: Guitar,
+  guitars: Guitar[],
 }
-function PopupDeleteGuitars({ guitar }: PopupDeleteGuitarsProps): JSX.Element {
+function PopupDeleteGuitars({ guitars }: PopupDeleteGuitarsProps): JSX.Element {
   const isActivePopupDeleteGuitarCart = useSelector(getIsActivePopupDeleteGuitarCart);
 
   const dispatch = useDispatch();
@@ -34,7 +34,7 @@ function PopupDeleteGuitars({ guitar }: PopupDeleteGuitarsProps): JSX.Element {
   const deleteClass = cn('modal modal-for-ui-kit', { 'is-active': isActivePopupDeleteGuitarCart });
 
   const handleDeleteButton = () => {
-    dispatch(removalCartGuitars(guitar));
+    dispatch(removalAllGuitars(guitars));
     dispatch(isActivePopupDeleteGuitarCartChange(false));
   };
 
@@ -49,12 +49,12 @@ function PopupDeleteGuitars({ guitar }: PopupDeleteGuitarsProps): JSX.Element {
           <div className="modal__overlay" data-close-modal></div>
           <div className="modal__content">
             <h2 className="modal__header title title--medium title--red">Удалить этот товар?</h2>
-            <div className="modal__info"><img className="modal__img" src={`/img/content/${guitar.previewImg.slice(4)}`} width="67" height="137" alt={guitar.name} />
+            <div className="modal__info"><img className="modal__img" src={`/img/content/${guitars[0].previewImg.slice(4)}`} width="67" height="137" alt={guitars[0].name} />
               <div className="modal__info-wrapper">
-                <h3 className="modal__product-name title title--little title--uppercase">{guitar.name}</h3>
-                <p className="modal__product-params modal__product-params--margin-11">Артикул: {guitar.vendorCode}</p>
-                <p className="modal__product-params">{guitarTranslate[guitar.type]}, {guitar.stringCount} струнная</p>
-                <p className="modal__price-wrapper"><span className="modal__price">Цена:</span><span className="modal__price">{guitar.price} ₽</span></p>
+                <h3 className="modal__product-name title title--little title--uppercase">{guitars[0].name}</h3>
+                <p className="modal__product-params modal__product-params--margin-11">Артикул: {guitars[0].vendorCode}</p>
+                <p className="modal__product-params">{guitarTranslate[guitars[0].type]}, {guitars[0].stringCount} струнная</p>
+                <p className="modal__price-wrapper"><span className="modal__price">Цена:</span><span className="modal__price">{guitars[0].price} ₽</span></p>
               </div>
             </div>
             <div className="modal__button-container">

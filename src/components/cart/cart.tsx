@@ -15,15 +15,15 @@ import PopupDeleteGuitars from '../popup-delete-guitars/popup-delete-guitars';
 function Cart(): JSX.Element {
   const guitarsMap = useSelector(getCartGuitarsWithCount);
   const discount = useSelector(getDiscount);
-  const [selectGuitar, setSelectGuitar] = useState<Guitar | null>( null);
+  const [selectGuitar, setSelectGuitar] = useState<Guitar[] | null>( null);
 
   document.body.style.overflow = 'auto';
 
   const totalPrice = getTotalPrice(guitarsMap);
   const discountFromPrice = getDiscountFromPrice( totalPrice, discount);
 
-  const handleDeleteClick = (guitar: Guitar) => {
-    setSelectGuitar(guitar);
+  const handleDeleteClick = (guitars: Guitar[]) => {
+    setSelectGuitar(guitars);
   };
   const discountClass = cn('cart__total-value cart__total-value--bonus', {'is-disactive': discountFromPrice === 0});
 
@@ -46,7 +46,7 @@ function Cart(): JSX.Element {
               </div>
             </div>
           </div>
-          {selectGuitar !== null && <PopupDeleteGuitars guitar={selectGuitar}/>}
+          {selectGuitar !== null && <PopupDeleteGuitars guitars={selectGuitar}/>}
         </div>
       </main>
       <Footer />
